@@ -3,10 +3,12 @@ import { getSerVerData } from "@/app/api/fetchData";
 import React, { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import WatchLists from "@/components/WatchList/WatchLists";
+import { getUserId } from "@/app/api/getEmail";
 
 export default function FavoriteMovie() {
   const [watchListUser, setWatchListUser] = React.useState<any[]>([]);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
+
   useEffect(() => {
     async function fetchData() {
       if (currentUser?.uid) {
@@ -17,6 +19,12 @@ export default function FavoriteMovie() {
       }
     }
     fetchData();
+  }, [currentUser?.uid]);
+  useEffect(() => {
+    async function getUerId() {
+      await getUserId(currentUser?.uid);
+    }
+    getUerId();
   }, [currentUser?.uid]);
   useEffect(() => {
     const auth = getAuth();

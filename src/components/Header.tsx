@@ -93,7 +93,7 @@ export default function Header() {
                   <Link href={"/profile"}>Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href={"/watchlist"}>WatchList</Link>
+                  <Link href={`/watchlist/${user.email}`}>WatchList</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
