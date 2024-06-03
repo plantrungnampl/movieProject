@@ -14,3 +14,13 @@ export interface UserTest {
   watchlist?: UserWatchList[];
   email?: string;
 }
+// export interface DetailProps {
+//   params: {
+//     id: string;
+//   };
+// }
+export interface MovieDetailProps {
+  detail: any;
+  watchList: boolean | null;
+  handleBookmarkClick: () => void;
+}

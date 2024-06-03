@@ -37,7 +37,6 @@ export default function Header() {
 
     return () => unsubscribe();
   }, []);
-  console.log(user);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -58,7 +57,7 @@ export default function Header() {
   };
   return (
     <>
-      <div className=" flex justify-between items-center p-3 bg-slate-700 shadow-sm  ">
+      <div className="flex justify-between items-center p-3 bg-slate-700 shadow-sm  fixed top-0 right-0 left-0 w-full z-10">
         <div className="flex gap-3 items-center">
           <MenuItem title="Home" address="/" Icon={AiFillHome} />
           <MenuItem title="About" address="/about" Icon={AiFillInfoCircle} />
