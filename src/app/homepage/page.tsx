@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Carousel,
@@ -8,14 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import CarouselItemComponent from "@/components/CarouselItemComponent";
-import { IItem } from "@/model/types";
 import axios from "axios";
-// import { IResult } from "@/model/types";
-
-// interface IResult {
-//   result: IItem[];
-//   result1: IItem[];
-// }
 const API_KEY = process.env.API_KEY;
 export default async function HomePage() {
   const res1 = await axios.get(
