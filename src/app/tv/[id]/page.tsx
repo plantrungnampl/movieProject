@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Loading from "@/app/loading";
 import Image from "next/image";
 import ReactPlayer from "react-player";
-import { FaBookmark, FaHeart } from "react-icons/fa";
+import { FaBookmark, FaHeart, FaRegBookmark } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,18 +13,26 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getDataMovieTv } from "@/app/api/getMovieTv";
-
-type DetailProps = {
-  params: {
-    id: string;
-  };
-};
+import { DetailProps } from "../../../model/types";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {
+  addToWatchList,
+  ifExitItem,
+  removeFromWatchList,
+} from "@/service/serives";
+import { isLoggedIn } from "@/utils/auth";
+import { useRouter } from "next/navigation";
+import { toast } from "@/utils/toastUtil";
+import TvDetail from "@/components/Detail/TvDetail";
 
 export default function Detail({ params }: DetailProps) {
+  const router = useRouter();
   const { id } = params;
   const [detail, setDetail] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [watchList, setWatchList] = useState<boolean | null | any>(null);
   console.log(detail);
   useEffect(() => {
     async function fetchData() {
@@ -39,6 +47,23 @@ export default function Detail({ params }: DetailProps) {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+      // if (user) {
+      //   ifExitItem(user.uid, id).then((data) => {
+      //     setWatchList(data);
+      //   });
+      // }
+    });
+    return () => unsubscribe();
+  }, [id]);
+
   if (loading) {
     return <Loading />;
   }
@@ -46,62 +71,110 @@ export default function Detail({ params }: DetailProps) {
   if (error) {
     return <div>Something went wrong: {error} </div>;
   }
+  const handleBookmarkClick = async () => {
+    if (!isLoggedIn()) {
+      router.push("/login");
+    }
+    const data = {
+      id: detail?.id,
+      name: detail?.name || detail?.original_name,
+      original_name: detail?.original_name,
+      title: detail?.name || detail?.original_name,
+      overview: detail?.overview,
+      poster_path: detail?.poster_path,
+    };
+
+    const dataId = detail?.id.toString();
+    try {
+      if (watchList) {
+        await removeFromWatchList(currentUser?.uid, dataId);
+        toast({
+          title: "Removed from Watchlist",
+          description: "You have removed this movie from your watchlist",
+          style: {
+            color: "red",
+          },
+          duration: 5000,
+        });
+        setWatchList(false);
+      } else {
+        await addToWatchList(currentUser?.uid, dataId, data);
+        toast({
+          title: "Added to Watchlist",
+          description: "You have added this movie to your watchlist",
+          style: {
+            color: "green",
+          },
+          duration: 5000,
+        });
+        setWatchList(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const trailer = detail.videos?.results?.find(
     (video: any) => video.type === "Trailer" && video.site === "YouTube"
   );
 
   return (
-    <div className="flex gap-8">
-      <div>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
-          alt={detail.title}
-          width={300}
-          height={450}
-          className="object-cover rounded"
-        />
-      </div>
-      {/* content */}
-      <div>
-        <h2>{detail.name || detail.original_name}</h2>
-        <p>{detail.release_date}</p>
-        <div>
-          <div className="flex gap-3">
-            <Button>
-              <FaBookmark />
-            </Button>
-            <Button>
-              <FaHeart />
-            </Button>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline">Video Trailer</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle className="pt-4 px-4">Video Trailer</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  {trailer ? (
-                    <ReactPlayer
-                      url={`https://www.youtube.com/watch?v=${trailer.key}`}
-                      width="942px"
-                      height="530px"
-                    />
-                  ) : (
-                    <div>No trailer availble</div>
-                  )}
-                </div>
-              </DialogContent>
-            </Dialog>
-          </div>
-          <div className="mt-3">
-            <h3 className="font-bold">Overview</h3>
-            <p>{detail.overview}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    // <div className="flex gap-8">
+    //   <div>
+    //     <Image
+    //       src={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
+    //       alt={detail.title}
+    //       width={300}
+    //       height={450}
+    //       className="object-cover rounded"
+    //     />
+    //   </div>
+    //   {/* content */}
+    //   <div>
+    //     <h2>{detail.name || detail.original_name}</h2>
+    //     <p>{detail.release_date}</p>
+    //     <div>
+    //       <div className="flex gap-3">
+    //         <Button onClick={handleBookmarkClick}>
+    //           {/* <FaBookmark /> */}
+    //           {watchList ? <FaBookmark /> : <FaRegBookmark />}
+    //         </Button>
+    //         <Button>
+    //           <FaHeart />
+    //         </Button>
+    //         <Dialog>
+    //           <DialogTrigger asChild>
+    //             <Button variant="outline">Video Trailer</Button>
+    //           </DialogTrigger>
+    //           <DialogContent>
+    //             <DialogHeader>
+    //               <DialogTitle className="pt-4 px-4">Video Trailer</DialogTitle>
+    //             </DialogHeader>
+    //             <div className="grid gap-4 py-4">
+    //               {trailer ? (
+    //                 <ReactPlayer
+    //                   url={`https://www.youtube.com/watch?v=${trailer.key}`}
+    //                   width="942px"
+    //                   height="530px"
+    //                 />
+    //               ) : (
+    //                 <div>No trailer availble</div>
+    //               )}
+    //             </div>
+    //           </DialogContent>
+    //         </Dialog>
+    //       </div>
+    //       <div className="mt-3">
+    //         <h3 className="font-bold">Overview</h3>
+    //         <p>{detail.overview}</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    <TvDetail
+      watchList={watchList}
+      tvDetail={detail}
+      handleBookmarkClick={handleBookmarkClick}
+    />
   );
 }

@@ -1,7 +1,6 @@
 "use server";
 import { db } from "@/service/firebase";
 import { doc, collection, getDoc, getDocs } from "firebase/firestore";
-import { UserWatchList } from "../../../types";
 
 export async function getSerVerData(userId: string) {
   try {

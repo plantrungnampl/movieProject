@@ -40,15 +40,6 @@ export const addDocumentWatchList = async (
 // add watchlist client
 export const addToWatchList = async (userId: any, dataId: any, data: any) => {
   try {
-    // if (await ifExitItem(userId, dataId)) {
-    //   toast({
-    //     title: "movie already in watchlist",
-    //     description: "This movie is already in your watchlist",
-
-    //     duration: 5000,
-    //   });
-    //   return false;
-    // }
     await setDoc(doc(db, "users", userId, "watchlist", dataId), data);
     toast({
       title: "Added to Watchlist",

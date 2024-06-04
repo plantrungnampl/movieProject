@@ -90,11 +90,12 @@
 // export default WatchListButton;
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { BookmarkButtonProps } from "@/model/types";
 
-interface BookmarkButtonProps {
-  watchList: boolean | null;
-  handleBookmarkClick: () => void;
-}
+// interface BookmarkButtonProps {
+//   watchList: boolean | null;
+//   handleBookmarkClick: () => void;
+// }
 
 const BookmarkButton = ({
   watchList,

@@ -23,12 +23,12 @@ import {
 import { useToast } from "./ui/use-toast";
 import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
-import { UserTest } from "../../types";
+import { UserTest, userProps } from "../model/types";
 
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState<userProps | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
@@ -41,6 +41,7 @@ export default function Header() {
   const handleLogout = async () => {
     await signOut(auth);
     localStorage.removeItem("authToken");
+    localStorage.removeItem("accountId");
     route.push("/login");
     toast({
       title: "Logout success",
@@ -52,9 +53,7 @@ export default function Header() {
       duration: 3000,
     });
   };
-  const handleLoginDialog = () => {
-    route.push("/login");
-  };
+
   return (
     <>
       <div className="flex justify-between items-center p-3 bg-slate-700 shadow-sm  fixed top-0 right-0 left-0 w-full z-10">

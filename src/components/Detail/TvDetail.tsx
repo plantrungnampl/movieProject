@@ -3,27 +3,26 @@ import { FaHeart } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import TrailerDialog from "@/components/TrailerDialog";
 import BookmarkButton from "@/components/BookmarkButton";
-import { MovieDetailProps } from "../../model/types";
-
-const MovieDetail = ({
-  detail,
+import { TvDetailProps } from "../../model/types";
+const TvDetail = ({
+  tvDetail,
   watchList,
   handleBookmarkClick,
-}: MovieDetailProps) => {
+}: TvDetailProps) => {
   return (
     <div className="flex gap-8">
       <div>
         <Image
-          src={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
-          alt={detail.title}
+          src={`https://image.tmdb.org/t/p/w500${tvDetail.poster_path}`}
+          alt={tvDetail.title}
           width={500}
           height={450}
           className="object-cover rounded"
         />
       </div>
       <div className="max-w-[960px]">
-        <h2>{detail.title || detail.original_title}</h2>
-        <p>{detail.release_date}</p>
+        <h2>{tvDetail.name || tvDetail.original_name}</h2>
+        <p>{tvDetail.release_date}</p>
         <div>
           <div className="flex gap-3">
             <BookmarkButton
@@ -33,11 +32,11 @@ const MovieDetail = ({
             <Button>
               <FaHeart />
             </Button>
-            <TrailerDialog trailerKey={detail.trailerKey} />
+            <TrailerDialog trailerKey={tvDetail.trailerKey} />
           </div>
           <div className="mt-3">
             <h3 className="font-bold">Overview</h3>
-            <p>{detail.overview}</p>
+            <p>{tvDetail.overview}</p>
           </div>
         </div>
       </div>
@@ -45,4 +44,4 @@ const MovieDetail = ({
   );
 };
 
-export default MovieDetail;
+export default TvDetail;

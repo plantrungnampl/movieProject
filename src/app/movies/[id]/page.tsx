@@ -206,7 +206,7 @@ import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast } from "@/components/ui/use-toast";
 import { getDataMovieServer } from "@/app/api/getDataMovie";
-import { DetailProps } from "../../../../types";
+import { DetailProps } from "../../../model/types";
 
 import Loading from "@/app/loading";
 import { isLoggedIn } from "@/utils/auth";
