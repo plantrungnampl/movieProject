@@ -112,79 +112,73 @@ export default function LoginForm() {
   };
 
   return (
-    <Suspense fallback={<Loading />}>
-      <div className="h-screen flex justify-center items-center">
-        <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex justify-between flex-col">
-          <div className="h-28 w-full justify-center flex items-center">
-            <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
-              Welcome
-            </span>
-          </div>
-          <Form {...form}>
-            <form
-              className="h-full w-1/2 mx-auto"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-black">Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="email@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-black">Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="password"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormDescription className="text-red-500 text-sm">
-                {error}
-              </FormDescription>
-              <Button className="flex justify-center mt-6 mb-3" type="submit">
-                Submit
-              </Button>
-            </form>
-          </Form>
-          <div className="mx-auto">
-            <span className="text-sm block text-center">Hoặc</span>
-            <Button
-              className="flex justify-center mt-6 mb-3"
-              onClick={handleGoogleLogin}
-            >
-              Đăng nhập bằng Google
+    <div className="h-screen flex justify-center items-center">
+      <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex justify-between flex-col">
+        <div className="h-28 w-full justify-center flex items-center">
+          <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
+            Welcome
+          </span>
+        </div>
+        <Form {...form}>
+          <form
+            className="h-full w-1/2 mx-auto"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="email@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormDescription className="text-red-500 text-sm">
+              {error}
+            </FormDescription>
+            <Button className="flex justify-center mt-6 mb-3" type="submit">
+              Submit
             </Button>
-          </div>
-          <div className="h-20 mx-auto">
-            <span className="text-sm ">
-              You not have an account?
-              <Link href={"/register"}>
-                <span className="text-blue-500 font-semibold text-md">
-                  {" "}
-                  Register Here
-                </span>
-              </Link>
-            </span>
-          </div>
+          </form>
+        </Form>
+        <div className="mx-auto">
+          <span className="text-sm block text-center">Hoặc</span>
+          <Button
+            className="flex justify-center mt-6 mb-3"
+            onClick={handleGoogleLogin}
+          >
+            Đăng nhập bằng Google
+          </Button>
+        </div>
+        <div className="h-20 mx-auto">
+          <span className="text-sm ">
+            You not have an account?
+            <Link href={"/register"}>
+              <span className="text-blue-500 font-semibold text-md">
+                {" "}
+                Register Here
+              </span>
+            </Link>
+          </span>
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 }

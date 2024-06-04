@@ -54,7 +54,9 @@ export default async function HomePage() {
                     key={item.id}
                     className="md:basis-1/2 lg:basis-1/3 flex"
                   >
-                    <CarouselItemComponent item={item} />
+                    <Suspense fallback={<Loading />}>
+                      <CarouselItemComponent item={item} />
+                    </Suspense>
                   </CarouselItem>
                 ))}
               </CarouselContent>

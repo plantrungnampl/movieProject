@@ -73,86 +73,78 @@ export default function Register() {
       });
   };
   return (
-    <Suspense fallback={<Loading />}>
-      <div className="h-screen flex justify-center items-center">
-        <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex justify-between flex-col">
-          <div className="h-28 w-full justify-center flex items-center">
-            <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
-              Register
-            </span>
-          </div>
-          <Form {...form}>
-            <form
-              className="h-full w-1/2 mx-auto"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-black">Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="email@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-black">Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="password"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-black">
-                      Confirm password
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Confirm password"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button className="flex justify-center mt-6 mb-3" type="submit">
-                Submit
-              </Button>
-            </form>
-          </Form>
-          <div className="h-20 mx-auto">
-            <span className="text-sm ">
-              If you have an account?
-              <Link href={"/login"}>
-                <span className="text-blue-500 font-semibold text-md">
-                  {" "}
-                  Login Here
-                </span>
-              </Link>
-            </span>
-          </div>
+    <div className="h-screen flex justify-center items-center">
+      <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex justify-between flex-col">
+        <div className="h-28 w-full justify-center flex items-center">
+          <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
+            Register
+          </span>
+        </div>
+        <Form {...form}>
+          <form
+            className="h-full w-1/2 mx-auto"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="email@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-black">Confirm password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Confirm password"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button className="flex justify-center mt-6 mb-3" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Form>
+        <div className="h-20 mx-auto">
+          <span className="text-sm ">
+            If you have an account?
+            <Link href={"/login"}>
+              <span className="text-blue-500 font-semibold text-md">
+                {" "}
+                Login Here
+              </span>
+            </Link>
+          </span>
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 }
