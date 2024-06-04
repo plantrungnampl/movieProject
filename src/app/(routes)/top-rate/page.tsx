@@ -28,12 +28,12 @@ export default function TopRate() {
   if (error) return <div>{error}</div>;
   return (
     <>
-      <Suspense fallback={<Loading />}>
-        <h1>Top rated Movie:</h1>
-        <div className=" w-full flex flex-wrap gap-4">
+      <h1>Top rated Movie:</h1>
+      <div className=" w-full flex flex-wrap gap-4">
+        <Suspense fallback={<Loading />}>
           <TopRateMovies topRate={topRate} />
-        </div>
-      </Suspense>
+        </Suspense>
+      </div>
     </>
   );
 }
