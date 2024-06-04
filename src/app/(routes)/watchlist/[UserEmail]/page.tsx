@@ -9,12 +9,13 @@ import Loading from "@/app/loading";
 export default function FavoriteMovie() {
   const [watchListUser, setWatchListUser] = React.useState<any[]>([]);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
-
+  const [loading, setLoading] = React.useState<boolean>(true);
   useEffect(() => {
     async function fetchData() {
       if (currentUser?.uid) {
         const data: any = await getSerVerData(currentUser?.uid);
         setWatchListUser(data);
+        setLoading(false);
       } else {
         setWatchListUser([]);
       }
