@@ -9,26 +9,8 @@ import {
 } from "@/components/ui/carousel";
 // import CarouselItemComponent from "./CarouselItemComponent";
 import CarouselItemComponent from "@/components/CarouselItemComponent";
-import Loading from "@/app/loading";
+import { IResult } from "@/model/types";
 
-export interface IItem {
-  id: number;
-  movie_id: number;
-  original_title: string;
-  overview: string;
-  name: string;
-  poster_path: string;
-  title: string;
-  first_air_date: string;
-  backdrop_path: string;
-  release_date: string;
-  media_type: string;
-}
-
-export interface IResult {
-  result: IItem[];
-  result1: IItem[];
-}
 export default function HomePage({ result, result1 }: IResult) {
   const tabData = [
     { value: "Today", result: result1 },

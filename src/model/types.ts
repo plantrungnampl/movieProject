@@ -67,3 +67,22 @@ export interface BookmarkButtonProps {
   watchList: boolean | null;
   handleBookmarkClick: () => void;
 }
+
+export interface IItem {
+  id: number;
+  movie_id: number;
+  original_title: string;
+  overview: string;
+  name: string;
+  poster_path: string;
+  title: string;
+  first_air_date: string;
+  backdrop_path: string;
+  release_date: string;
+  media_type: string;
+}
+
+export interface IResult {
+  result: IItem[];
+  result1: IItem[];
+}
