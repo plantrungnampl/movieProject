@@ -23,6 +23,7 @@ export default function TopRate() {
     getTopRate();
   }, []);
   console.log("toprate===", topRate);
+  console.log("movieTopRate===", movieTopRate);
   if (error) return <div>{error}</div>;
   return (
     <>
