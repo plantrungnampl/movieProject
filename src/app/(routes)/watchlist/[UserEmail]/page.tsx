@@ -1,9 +1,10 @@
 "use client";
 import { getSerVerData } from "@/app/api/fetchData";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import WatchLists from "@/components/WatchList/WatchLists";
 import { getUserId } from "@/app/api/getEmail";
+import Loading from "@/app/loading";
 
 export default function FavoriteMovie() {
   const [watchListUser, setWatchListUser] = React.useState<any[]>([]);
@@ -36,20 +37,22 @@ export default function FavoriteMovie() {
 
   return (
     <div>
-      {watchListUser.length > 0 ? (
-        <div>
-          <h1 className="font-bold text-2xl">My Watchlist </h1>
-          {watchListUser.map((item) => (
-            <div key={item.id}>
-              <WatchLists item={item} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <h1>No Data</h1>
-        </div>
-      )}
+      <Suspense fallback={<Loading />}>
+        {watchListUser.length > 0 ? (
+          <div>
+            <h1 className="font-bold text-2xl">My Watchlist </h1>
+            {watchListUser.map((item) => (
+              <div key={item.id}>
+                <WatchLists item={item} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <Loading />
+          </div>
+        )}
+      </Suspense>
     </div>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 import { getDataTopRate } from "@/app/api/getDataTopRate";
+import Loading from "@/app/loading";
 import TopRateMovies from "@/components/TopRateMovie/TopRateMovies";
 import { TopRateMovieProps } from "@/model/topRate";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 
 export default function TopRate() {
   const [topRate, setTopRate] = React.useState<TopRateMovieProps[]>([]);
@@ -27,10 +28,12 @@ export default function TopRate() {
   if (error) return <div>{error}</div>;
   return (
     <>
-      <h1>Top rated Movie:</h1>
-      <div className=" w-full flex flex-wrap gap-4">
-        <TopRateMovies topRate={topRate} />
-      </div>
+      <Suspense fallback={<Loading />}>
+        <h1>Top rated Movie:</h1>
+        <div className=" w-full flex flex-wrap gap-4">
+          <TopRateMovies topRate={topRate} />
+        </div>
+      </Suspense>
     </>
   );
 }
