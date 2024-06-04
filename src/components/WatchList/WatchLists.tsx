@@ -1,8 +1,8 @@
-import { IItem } from "@/app/homepage/page";
 import React from "react";
 
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { IItem } from "@/model/types";
 
 export default function WatchLists({ item }: { item: IItem }) {
   return (
