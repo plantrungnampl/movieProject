@@ -1,8 +1,8 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import axios from "axios";
+import HomePage from "./homepage/page";
 // import Result from "@/components/Result";
 const API_KEY = process.env.API_KEY;
-import HomePage from "./homepage/page";
 
 export default async function Home() {
   const res1 = await axios.get(

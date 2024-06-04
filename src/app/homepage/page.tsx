@@ -7,9 +7,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-// import CarouselItemComponent from "./CarouselItemComponent";
 import CarouselItemComponent from "@/components/CarouselItemComponent";
-import { IResult } from "@/model/types";
+import { IItem } from "@/model/types";
+// import { IResult } from "@/model/types";
+
+interface IResult {
+  result: IItem[];
+  result1: IItem[];
+}
 
 export default function HomePage({ result, result1 }: IResult) {
   const tabData = [
