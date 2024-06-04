@@ -11,14 +11,14 @@ const MovieDetail = ({
   handleBookmarkClick,
 }: MovieDetailProps) => {
   return (
-    <div className="flex gap-8">
-      <div>
+    <div className=" relative flex gap-5 bg-clip-border rounded-xl shadow-md w-full flex-row mb-4  ">
+      <div className=" relative w-1/5 m-0 overflow-hidden rounded-r-none bg-clip-border rounded-xl shrink-0">
         <Image
           src={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
           alt={detail.title}
-          width={500}
-          height={450}
-          className="object-cover rounded"
+          width={300}
+          height={300}
+          className="object-cover rounded w-full h-full"
         />
       </div>
       <div className="max-w-[960px]">
