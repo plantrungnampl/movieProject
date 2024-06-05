@@ -63,7 +63,7 @@ export default function Header() {
             <MenuItem title="Home" address="/" Icon={AiFillHome} />
           </Suspense>
 
-          <MenuItem title="About" address="/about" Icon={AiFillInfoCircle} />
+          {/* <MenuItem title="About" address="/about" Icon={AiFillInfoCircle} /> */}
           <Suspense fallback={<Loading />}>
             <MenuItem title="Top rate" address="/top-rate" Icon={AiFillStar} />
           </Suspense>
