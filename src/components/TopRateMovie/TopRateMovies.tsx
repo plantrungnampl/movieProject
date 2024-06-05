@@ -53,13 +53,3 @@ export default function TopRateMovies({
     </>
   );
 }
-// function TopRateMoviesWp({ topRate }: { topRate: TopRateMovieProps[] }) {
-//   return (
-//     <>
-//       <Suspense>
-//         <TopRateMovies topRate={topRate} />
-//       </Suspense>
-//     </>
-//   );
-// }
-// export default TopRateMoviesWp;

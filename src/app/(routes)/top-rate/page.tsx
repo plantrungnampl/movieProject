@@ -3,16 +3,14 @@ import { getDataTopRate } from "@/app/api/getDataTopRate";
 import Loading from "@/app/loading";
 import TopRateMovies from "@/components/TopRateMovie/TopRateMovies";
 import { TopRateMovieProps } from "@/model/topRate";
-import { useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect } from "react";
 
-function TopRate() {
+export default function TopRate() {
   const [topRate, setTopRate] = React.useState<TopRateMovieProps[]>([]);
   const [movieTopRate, setMovieTopRate] = React.useState<TopRateMovieProps[]>(
     []
   );
   const [error, setError] = React.useState<string>("");
-  const searchParams = useSearchParams();
   useEffect(() => {
     async function getTopRate() {
       try {
@@ -36,11 +34,11 @@ function TopRate() {
     </>
   );
 }
-function TopRatePage() {
-  <>
-    <Suspense fallback={<Loading />}>
-      <TopRate />
-    </Suspense>
-  </>;
-}
-export default TopRatePage;
+// function TopRatePage() {
+//   <>
+//     <Suspense fallback={<Loading />}>
+//       <TopRate />
+//     </Suspense>
+//   </>;
+// }
+// export default TopRatePage;
