@@ -33,7 +33,7 @@ const formSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-export default function LoginForm() {
+const LoginForm = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -181,4 +181,12 @@ export default function LoginForm() {
       </div>
     </div>
   );
-}
+};
+
+const LoginFormSuspense = () => (
+  <Suspense fallback={<Loading />}>
+    <LoginForm />
+  </Suspense>
+);
+
+export default LoginFormSuspense;
