@@ -39,57 +39,56 @@ export default function Collections({
   console.log(resultsData);
   return (
     <>
-      <Suspense fallback={<Loading />}>
-        <div>
-          <p className="uppercase mb-3 ">
-            <span>{` Showing ${result.length} result for ${searchValue}`}</span>
-          </p>
-          {resultsData.length > 0 ? (
-            resultsData.map((item: any) => (
-              <Link href={`/movies/${item.id}`} key={item.id}>
-                <Card
-                  className="flex relative gap-5 bg-clip-border rounded-xl  w-full flex-row mb-4"
-                  key={item.id}
-                >
-                  {item?.poster_path ||
-                  item?.backdrop_path ||
-                  item?.profile_path ||
-                  item?.known_for?.backdrop_path ||
-                  item?.logo_path ? (
-                    <div className="relative flex bg-clip-border rounded-xl w-full flex-row mb-4">
-                      <div className="relative w-1/5 m-0 overflow-hidden  rounded-r-none bg-clip-border rounded-xl shrink-0">
-                        <Image
-                          className="rounded object-cover w-full h-full"
-                          loading="lazy"
-                          src={`https://image.tmdb.org/t/p/w500${
-                            item.poster_path ||
-                            item?.backdrop_path ||
-                            item.profile_path ||
-                            item?.known_for?.backdrop_path ||
-                            item?.logo_path
-                          }`}
-                          alt=""
-                          width={300}
-                          height={300}
-                        />
-                      </div>
-                      <div className="flex">
-                        <CardContent className="flex flex-col justify-start gap-2 p-3">
-                          <CardTitle>
-                            {item.original_title ||
-                              item.name ||
-                              item.original_name}
-                          </CardTitle>
-                          <CardDescription>
-                            {item?.first_air_date || item?.release_date}
-                          </CardDescription>
-                          <CardDescription>{item?.overview}</CardDescription>
-                        </CardContent>
-                      </div>
+      <div>
+        <p className="uppercase mb-3 ">
+          <span>{` Showing ${result.length} result for ${searchValue}`}</span>
+        </p>
+        {resultsData.length > 0 ? (
+          resultsData.map((item: any) => (
+            <Link href={`/movies/${item.id}`} key={item.id}>
+              <Card
+                className="flex relative gap-5 bg-clip-border rounded-xl  w-full flex-row mb-4"
+                key={item.id}
+              >
+                {item?.poster_path ||
+                item?.backdrop_path ||
+                item?.profile_path ||
+                item?.known_for?.backdrop_path ||
+                item?.logo_path ? (
+                  <div className="relative flex bg-clip-border rounded-xl w-full flex-row mb-4">
+                    <div className="relative w-1/5 m-0 overflow-hidden  rounded-r-none bg-clip-border rounded-xl shrink-0">
+                      <Image
+                        className="rounded object-cover w-full h-full"
+                        loading="lazy"
+                        src={`https://image.tmdb.org/t/p/w500${
+                          item.poster_path ||
+                          item?.backdrop_path ||
+                          item.profile_path ||
+                          item?.known_for?.backdrop_path ||
+                          item?.logo_path
+                        }`}
+                        alt=""
+                        width={300}
+                        height={300}
+                      />
                     </div>
-                  ) : (
-                    <div className="relative flex bg-clip-border rounded-xl w-full flex-row mb-4">
-                      {/* <div className="w-[300px] h-[300px]">
+                    <div className="flex">
+                      <CardContent className="flex flex-col justify-start gap-2 p-3">
+                        <CardTitle>
+                          {item.original_title ||
+                            item.name ||
+                            item.original_name}
+                        </CardTitle>
+                        <CardDescription>
+                          {item?.first_air_date || item?.release_date}
+                        </CardDescription>
+                        <CardDescription>{item?.overview}</CardDescription>
+                      </CardContent>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="relative flex bg-clip-border rounded-xl w-full flex-row mb-4">
+                    {/* <div className="w-[300px] h-[300px]">
                       <Image
                         className="rounded object-cover w-full h-full"
                         loading="lazy"
@@ -99,26 +98,22 @@ export default function Collections({
                         height={300}
                       />
                     </div> */}
-                      <CardContent className="flex flex-col justify-center gap-2 p-3">
-                        <CardTitle>
-                          {" "}
-                          {item.original_title || item.name}
-                        </CardTitle>
-                        <CardDescription>
-                          {item.first_air_date || item.release_date}
-                        </CardDescription>
-                        <CardDescription>{item.overview}</CardDescription>
-                      </CardContent>
-                    </div>
-                  )}
-                </Card>
-              </Link>
-            ))
-          ) : (
-            <h1>No result found</h1>
-          )}
-        </div>
-      </Suspense>
+                    <CardContent className="flex flex-col justify-center gap-2 p-3">
+                      <CardTitle> {item.original_title || item.name}</CardTitle>
+                      <CardDescription>
+                        {item.first_air_date || item.release_date}
+                      </CardDescription>
+                      <CardDescription>{item.overview}</CardDescription>
+                    </CardContent>
+                  </div>
+                )}
+              </Card>
+            </Link>
+          ))
+        ) : (
+          <h1>No result found</h1>
+        )}
+      </div>
     </>
   );
 }
