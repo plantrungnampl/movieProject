@@ -107,40 +107,42 @@ const SearchResults = async ({
 
   return (
     <div>
-      <p className="uppercase mb-3 ">
-        <span>{` Showing ${result.length} result for ${searchValue}`}</span>
-      </p>
-      {result.length > 0 ? (
-        result.map((item: any) => (
-          <Link href={`/movies/${item.id}`} key={item.id}>
-            <Card className="flex" key={item.id}>
-              <CardHeader>
-                <div className="w-[300px] h-[300px]">
-                  <Image
-                    className="rounded object-cover w-full h-full"
-                    loading="lazy"
-                    src={`https://image.tmdb.org/t/p/w500${
-                      item.poster_path || item.backdrop_path
-                    }`}
-                    alt={item.original_title || item.name}
-                    width={300}
-                    height={300}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="flex flex-col justify-center gap-2">
-                <CardTitle> {item.original_title || item.name}</CardTitle>
-                <CardDescription>
-                  {item.first_air_date || item.release_date}
-                </CardDescription>
-                <CardDescription>{item.overview}</CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
-        ))
-      ) : (
-        <h1>No result found</h1>
-      )}
+      <Suspense fallback={<div>Loading...</div>}>
+        <p className="uppercase mb-3 ">
+          <span>{` Showing ${result.length} result for ${searchValue}`}</span>
+        </p>
+        {result.length > 0 ? (
+          result.map((item: any) => (
+            <Link href={`/movies/${item.id}`} key={item.id}>
+              <Card className="flex" key={item.id}>
+                <CardHeader>
+                  <div className="w-[300px] h-[300px]">
+                    <Image
+                      className="rounded object-cover w-full h-full"
+                      loading="lazy"
+                      src={`https://image.tmdb.org/t/p/w500${
+                        item.poster_path || item.backdrop_path
+                      }`}
+                      alt={item.original_title || item.name}
+                      width={300}
+                      height={300}
+                    />
+                  </div>
+                </CardHeader>
+                <CardContent className="flex flex-col justify-center gap-2">
+                  <CardTitle> {item.original_title || item.name}</CardTitle>
+                  <CardDescription>
+                    {item.first_air_date || item.release_date}
+                  </CardDescription>
+                  <CardDescription>{item.overview}</CardDescription>
+                </CardContent>
+              </Card>
+            </Link>
+          ))
+        ) : (
+          <h1>No result found</h1>
+        )}
+      </Suspense>
     </div>
   );
 };

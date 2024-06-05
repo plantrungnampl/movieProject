@@ -21,7 +21,7 @@ export default function Collections({
   const { result } = params;
   const [resultsData, setResultsData] = useState([]);
   const searchParams = useSearchParams();
-  const searchValue = searchParams.get("q");
+  const searchValue = searchParams.get("q") || "";
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -88,16 +88,6 @@ export default function Collections({
                   </div>
                 ) : (
                   <div className="relative flex bg-clip-border rounded-xl w-full flex-row mb-4">
-                    {/* <div className="w-[300px] h-[300px]">
-                      <Image
-                        className="rounded object-cover w-full h-full"
-                        loading="lazy"
-                        src={`https://image.tmdb.org/t/p/w500${item?.logo_path}`}
-                        alt=""
-                        width={300}
-                        height={300}
-                      />
-                    </div> */}
                     <CardContent className="flex flex-col justify-center gap-2 p-3">
                       <CardTitle> {item.original_title || item.name}</CardTitle>
                       <CardDescription>
