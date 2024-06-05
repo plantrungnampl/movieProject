@@ -57,6 +57,27 @@ const RegisterPage = () => {
         route.push("/login");
       })
       .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          toast({
+            title: "Error",
+            description: "Email already in use",
+            duration: 2000,
+            style: {
+              color: "white",
+              backgroundColor: "red",
+            },
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: `There was an error registering${error.message}`,
+            duration: 2000,
+            style: {
+              color: "white",
+              backgroundColor: "red",
+            },
+          });
+        }
         console.log(error);
       });
   };
