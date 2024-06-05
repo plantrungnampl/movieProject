@@ -30,7 +30,9 @@ const TrailerDialog = ({ trailerKey }: TrailerDialogProps) => {
               height="530px"
             />
           ) : (
-            <div>No trailer available</div>
+            <div className="flex justify-center items-center p-4 font-bold text-2xl">
+              No trailer available
+            </div>
           )}
         </div>
       </DialogContent>

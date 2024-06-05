@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { Suspense, useState } from "react";
 import {
   Form,
@@ -23,21 +22,16 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { addDocument } from "@/service/serives";
-import { toast, useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/app/loading";
-const API_KEY = process.env.API_KEY;
-const AUTHOR = process.env.ASSETTOKENAUTH;
-const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
+import { formSchema } from "@/validation/form";
 
 const LoginForm = () => {
   const [error, setError] = useState("");
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,8 +83,9 @@ const LoginForm = () => {
       const accountId = await userCredential.user.uid;
       localStorage.setItem("authToken", token);
       localStorage.setItem("accountId", accountId);
-      form.reset();
       router.push("/");
+      form.reset();
+
       toast({
         title: "Success",
         description: "You have successfully logged in",
@@ -119,7 +114,6 @@ const LoginForm = () => {
           <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
             Welcome
           </span>
-          {searchParams.get("q") || "login"}
         </div>
         <Form {...form}>
           <form

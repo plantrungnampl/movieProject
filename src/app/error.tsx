@@ -5,16 +5,16 @@ export default function Error({
   error,
   reset,
 }: {
-  error: string;
+  error: Error;
   reset: () => void;
 }) {
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.log(error);
+  // }, [error]);
   return (
     <div>
-      <h1>{error}</h1>
-      zzz
+      <h1>{error.message}</h1>
+
       <button onClick={() => reset()}>Reset</button>
     </div>
   );

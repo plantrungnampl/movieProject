@@ -12,6 +12,7 @@ function TopRate() {
     []
   );
   const [error, setError] = React.useState<string>("");
+  const searchParams = useSearchParams();
   useEffect(() => {
     async function getTopRate() {
       try {
@@ -24,8 +25,7 @@ function TopRate() {
     }
     getTopRate();
   }, []);
-  console.log("toprate===", topRate);
-  console.log("movieTopRate===", movieTopRate);
+  console.log("topRate===", topRate);
   if (error) return <div>{error}</div>;
   return (
     <>

@@ -9,7 +9,7 @@ export default function AuthLayout({
 }>) {
   return (
     <>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      <Suspense fallback={<div>loading....</div>}>{children}</Suspense>
     </>
   );
 }

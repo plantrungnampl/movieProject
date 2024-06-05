@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { Suspense, use, useEffect, useState } from "react";
 import MenuItem from "./MenuItem";
 import { AiFillHome } from "react-icons/ai";
 import { AiFillInfoCircle } from "react-icons/ai";
@@ -8,8 +8,7 @@ import ToggleMode from "./ToggleMode";
 import Link from "next/link";
 import { AiFillBook } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
-import SearchBox from "./SearchBox";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -24,12 +23,13 @@ import { useToast } from "./ui/use-toast";
 import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
 import { UserTest, userProps } from "../model/types";
+import SearchBox from "@/app/search/SearchBox";
 
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
   const [user, setUser] = React.useState<userProps | null>(null);
-
+  const searchParams = useSearchParams();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       setUser(currentUser);
@@ -42,6 +42,7 @@ export default function Header() {
     await signOut(auth);
     localStorage.removeItem("authToken");
     localStorage.removeItem("accountId");
+
     route.push("/login");
     toast({
       title: "Logout success",
@@ -58,13 +59,19 @@ export default function Header() {
     <>
       <div className="flex justify-between items-center p-3 bg-slate-700 shadow-sm  fixed top-0 right-0 left-0 w-full z-10">
         <div className="flex gap-3 items-center">
-          <MenuItem title="Home" address="/" Icon={AiFillHome} />
-          <MenuItem title="About" address="/about" Icon={AiFillInfoCircle} />
+          <Suspense fallback={<Loading />}>
+            <MenuItem title="Home" address="/" Icon={AiFillHome} />
+          </Suspense>
 
-          <MenuItem title="Top rate" address="/top-rate" Icon={AiFillStar} />
+          <MenuItem title="About" address="/about" Icon={AiFillInfoCircle} />
+          <Suspense fallback={<Loading />}>
+            <MenuItem title="Top rate" address="/top-rate" Icon={AiFillStar} />
+          </Suspense>
         </div>
         <div className="w-1/2 ">
-          <SearchBox />
+          <Suspense fallback={<Loading />}>
+            <SearchBox />
+          </Suspense>
         </div>
         {user ? (
           <div className="flex gap-2 ">

@@ -6,7 +6,7 @@ import WatchLists from "@/components/WatchList/WatchLists";
 import { getUserId } from "@/app/api/getEmail";
 import Loading from "@/app/loading";
 
-export default function FavoriteMovie() {
+function FavoriteMovie() {
   const [watchListUser, setWatchListUser] = React.useState<any[]>([]);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -57,3 +57,13 @@ export default function FavoriteMovie() {
     </div>
   );
 }
+function FavWp() {
+  return (
+    <>
+      <Suspense fallback={<Loading />}>
+        <FavoriteMovie />
+      </Suspense>
+    </>
+  );
+}
+export default FavWp;

@@ -39,6 +39,7 @@ export interface TvDetailProps {
   tvDetail: TvDetailMovieProps;
   watchList: boolean | null;
   handleBookmarkClick: () => void;
+  trailer: string;
 }
 export interface TvDetailMovieProps {
   id: number;
@@ -50,6 +51,7 @@ export interface TvDetailMovieProps {
   release_date: string;
   trailerKey: string;
   poster_path: string;
+  trailer: string;
 }
 export interface detaiMovie {
   id: number;

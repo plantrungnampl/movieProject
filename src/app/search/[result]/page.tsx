@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
-import Loading from "../loading";
+import NotFound from "../not-found";
 const API_KEY = process.env.API_KEY;
 export default function Collections({
   params,
@@ -36,13 +36,12 @@ export default function Collections({
       fetchResults();
     }
   }, [searchValue, result]);
-  console.log(resultsData);
   return (
     <>
       <div>
-        <p className="uppercase mb-3 ">
+        {/* <p className="uppercase mb-3 ">
           <span>{` Showing ${result.length} result for ${searchValue}`}</span>
-        </p>
+        </p> */}
         {resultsData.length > 0 ? (
           resultsData.map((item: any) => (
             <Link href={`/movies/${item.id}`} key={item.id}>
@@ -101,7 +100,12 @@ export default function Collections({
             </Link>
           ))
         ) : (
-          <h1>No result found</h1>
+          <div className="flex flex-col justify-center gap-2 p-3">
+            <CardContent className="flex flex-col justify-center gap-2 p-3">
+              <CardTitle> {`No results found for ${searchValue}`}</CardTitle>
+              <CardDescription> {`Please try again`}</CardDescription>
+            </CardContent>
+          </div>
         )}
       </div>
     </>

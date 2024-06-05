@@ -1,5 +1,5 @@
 import { TopRateMovieProps } from "@/model/topRate";
-import React from "react";
+import React, { Suspense } from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ export default function TopRateMovies({
 }: {
   topRate: TopRateMovieProps[];
 }) {
+  console.log("topRate===", topRate);
   return (
     <>
       {topRate.map((movieItem) => {
@@ -52,3 +53,13 @@ export default function TopRateMovies({
     </>
   );
 }
+// function TopRateMoviesWp({ topRate }: { topRate: TopRateMovieProps[] }) {
+//   return (
+//     <>
+//       <Suspense>
+//         <TopRateMovies topRate={topRate} />
+//       </Suspense>
+//     </>
+//   );
+// }
+// export default TopRateMoviesWp;
