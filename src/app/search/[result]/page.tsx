@@ -5,11 +5,11 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, useSearchParams } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
-import NotFound from "../not-found";
+import React, { useEffect, useState } from "react";
 const API_KEY = process.env.API_KEY;
 export default function Collections({
   params,
@@ -25,10 +25,10 @@ export default function Collections({
 
   useEffect(() => {
     const fetchResults = async () => {
-      const response = await fetch(
+      const response = await axios.get(
         `https://api.themoviedb.org/3/search/${result}?api_key=${API_KEY}&query=${searchValue}&include_adult=false&language=en-US&page=1`
       );
-      const data = await response.json();
+      const data = response.data;
       setResultsData(data.results);
     };
 
@@ -39,9 +39,6 @@ export default function Collections({
   return (
     <>
       <div>
-        {/* <p className="uppercase mb-3 ">
-          <span>{` Showing ${result.length} result for ${searchValue}`}</span>
-        </p> */}
         {resultsData.length > 0 ? (
           resultsData.map((item: any) => (
             <Link href={`/movies/${item.id}`} key={item.id}>
