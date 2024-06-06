@@ -6,8 +6,8 @@ export async function getUserId(email: string) {
     const docRef = await getDocs(collection(db, "users", email.toString()));
     const data = docRef.docs.map((doc) => {
       return {
-        id: doc.id,
-        data: doc.data(),
+        id: doc?.id,
+        data: doc?.data(),
       };
     });
     return data;

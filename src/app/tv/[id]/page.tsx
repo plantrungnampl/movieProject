@@ -5,7 +5,11 @@ import Loading from "@/app/loading";
 import { getDataMovieTv } from "@/app/api/getMovieTv";
 import { DetailProps } from "../../../model/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { addToWatchList, removeFromWatchList } from "@/service/serives";
+import {
+  addToWatchList,
+  ifExitItem,
+  removeFromWatchList,
+} from "@/service/serives";
 import { isLoggedIn } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "@/utils/toastUtil";
@@ -26,7 +30,17 @@ export default function Detail({ params }: DetailProps) {
       if (data.error) {
         setError(data.error);
       } else {
-        setDetail(data);
+        const trailer = data?.videos?.results?.find(
+          (video: any) =>
+            (video.type === "Teaser" ||
+              video.type === "Trailer" ||
+              "Behind the Scenes" ||
+              "Featurette" ||
+              "Clip") &&
+            video.site === "YouTube"
+        );
+        setDetail({ ...data, trailerKey: trailer?.key || null });
+        // setDetail(data);
       }
       setLoading(false);
     }
@@ -36,10 +50,11 @@ export default function Detail({ params }: DetailProps) {
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
       if (user) {
-        setCurrentUser(user);
-      } else {
-        setCurrentUser(null);
+        ifExitItem(user.uid, id).then((data) => {
+          setWatchList(data);
+        });
       }
     });
     return () => unsubscribe();
@@ -53,8 +68,17 @@ export default function Detail({ params }: DetailProps) {
     return <div>Something went wrong: {error} </div>;
   }
   const handleBookmarkClick = async () => {
-    if (!isLoggedIn()) {
+    if (!currentUser) {
+      toast({
+        title: "Login",
+        description: "Please login to continue",
+        style: {
+          background: "red",
+          color: "white",
+        },
+      });
       router.push("/login");
+      return;
     }
     const data = {
       id: detail?.id,
@@ -95,16 +119,11 @@ export default function Detail({ params }: DetailProps) {
     }
   };
 
-  const trailer = detail.videos?.results?.find(
-    (video: any) => video.type === "Trailer" && video.site === "YouTube"
-  );
-
   return (
     <TvDetail
       watchList={watchList}
       tvDetail={detail}
       handleBookmarkClick={handleBookmarkClick}
-      trailer={trailer?.key}
     />
   );
 }

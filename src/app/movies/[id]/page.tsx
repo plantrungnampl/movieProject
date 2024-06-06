@@ -52,7 +52,7 @@ export default function Detail({ params }: DetailProps) {
     }
     fetchData();
   }, [id]);
-
+  console.log("detail movie", detail);
   const handleBookmarkClick = async () => {
     if (!isLoggedIn()) {
       toast({
@@ -70,11 +70,13 @@ export default function Detail({ params }: DetailProps) {
       id: detail?.id,
       title: detail?.title,
       overview: detail?.overview,
+      // media_type: detail?.media_type,
       poster_path: detail?.poster_path,
       backdrop_path: detail?.backdrop_path,
       vote_average: detail?.vote_average,
       release_date: detail?.release_date,
     };
+    console.log(detail);
     const dataId = detail?.id.toString();
 
     try {
@@ -84,8 +86,8 @@ export default function Detail({ params }: DetailProps) {
           title: "Removed from Watchlist",
           description: "You have removed this movie from your watchlist",
           style: {
-            background: "green",
-            color: "white",
+            background: "yellow",
+            color: "black",
           },
           duration: 5000,
         });

@@ -9,10 +9,10 @@ import ReactPlayer from "react-player/youtube";
 import { Button } from "@/components/ui/button";
 
 interface TrailerDialogProps {
-  trailerKey: string | null;
+  trailer: string | null;
 }
 
-const TrailerDialog = ({ trailerKey }: TrailerDialogProps) => {
+const TrailerDialog = ({ trailer }: TrailerDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,9 +23,9 @@ const TrailerDialog = ({ trailerKey }: TrailerDialogProps) => {
           <DialogTitle className="pt-4 px-4">Video Trailer</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          {trailerKey ? (
+          {trailer ? (
             <ReactPlayer
-              url={`https://www.youtube.com/watch?v=${trailerKey}`}
+              url={`https://www.youtube.com/watch?v=${trailer}`}
               width="942px"
               height="530px"
             />

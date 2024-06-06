@@ -33,7 +33,7 @@ const MovieDetail = ({
             <Button>
               <FaHeart />
             </Button>
-            <TrailerDialog trailerKey={detail.trailerKey} />
+            <TrailerDialog trailer={detail.trailerKey} />
           </div>
           <div className="mt-3">
             <h3 className="font-bold">Overview</h3>
