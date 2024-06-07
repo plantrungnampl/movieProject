@@ -1,8 +1,13 @@
 import Loading from "@/app/loading";
 // import Filter from "@/components/Filters/Filter";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { Metadata } from "next";
 import React, { Suspense } from "react";
-
+export const metadata: Metadata = {
+  title: "top-rate ",
+  description: "top-rate ",
+  keywords: "top-rate ",
+};
 export default function DetailTopRatelayout({
   children,
 }: {

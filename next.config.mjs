@@ -5,7 +5,7 @@ const nextConfig = {
         missingSuspenseWithCSRBailout: false,
     },
     images: {
-        domains: ['image.tmdb.org', 'lh3.googleusercontent.com', 'images.remotePatterns', 'images.remotePatterns.com'],
+        domains: ['image.tmdb.org', 'lh3.googleusercontent.com', 'images.remotePatterns', 'images.remotePatterns.com', 'img.youtube.com'],
 
     },
     env: {

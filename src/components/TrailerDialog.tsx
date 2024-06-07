@@ -28,6 +28,7 @@ const TrailerDialog = ({ trailer }: TrailerDialogProps) => {
               url={`https://www.youtube.com/watch?v=${trailer}`}
               width="942px"
               height="530px"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />
           ) : (
             <div className="flex justify-center items-center p-4 font-bold text-2xl">

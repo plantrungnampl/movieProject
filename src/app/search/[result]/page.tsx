@@ -11,6 +11,7 @@ import Link from "next/link";
 import { notFound, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 const API_KEY = process.env.API_KEY;
+// result is type: "movie" | "tv" | "person" | "collection" | "company" | "keyword"
 export default function Collections({
   params,
 }: {
@@ -36,12 +37,22 @@ export default function Collections({
       fetchResults();
     }
   }, [searchValue, result]);
+
+  if (!resultsData) {
+    notFound();
+  }
   return (
     <>
       <div>
         {resultsData.length > 0 ? (
           resultsData.map((item: any) => (
-            <Link href={`/movies/${item.id}`} key={item.id}>
+            <Link
+              href={{
+                pathname: `/${result}/${item.id}`,
+                query: { q: searchValue },
+              }}
+              key={item.id}
+            >
               <Card
                 className="flex relative gap-5 bg-clip-border rounded-xl  w-full flex-row mb-4"
                 key={item.id}

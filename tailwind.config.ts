@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 const config = {
   darkMode: ["class"],
   content: [
@@ -25,6 +24,10 @@ const config = {
       flex: {
         "card-cal": "1 1 calc(33.333% - 20px);",
       },
+      backgroundImage: {
+        " line-Bg": "linear-gradient(to right, rgba(255, 255, 255, 0)",
+      },
+
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

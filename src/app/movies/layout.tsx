@@ -1,7 +1,16 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import React, { Suspense } from "react";
 import Loading from "../loading";
-
+import { Metadata } from "next";
+import { DetailProps, detaiMovie } from "@/model/types";
+// export const metadata:Metadata = {
+//  title: `movie ${params.id}`,
+// }
+// export const generateMetadata = ({ params }: DetailProps): Metadata => {
+//   return {
+//     title: `Movie ${params.id}`,
+//   };
+// };
 export default function DetailMovieslayout({
   children,
 }: {
