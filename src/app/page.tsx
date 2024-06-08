@@ -100,7 +100,7 @@
 // }
 // export default HomePageWrapper;
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import Loading from "./loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchData } from "./api/fetchData";
@@ -121,11 +121,23 @@ const LastestTrailer = dynamic(() => import("@/components/LastestTrailer"), {
 });
 
 async function Home() {
+  // const [Data, setData] = React.useState<any[]>([]);
+  // const [tabData, setTabData] = React.useState<any[] | string>("Today");
   const Data = await fetchData();
+  // useEffect(() => {
+  //   const fetchDataHome = async () => {
+  //     try {
+  //       const data = await fetchData();
+  //       setData(data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchDataHome();
+  // }, []);
 
   return (
     <>
-      {/* <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 "> */}
       <div>
         <Tabs defaultValue="Today">
           {/* map tap */}
@@ -140,6 +152,7 @@ async function Home() {
             </TabsList>
           </div>
           {/* map data */}
+
           {Data.map((tab) => (
             <TabsContent key={tab.value} value={tab.value}>
               <div>
@@ -158,7 +171,6 @@ async function Home() {
           ))}
         </Tabs>
       </div>
-      {/* </MaxWidthWrapper> */}
     </>
   );
 }

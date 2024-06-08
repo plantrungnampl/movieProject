@@ -3,6 +3,7 @@ import { db } from "@/service/firebase";
 import axios from "axios";
 
 import { doc, collection, getDoc, getDocs } from "firebase/firestore";
+import { revalidateTag } from "next/cache";
 // get user data form firebase data (firestore)
 export async function getSerVerData(userId: string) {
   try {
@@ -25,10 +26,16 @@ const API_KEY = process.env.API_KEY;
 
 export async function fetchData() {
   const trendingWeek = await axios.get(
-    `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`,
+    {
+      timeout: 3000,
+    }
   );
   const trendingDay = await axios.get(
-    `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&language=en-US&page=1`,
+    {
+      timeout: 3000,
+    }
   );
   // const [data1, data2] = await Promise.all([res2.data, res1.data]);
   const [trendingWeeks, trendingDays] = await Promise.all([
@@ -66,28 +73,36 @@ export const getPopularMovies = async () => {
     return [];
   }
 };
-
-export const getInTheatersMovies = async () => {
+export const fetchAllData = async () => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
+    const getInthreatMovie = await axios.get(
+      `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`,
+      {
+        timeout: 3000,
+      }
     );
-    return response.data.results;
-  } catch (error) {
-    console.error("Error fetching in theaters movies:", error);
-    return [];
-  }
-};
-
-export const getLatestTrailers = async () => {
-  try {
-    const response = await axios.get(
-      `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+    const getLatestTrailers = await axios.get(
+      `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`,
+      {
+        timeout: 3000,
+      }
     );
-    return response.data.results;
-  } catch (error) {
-    console.error("Error fetching latest trailers:", error);
-    return [];
+    const [inThreatMovie, latestTrailers] = await Promise.all([
+      getInthreatMovie.data,
+      getLatestTrailers.data,
+    ]);
+    if (getInthreatMovie.status !== 200 || getLatestTrailers.status !== 200) {
+      throw new Error("Failed to fetch data");
+    }
+    const Popular = latestTrailers.results;
+    const ThreatMovie = inThreatMovie.results;
+    const tabData = [
+      { value: "Popular", result: Popular },
+      { value: "In theaters", result: ThreatMovie },
+    ];
+    return tabData;
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -102,3 +117,27 @@ export const getVideoDetails = async (id: string | number) => {
     return [];
   }
 };
+
+// export const getInTheatersMovies = async () => {
+//   try {
+//     const response = await axios.get(
+//       `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
+//     );
+//     return response.data.results;
+//   } catch (error) {
+//     console.error("Error fetching in theaters movies:", error);
+//     return [];
+//   }
+// };
+
+// export const getLatestTrailers = async () => {
+//   try {
+//     const response = await axios.get(
+//       `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+//     );
+//     return response.data.results;
+//   } catch (error) {
+//     console.error("Error fetching latest trailers:", error);
+//     return [];
+//   }
+// };
