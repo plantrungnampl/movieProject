@@ -14,10 +14,10 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
             loading="lazy"
             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
             alt={item.original_title || item.name}
-            className="object-cover rounded"
+            className="object-cover w-full h-full "
             width={300}
             height={300}
-            objectFit="cover"
+            layout="responsive"
           />
         </div>
         <CardHeader>

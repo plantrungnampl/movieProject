@@ -74,7 +74,6 @@ const LastestTrailer = () => {
           const trailer = details.find(
             (video: any) => video.type === "Trailer"
           );
-          console.log(details);
           return {
             ...item,
             videoKey: trailer ? trailer.key : null,
@@ -131,7 +130,8 @@ const LastestTrailer = () => {
                                   width={500}
                                   height={500}
                                   loading="lazy"
-                                  className="w-full h-full flex justify-center items-center object-cover"
+                                  className="w-full h-full flex justify-center items-center"
+                                  objectFit="cover"
                                 />
                               </div>
                             </DialogTrigger>
@@ -147,7 +147,7 @@ const LastestTrailer = () => {
                                   width="100%"
                                   height="100%"
                                   playing={true}
-                                  className="rounded-lg"
+                                  className="rounded-lg w-full h-full"
                                   config={{
                                     youtube: {
                                       playerVars: { showinfo: 0 },
