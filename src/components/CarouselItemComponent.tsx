@@ -17,7 +17,7 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
             className="object-cover rounded"
             width={300}
             height={300}
-            layout="responsive"
+            objectFit="cover"
           />
         </div>
         <CardHeader>

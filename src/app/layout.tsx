@@ -8,11 +8,12 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import { Toaster } from "@/components/ui/toaster";
 import dynamic from "next/dynamic";
+import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
-export const Header = dynamic(() => import("@/components/Header"), {
-  suspense: true,
-  loading: () => <Loading />,
-});
+// export const Header = dynamic(() => import("@/components/Header"), {
+//   suspense: true,
+//   loading: () => <Loading />,
+// });
 export const metadata: Metadata = {
   title: "Movies dev",
   description: "This is a movies project for eductional purposes",
