@@ -123,7 +123,7 @@ const LastestTrailer = () => {
                         <div className="object-cover rounded w-full h-full flex justify-center items-center">
                           <Dialog>
                             <DialogTrigger className="h-fit" asChild>
-                              <div className="object-cover rounded w-[500px] h-auto flex justify-center items-center cursor-pointer">
+                              <div className="object-cover rounded min-w-[300px] h-auto flex justify-center items-center cursor-pointer">
                                 <Image
                                   src={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                                   alt={movie.title || movie.name}
