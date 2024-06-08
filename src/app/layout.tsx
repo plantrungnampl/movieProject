@@ -22,6 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <SpeedInsights />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
