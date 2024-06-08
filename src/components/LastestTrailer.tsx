@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import Loading from "@/app/loading";
 
-import { fetchAllData, getVideoDetails } from "@/app/api/fetchData";
+import {
+  getInTheatersMovies,
+  getLatestTrailers,
+  getVideoDetails,
+} from "@/app/api/fetchData";
 import dynamic from "next/dynamic";
-// import LatestTrailerItem from './LatestTrailerItem';
 const LatestTrailerItem = dynamic(
   () => import("@/components/LatestTrailerItem"),
   {
@@ -16,17 +19,23 @@ const LastestTrailer = () => {
   const [videos, setVideos] = useState<any[] | any>([]);
   const [activeTab, setActiveTab] = useState("Popular");
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
-      const tabData = await fetchAllData();
-
       setLoading(true);
-      const selectedTabData =
-        tabData?.find((tab) => tab.value === activeTab)?.result || [];
+      let trailerLatest: any[] = [];
+      switch (activeTab) {
+        case "Popular":
+          trailerLatest = await getLatestTrailers();
+          break;
+        case "In theaters":
+          trailerLatest = await getInTheatersMovies();
+          break;
 
+        default:
+          break;
+      }
       const movieDetails = await Promise.all(
-        selectedTabData.map(async (item: any) => {
+        trailerLatest.map(async (item) => {
           const details = await getVideoDetails(item.id);
           const trailer = details.find(
             (video: any) => video.type === "Trailer"
@@ -37,18 +46,17 @@ const LastestTrailer = () => {
           };
         })
       );
-
       setVideos(movieDetails);
       setLoading(false);
     };
-
     fetchData();
   }, [activeTab]);
+
   return (
     <div>
       <Tabs
         defaultValue="Popular"
-        onValueChange={(value: any) => setActiveTab(value)}
+        onValueChange={(value: string) => setActiveTab(value)}
       >
         <div className="flex gap-5 items-center mb-3">
           <p className="text-xl p-1 rounded">Latest Trailers</p>
@@ -57,6 +65,7 @@ const LastestTrailer = () => {
             <TabsTrigger value="In theaters">In theaters</TabsTrigger>
           </TabsList>
         </div>
+
         <TabsContent value="Popular">
           {loading ? (
             <Loading />

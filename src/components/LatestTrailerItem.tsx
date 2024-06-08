@@ -27,7 +27,7 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
         {videos.map((movie: any) => (
           <div
             key={movie.id}
-            className="relative min-w-[400px] overflow-hidden bg-cover bg-no-repeat h-auto"
+            className="relative min-w-[400px] overflow-hidden bg-cover bg-no-repeat "
             onMouseEnter={() =>
               setBackgroundImages(
                 `https://img.youtube.com/vi/${movie.videoKey}/0.jpg`
@@ -37,7 +37,7 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
             {movie.videoKey ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <div className="cursor-pointer relative transition duration-300 ease-in-out hover:scale-110">
+                  <div className="cursor-pointer min-w-[400px]  relative transition duration-300 ease-in-out hover:scale-110">
                     <Image
                       src={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                       alt={movie.title || movie.name}
