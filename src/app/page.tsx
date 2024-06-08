@@ -147,7 +147,7 @@ async function Home() {
                   {tab.result.map((item: any) => (
                     <div
                       key={item.id}
-                      className="flex-shrink-0 snap-center w-fit "
+                      className="flex-shrink-0 snap-center w-fit flex "
                     >
                       <CarouselItemComponent item={item} />
                     </div>

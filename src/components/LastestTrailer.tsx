@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const LastestTrailer = () => {
   const [videos, setVideos] = useState<any[]>([]);
@@ -129,9 +129,12 @@ const LastestTrailer = () => {
                                   alt={movie.title || movie.name}
                                   width={500}
                                   height={500}
-                                  loading="lazy"
+                                  // loading="lazy"
                                   className="w-full h-full flex justify-center items-center"
                                   objectFit="cover"
+                                  priority={true}
+                                  placeholder="blur"
+                                  blurDataURL={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                                 />
                               </div>
                             </DialogTrigger>

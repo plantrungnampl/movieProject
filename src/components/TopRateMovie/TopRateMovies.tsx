@@ -1,7 +1,7 @@
 import { TopRateMovieProps } from "@/model/topRate";
 import React, { Suspense } from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 
 export default function TopRateMovies({

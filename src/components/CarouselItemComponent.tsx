@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
 import { IItem } from "@/model/types";
@@ -7,20 +7,22 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
 
   const href = isMovie ? `/movies/${item.id}` : `/tv/${item.id}`;
   return (
-    <Link href={href}>
-      <Card className="flex-card-cal">
-        <div>
+    <Link className="flex" href={href}>
+      <Card className="flex-card-cal max-w-sm ">
+        <div className=" min-w-[300px] h-auto relative ">
           <Image
-            loading="lazy"
             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
             alt={item.original_title || item.name}
-            className="object-cover w-full h-full "
-            width={300}
-            height={300}
+            className="object-contain w-full h-full rounded-t-lg  "
+            width={400}
+            height={500}
             layout="responsive"
+            priority={true}
+            placeholder="blur"
+            blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
           />
         </div>
-        <CardHeader>
+        <CardHeader className="">
           <CardTitle>{item.original_title || item.name}</CardTitle>
           <CardDescription className="line-clamp-2">
             {item.first_air_date || item.release_date}

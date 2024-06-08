@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { FaHeart } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import TrailerDialog from "@/components/TrailerDialog";

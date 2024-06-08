@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 
 export const metadata = {

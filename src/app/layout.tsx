@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-// import Header from "../components/Header";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
@@ -10,13 +9,10 @@ import { Toaster } from "@/components/ui/toaster";
 import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
-// export const Header = dynamic(() => import("@/components/Header"), {
-//   suspense: true,
-//   loading: () => <Loading />,
-// });
+
 export const metadata: Metadata = {
   title: "Movies dev",
-  description: "This is a movies project for eductional purposes",
+  description: "This is a movies project for educational purposes",
 };
 
 export default function RootLayout({
@@ -26,6 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>{String(metadata.title) ?? "movie"}</title>
+        <meta
+          name="description"
+          content={metadata.description ?? "default description"}
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -33,16 +36,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <header>
-            <Header />
-          </header>
-
-          <Suspense fallback={<Loading />}>
-            <Toaster />
-            <SpeedInsights />
-
-            {children}
-          </Suspense>
+          <Header />
+          <Toaster />
+          <SpeedInsights />
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </ThemeProvider>
       </body>
     </html>
