@@ -22,8 +22,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SpeedInsights />
-
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -36,6 +34,8 @@ export default function RootLayout({
 
           <Suspense fallback={<Loading />}>
             <Toaster />
+            <SpeedInsights />
+
             {children}
           </Suspense>
         </ThemeProvider>
