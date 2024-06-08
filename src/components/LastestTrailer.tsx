@@ -210,9 +210,11 @@ import {
 } from "./ui/dialog";
 import Image from "next/legacy/image";
 import { fetchAllData, getVideoDetails } from "@/app/api/fetchData";
+import TrailerDialog from "./TrailerDialog";
+import LatestTrailerItem from "./LatestTrailerItem";
 
 const LastestTrailer = () => {
-  const [videos, setVideos] = useState<any[]>([]);
+  const [videos, setVideos] = useState<any[] | any>([]);
   const [activeTab, setActiveTab] = useState("Popular");
   const [loading, setLoading] = useState(false);
 
@@ -260,112 +262,14 @@ const LastestTrailer = () => {
           {loading ? (
             <Loading />
           ) : (
-            activeTab === "Popular" && (
-              <div className="flex gap-4 overflow-x-auto overflow-y-hidden max-w-screen-xl snap-x transition-colors">
-                {videos.map((movie: any) => (
-                  <div key={movie.id} className=" h-auto">
-                    {movie.videoKey ? (
-                      <Dialog>
-                        <DialogTrigger className="h-fit min-w-[400px]" asChild>
-                          <div className="cursor-pointer  ">
-                            <Image
-                              src={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
-                              alt={movie.title || movie.name}
-                              width={400}
-                              height={300}
-                              className="rounded-lg object-contain w-full h-full"
-                              priority={true}
-                              layout="responsive"
-                              placeholder="blur"
-                              blurDataURL={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
-                            />
-                          </div>
-                        </DialogTrigger>
-                        <DialogContent className="bg-black bg-opacity-75 p-4 rounded-lg">
-                          <DialogHeader>
-                            <DialogTitle className="pt-4 px-4 text-white">
-                              Video Trailer
-                            </DialogTitle>
-                          </DialogHeader>
-                          <div className="w-[500px] h-[500px] grid gap-4 py-4">
-                            <ReactPlayer
-                              url={`https://www.youtube.com/watch?v=${movie.videoKey}`}
-                              width="100%"
-                              height="100%"
-                              playing={true}
-                              className="rounded-lg"
-                              config={{
-                                youtube: {
-                                  playerVars: { showinfo: 0 },
-                                },
-                              }}
-                            />
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                    ) : (
-                      <p>No video available</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )
+            activeTab === "Popular" && <LatestTrailerItem videos={videos} />
           )}
         </TabsContent>
         <TabsContent value="In theaters">
           {loading ? (
             <Loading />
           ) : (
-            activeTab === "In theaters" && (
-              <div className="flex gap-4 overflow-x-auto overflow-y-hidden max-w-screen-xl snap-x transition-colors">
-                {videos.map((movie: any) => (
-                  <div key={movie.id} className="min-w-[400px] h-auto">
-                    {movie.videoKey ? (
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <div className="cursor-pointer">
-                            <Image
-                              src={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
-                              alt={movie.title || movie.name}
-                              width={400}
-                              height={300}
-                              className="rounded-lg object-contain w-full h-full"
-                              priority={true}
-                              layout="responsive"
-                              placeholder="blur"
-                              blurDataURL={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
-                            />
-                          </div>
-                        </DialogTrigger>
-                        <DialogContent className="bg-black bg-opacity-75 p-4 rounded-lg">
-                          <DialogHeader>
-                            <DialogTitle className="pt-4 px-4 text-white">
-                              Video Trailer
-                            </DialogTitle>
-                          </DialogHeader>
-                          <div className="w-[500px] h-[500px] grid gap-4 py-4">
-                            <ReactPlayer
-                              url={`https://www.youtube.com/watch?v=${movie.videoKey}`}
-                              width="100%"
-                              height="100%"
-                              playing={true}
-                              className="rounded-lg"
-                              config={{
-                                youtube: {
-                                  playerVars: { showinfo: 0 },
-                                },
-                              }}
-                            />
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                    ) : (
-                      <p>No video available</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )
+            activeTab === "In theaters" && <LatestTrailerItem videos={videos} />
           )}
         </TabsContent>
       </Tabs>

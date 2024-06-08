@@ -11,8 +11,8 @@ export default function MenuItem({
   address: string;
   Icon: React.FC;
 }) {
-  const searchParams = useSearchParams();
-  const genre = searchParams.get("genre");
+  // const searchParams = useSearchParams();
+  // const genre = searchParams.get("genre");
   return (
     <>
       <Link className="flex gap-1 justify-center items-center" href={address}>

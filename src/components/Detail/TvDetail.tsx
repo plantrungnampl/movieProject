@@ -32,7 +32,10 @@ const TvDetail = ({
             <Button>
               <FaHeart />
             </Button>
-            <TrailerDialog trailer={tvDetail.trailerKey} />
+            <TrailerDialog
+              trailer={tvDetail.trailerKey}
+              buttonTitle="Video trailers "
+            />
           </div>
           <div className="mt-3">
             <h3 className="font-bold">Overview</h3>
