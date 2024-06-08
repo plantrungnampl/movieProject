@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
-// import { IItem } from "./Result";
 import Link from "next/link";
 import { IItem } from "@/model/types";
-
 export default function CarouselItemComponent({ item }: { item: IItem }) {
   const isMovie = item.media_type === "movie";
 
@@ -19,6 +17,7 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
             className="object-cover rounded"
             width={300}
             height={300}
+            layout="responsive"
           />
         </div>
         <CardHeader>

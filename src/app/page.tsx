@@ -103,14 +103,9 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import React, { Suspense } from "react";
 import Loading from "./loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import CarouselItemComponent from "@/components/CarouselItemComponent";
 import { fetchData } from "./api/fetchData";
 import { Metadata } from "next";
-import ReactPlayer from "react-player";
-import { getDataMovieServer } from "./api/getDataMovie";
-import { DetailProps } from "@/model/types";
 import dynamic from "next/dynamic";
-// import LastestTrailer from "@/components/LastestTrailer";
 export const metadata: Metadata = {
   title: "Home ",
   description: "This is a movies project for eductional purposes",
