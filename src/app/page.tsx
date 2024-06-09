@@ -40,7 +40,7 @@ async function Home() {
       <div>
         <Tabs defaultValue="Today">
           {/* map tap */}
-          <div className="flex gap-5 items-center mb-3">
+          <div className="flex gap-5 items-center mb-3 ">
             <p className="text-xl p-1 rounded">Trending</p>
             <TabsList>
               {Data.map((tab) => (
@@ -55,7 +55,7 @@ async function Home() {
           {Data.map((tab) => (
             <TabsContent key={tab.value} value={tab.value}>
               <div className="">
-                <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl snap-x transition-colors  ">
+                <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl snap-x ">
                   {tab.result.map((item: any) => (
                     <div
                       key={item.id}

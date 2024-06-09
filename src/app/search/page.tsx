@@ -11,15 +11,15 @@ import {
 import Image from "next/legacy/image";
 import Link from "next/link";
 
-export const metadata = {
-  title: "search",
-  description: "search movie",
-};
-
-const fetchSearchResults = async (searchValue: string) => {
+// export const metadata = {
+//   title: "search",
+//   description: "search movie",
+// };
+const API_KEY = process.env.API_KEY;
+export const fetchSearchResults = async (searchValue: string) => {
   try {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&language=en-US&query=${searchValue}&page=1&include`
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${searchValue}&page=1&include`
     );
     return res.data;
   } catch (error) {
@@ -73,7 +73,6 @@ const SearchResults = async ({
           </Link>
         ))
       ) : (
-        // <h1>No result found</h1>
         <h1>No result found</h1>
       )}
     </div>

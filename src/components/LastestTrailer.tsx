@@ -15,6 +15,11 @@ const LatestTrailerItem = dynamic(
     suspense: true,
   }
 );
+// 1.create []
+//2 fetch 2 API latest and now playing movies in []
+//3create const variabale  use promise.all wait for both to finish and create new const variable get videoDetails
+//4 get Video key from videoDetails
+
 const LastestTrailer = () => {
   const [videos, setVideos] = useState<any[] | any>([]);
   const [activeTab, setActiveTab] = useState("Popular");

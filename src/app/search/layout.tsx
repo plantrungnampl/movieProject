@@ -4,14 +4,28 @@ import React, { Suspense } from "react";
 import Loading from "../loading";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { fetchSearchResults } from "./page";
 
 export default function Searchlayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [result, setResult] = React.useState("");
   const searchParams = useSearchParams();
+
   const searchValue = searchParams.get("q");
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      if (searchValue) {
+        const data = await fetchSearchResults(searchValue);
+        setResult(data);
+      }
+    };
+    fetch();
+  }, [searchValue]);
+
   return (
     <>
       <MaxWidthWrapper className="pb-24 pt-10  lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 ">
@@ -24,7 +38,7 @@ export default function Searchlayout({
                   className="active:text-black"
                   href={`/search/tv?q=${searchValue}`}
                 >
-                  TV Shows{" "}
+                  TV Shows
                 </Link>
               </li>
               <li className="hover:bg-slate-600 hover:text-white p-2 rounded">
