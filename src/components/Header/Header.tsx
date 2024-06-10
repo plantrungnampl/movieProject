@@ -1,10 +1,10 @@
 "use client";
 import React, { Suspense, use, useEffect, useState } from "react";
-import MenuItem from "./MenuItem";
+import MenuItem from "../MenuItem";
 import { AiFillHome } from "react-icons/ai";
 import { AiFillInfoCircle } from "react-icons/ai";
-import { Button } from "./ui/button";
-import ToggleMode from "./ToggleMode";
+import { Button } from "../ui/button";
+import ToggleMode from "../ToggleMode";
 import Link from "next/link";
 import { AiFillBook } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
@@ -19,16 +19,44 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "../ui/use-toast";
 import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
-import { userProps } from "../model/types";
+import { userProps } from "../../model/types";
 import SearchBox from "@/app/search/SearchBox";
 
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
   const [user, setUser] = React.useState<userProps | null>(null);
+  const [scrollDirection, setScrollDirection] = useState<string | null>(null);
+
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = () => {
+    if (window.scrollY > lastScrollY) {
+      // if scroll down hide the navbar
+      setShow(false);
+      setScrollDirection("down");
+    } else {
+      // if scroll up show the navbar
+      setShow(true);
+      setScrollDirection("up");
+    }
+
+    // remember current page location to use in the next move
+    setLastScrollY(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", controlNavbar);
+
+    // cleanup function
+    return () => {
+      window.removeEventListener("scroll", controlNavbar);
+    };
+  }, [lastScrollY]);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       setUser(currentUser);
@@ -56,7 +84,11 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex justify-between items-center p-3 bg-slate-700 shadow-sm  fixed top-0 right-0 left-0 w-full z-10">
+      <div
+        className={` justify-between items-center p-3 bg-slate-700 fixed top-0 w-full z-10 shadow-2xl transition duration-300 ease-out transform    ${
+          show ? "flex" : "hidden"
+        } `}
+      >
         <div className="flex gap-3 items-center">
           <Suspense fallback={<Loading />}>
             <MenuItem title="Home" address="/" Icon={AiFillHome} />

@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 // const inter = Inter({ subsets: ["latin"] });
 const sourceSansPro = Source_Sans_3({
   subsets: ["latin"],

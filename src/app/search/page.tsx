@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import Image from "next/legacy/image";
 import Link from "next/link";
+import RatingBar from "@/components/RatingBar";
 
 export const metadata = {
   title: "search",

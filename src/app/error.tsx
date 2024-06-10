@@ -13,9 +13,11 @@ export default function Error({
   // }, [error]);
   return (
     <div>
-      <h1>{error.message}</h1>
+      <div className="h-[62px]">
+        <h1>{error.message}</h1>
 
-      <button onClick={() => reset()}>Reset</button>
+        <button onClick={() => reset()}>Reset</button>
+      </div>
     </div>
   );
 }
