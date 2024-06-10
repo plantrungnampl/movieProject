@@ -23,9 +23,10 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
             placeholder="blur"
             blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
           />
-          <div className="absolute rounded-lg top-0 right-0 w-auto h-auto  ">
-            {/* <span className="inline-block p-2">{item.vote_average}</span> */}
-            <RatingBar rating={Math.round(item.vote_average * 10)} />
+          <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
+            <span className="">
+              <RatingBar rating={Math.round(item.vote_average * 10)} />
+            </span>
           </div>
         </div>
         <CardHeader className="">

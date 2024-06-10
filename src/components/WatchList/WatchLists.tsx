@@ -4,6 +4,7 @@ import Image from "next/legacy/image";
 import { Button } from "../ui/button";
 import { IItem } from "@/model/types";
 import Link from "next/link";
+import RatingBar from "../RatingBar";
 
 export default function WatchLists({ item }: { item: IItem }) {
   const isMovie = item.media_type === "movie";
@@ -21,6 +22,9 @@ export default function WatchLists({ item }: { item: IItem }) {
           />
         </div>
         <div className="p-6">
+          <div className="bg-black w-fit rounded-3xl">
+            <RatingBar rating={Math.round(item.vote_average * 10)} />
+          </div>
           <h6 className="block mb-4 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal uppercase">
             {item.title}
           </h6>

@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import { Source_Sans_3 } from "@next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { Toaster } from "@/components/ui/toaster";
-import dynamic from "next/dynamic";
 import Header from "@/components/Header";
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
+const sourceSansPro = Source_Sans_3({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Movies dev",
@@ -29,7 +32,7 @@ export default function RootLayout({
           content={metadata.description ?? "default description"}
         />
       </head>
-      <body className={inter.className}>
+      <body className={sourceSansPro.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

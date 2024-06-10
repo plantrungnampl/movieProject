@@ -57,6 +57,7 @@ import React from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/legacy/image";
 import Link from "next/link";
+import RatingBar from "../RatingBar";
 
 export default function TopRateMovies({
   topRate,
@@ -78,7 +79,7 @@ export default function TopRateMovies({
               href={href}
             >
               <Card className="relative mx-4 mt-4 overflow-hidden bg-clip-border rounded-xl flex-card-cal">
-                <div className="  flex justify-center items-center">
+                <div className=" relative">
                   <Image
                     priority={true}
                     src={`https://image.tmdb.org/t/p/w500${
@@ -89,6 +90,13 @@ export default function TopRateMovies({
                     width={500}
                     height={600}
                   />
+                  <div className="absolute rounded-3xl bottom-0 bg-black w-auto h-auto  ">
+                    <span className="">
+                      <RatingBar
+                        rating={Math.round(movieItem.vote_average * 10)}
+                      />
+                    </span>
+                  </div>
                 </div>
                 <CardHeader className="p-6">
                   <CardTitle className="flex items-center justify-between mb-2 truncate ">

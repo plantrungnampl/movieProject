@@ -1,44 +1,36 @@
 import React from "react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
-export default function RatingBar({ rating }: { rating: number }) {
+interface RatingCircleProps {
+  rating: number; // Rating as a percentage (0-100)
+}
+
+const getColor = (rating: number) => {
+  if (rating >= 70) {
+    return "#4caf50"; // Green
+  } else if (rating >= 40) {
+    return "#ffeb3b"; // Yellow
+  } else {
+    return "#f44336"; // Red
+  }
+};
+
+const RatingBar: React.FC<RatingCircleProps> = ({ rating }) => {
   return (
-    <div className="rating-bar">
-      <div className="rating-bar-bg">
-        <div
-          className="rating-bar-fill"
-          style={{
-            width: `${rating}%`,
-            height: "20px",
-            backgroundColor: "red",
-            borderRadius: "10px",
-          }}
-        ></div>
-      </div>
-      <span className="rating-bar-text">{rating}%</span>
-      <style jsx>{`
-        .rating-bar {
-          display: flex;
-          align-items: center;
-        }
-        .rating-bar-bg {
-          width: 100%;
-          height: 20px;
-          background-color:red
-          border-radius: 10px;
-          background-color: grey;
-          overflow: hidden;
-        }
-        .rating-bar-fill {
-          width: 0;
-          height: 100%;
-          background-color: red;
-          border-radius: 10px;
-        }
-        .rating-bar-text {
-          font-size: 12px;
-          color: grey;
-        }
-      `}</style>
+    <div className="rating-circle w-10 h-10">
+      <CircularProgressbar
+        value={rating}
+        text={`${rating}%`}
+        styles={buildStyles({
+          textSize: "30px",
+          textColor: "#fff",
+          pathColor: getColor(rating),
+          trailColor: "#e0e0e0",
+        })}
+      />
     </div>
   );
-}
+};
+
+export default RatingBar;

@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: '/public/SourceSans3-Italic-VariableFont_wght.ttf';
+  src: url('/fonts/YourCustomFont.woff2') format('woff2'),
+       url('/fonts/YourCustomFont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
   @layer base {
     :root {
