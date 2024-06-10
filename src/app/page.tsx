@@ -20,20 +20,7 @@ const LastestTrailer = dynamic(() => import("@/components/LastestTrailer"), {
 });
 
 async function Home() {
-  // const [Data, setData] = React.useState<any[]>([]);
-  // const [tabData, setTabData] = React.useState<any[] | string>("Today");
   const Data = await fetchData();
-  // useEffect(() => {
-  //   const fetchDataHome = async () => {
-  //     try {
-  //       const data = await fetchData();
-  //       setData(data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchDataHome();
-  // }, []);
 
   return (
     <>

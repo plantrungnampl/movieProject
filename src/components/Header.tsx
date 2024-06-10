@@ -22,14 +22,13 @@ import {
 import { useToast } from "./ui/use-toast";
 import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
-import { UserTest, userProps } from "../model/types";
+import { userProps } from "../model/types";
 import SearchBox from "@/app/search/SearchBox";
 
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
   const [user, setUser] = React.useState<userProps | null>(null);
-  const searchParams = useSearchParams();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       setUser(currentUser);

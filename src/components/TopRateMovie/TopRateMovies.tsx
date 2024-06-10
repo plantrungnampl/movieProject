@@ -77,16 +77,16 @@ export default function TopRateMovies({
             href={href}
           >
             <Card className="relative mx-4 mt-4 overflow-hidden bg-clip-border rounded-xl flex-card-cal">
-              <div className="w-full flex justify-center items-center">
+              <div className="  flex justify-center items-center">
                 <Image
-                  loading="lazy"
+                  priority={true}
                   src={`https://image.tmdb.org/t/p/w500${
                     movieItem.poster_path || movieItem.backdrop_path
                   }`}
                   alt={movieItem.original_name || movieItem.name}
                   className="object-cover rounded w-full h-full"
-                  width={200}
-                  height={200}
+                  width={500}
+                  height={600}
                 />
               </div>
               <CardHeader className="p-6">

@@ -36,7 +36,7 @@ const SearchResults = async ({
   const { q: searchValue } = searchParams;
   const data = await fetchSearchResults(searchValue);
   const result = data.results;
-  if (!result || result.length === 0) {
+  if (!result) {
     notFound();
   }
   return (
@@ -73,7 +73,12 @@ const SearchResults = async ({
           </Link>
         ))
       ) : (
-        <h1>No result found</h1>
+        <div className="flex flex-col justify-center gap-2 p-3">
+          <CardContent className="flex flex-col justify-center gap-2 p-3">
+            <CardTitle> {`No results found for ${searchValue}`}</CardTitle>
+            <CardDescription> {`Please try again`}</CardDescription>
+          </CardContent>
+        </div>
       )}
     </div>
   );

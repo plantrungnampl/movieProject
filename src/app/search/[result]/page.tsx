@@ -9,6 +9,7 @@ import axios from "axios";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { notFound, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 const API_KEY = process.env.API_KEY;
 // result is type: "movie" | "tv" | "person" | "collection" | "company" | "keyword"
@@ -23,7 +24,6 @@ export default function Collections({
   const [resultsData, setResultsData] = useState([]);
   const searchParams = useSearchParams();
   const searchValue = searchParams.get("q") || "";
-
   useEffect(() => {
     const fetchResults = async () => {
       const response = await axios.get(
@@ -38,9 +38,6 @@ export default function Collections({
     }
   }, [searchValue, result]);
 
-  if (!resultsData) {
-    notFound();
-  }
   return (
     <>
       <div>

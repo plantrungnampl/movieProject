@@ -36,11 +36,14 @@ export default function TopRate() {
         <h1 className="font-bold text-2xl">Top Rated Movies</h1>
 
         <div className="flex">
-          <div className="shadow-lg p-3 ">
-            <Filter setMovies={setFilteredMovies} movies={filteredMovies} />
+          <div className="shadow-lg p-3 w-1/3 ">
+            <Filter
+              filteredMovies={filteredMovies}
+              setFilteredMovies={setFilteredMovies}
+            />
           </div>
 
-          <div className=" w-full flex flex-wrap gap-4">
+          <div className=" w-full flex flex-wrap">
             <TopRateMovies topRate={filteredMovies} />
           </div>
         </div>

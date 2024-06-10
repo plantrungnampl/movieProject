@@ -76,10 +76,7 @@ const LoginForm = () => {
         data.email,
         data.password
       );
-      console.log(userCredential);
       const token = await userCredential.user.getIdToken();
-      console.log(userCredential.user.uid);
-      console.log("token===", token);
       const accountId = await userCredential.user.uid;
       localStorage.setItem("authToken", token);
       localStorage.setItem("accountId", accountId);

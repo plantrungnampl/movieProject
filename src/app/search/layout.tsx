@@ -4,27 +4,15 @@ import React, { Suspense } from "react";
 import Loading from "../loading";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { fetchSearchResults } from "./page";
 
 export default function Searchlayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [result, setResult] = React.useState("");
   const searchParams = useSearchParams();
 
   const searchValue = searchParams.get("q");
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      if (searchValue) {
-        const data = await fetchSearchResults(searchValue);
-        setResult(data);
-      }
-    };
-    fetch();
-  }, [searchValue]);
 
   return (
     <>
@@ -84,13 +72,8 @@ export default function Searchlayout({
             </ul>
           </div>
           <Suspense fallback={<Loading />}>{children}</Suspense>
-          <div className="order-none flex-none md:order-last md:w-[125px]">
-            {/* <FilterList list={sorting} title="Sort by" /> */}
-          </div>
         </div>
       </MaxWidthWrapper>
-      {/* </Suspense> */}
-      {/* <Footer /> */}
     </>
   );
 }

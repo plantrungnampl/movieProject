@@ -1,19 +1,27 @@
 "use client";
 import { getGenres, getTvByGenre } from "@/app/api/fetchFIlter";
 import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Label } from "../ui/label";
+import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
-
 export default function Filter({
-  setMovies,
-  movies,
+  setFilteredMovies,
+  filteredMovies,
 }: {
-  setMovies: any;
-  movies: any;
+  setFilteredMovies: any;
+  filteredMovies: any;
 }) {
   const [genres, setGenres] = React.useState([]);
-  const [selectedGenre, setSelectedGenre] = React.useState(null);
+  const [selectedGenre, setSelectedGenre] = React.useState<any[]>([]);
   const [sortOrder, setSortOrder] = React.useState("asc");
   const [selectedOrder, setSelectedOrder] = React.useState("asc");
+  // fetch genres
   React.useEffect(() => {
     const fetchGenres = async () => {
       const genres = await getGenres();
@@ -21,18 +29,36 @@ export default function Filter({
     };
     fetchGenres();
   }, []);
-
-  React.useEffect(() => {
-    if (selectedGenre) {
-      const fetchMovies = async () => {
-        const movies = await getTvByGenre(selectedGenre);
-        setMovies(movies);
-      };
-      fetchMovies();
+  //  get movies data TV by genre
+  // React.useEffect(() => {
+  //   if (selectedGenre) {
+  //     const fetchMovies = async () => {
+  //       const movies = await getTvByGenre(selectedGenre);
+  //       setFilteredMovies(movies);
+  //     };
+  //     fetchMovies();
+  //   }
+  // }, [selectedGenre, setFilteredMovies]);
+  const handleChange = (genId: string | number) => {
+    if (selectedGenre.includes(genId)) {
+      setSelectedGenre(selectedGenre.filter((item: any) => item !== genId));
+    } else {
+      setSelectedGenre([...selectedGenre, genId]);
     }
-  }, [selectedGenre, setMovies]);
+  };
+  const handleSubmitFilter = async () => {
+    try {
+      if (selectedGenre.length > 0) {
+        const selectIdGenre = selectedGenre.join(",");
+        const movies = await getTvByGenre(selectIdGenre);
+        setFilteredMovies(movies);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleSort = (order: any) => {
-    const sortedMovies = [...movies].sort((a, b) => {
+    const sortedMovies = [...filteredMovies].sort((a, b) => {
       if (order === "asc") {
         return a.name.localeCompare(b.name);
       } else {
@@ -40,37 +66,66 @@ export default function Filter({
       }
     });
     setSortOrder(order);
-    setMovies(sortedMovies);
+    setFilteredMovies(sortedMovies);
     setSelectedOrder(order);
   };
   return (
     <>
       <div className="container flex flex-col gap-4">
-        <div className="filter-section">
-          <h2>The loai</h2>
-
-          <select
-            onChange={(e: any) => setSelectedGenre(e.target.value)}
-            className="genre-select"
-          >
-            <option value="">Tất cả</option>
-            {genres.map((genre: any) => (
-              <option key={genre.id} value={genre.id}>
-                {genre.name}
-              </option>
-            ))}
-          </select>
+        <div className="">
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Genres</AccordionTrigger>
+              {genres.map((genres: any) => (
+                <AccordionContent key={genres.id}>
+                  <div className="flex gap-2">
+                    <input
+                      type="checkbox"
+                      id={genres.id}
+                      value={genres.id}
+                      // checked={selectedGenre === genres.id}
+                      checked={selectedGenre.includes(genres.id)}
+                      // onChange={(e: any) => setSelectedGenre(e.target.value)}
+                      onChange={(e: any) => handleChange(e.target.value)}
+                    />
+                    <Label htmlFor={genres.id}>{genres.name}</Label>
+                  </div>
+                </AccordionContent>
+              ))}
+            </AccordionItem>
+            {selectedGenre.length > 0 && (
+              <Button onClick={handleSubmitFilter}>Submit</Button>
+            )}
+          </Accordion>
         </div>
         <div className="sort-section">
-          <select
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              handleSort(e.target.value)
-            }
-            value={selectedOrder}
-          >
-            <option value="asc">Sắp xếp từ A-Z</option>
-            <option value="desc">Sắp xếp từ Z-A</option>
-          </select>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Sort</AccordionTrigger>
+              <AccordionContent className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    id="asc"
+                    value="asc"
+                    onChange={(e: any) => handleSort(e.target.value)}
+                    checked={selectedOrder === "asc"}
+                  />
+                  <Label htmlFor="asc">A-Z</Label>
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    id="desc"
+                    value="desc"
+                    onChange={(e: any) => handleSort(e.target.value)}
+                    checked={selectedOrder === "desc"}
+                  />
+                  <Label htmlFor="desc">Z-A</Label>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </>
