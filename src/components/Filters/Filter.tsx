@@ -30,15 +30,7 @@ export default function Filter({
     fetchGenres();
   }, []);
   //  get movies data TV by genre
-  // React.useEffect(() => {
-  //   if (selectedGenre) {
-  //     const fetchMovies = async () => {
-  //       const movies = await getTvByGenre(selectedGenre);
-  //       setFilteredMovies(movies);
-  //     };
-  //     fetchMovies();
-  //   }
-  // }, [selectedGenre, setFilteredMovies]);
+
   const handleChange = (genId: string | number) => {
     if (selectedGenre.includes(genId)) {
       setSelectedGenre(selectedGenre.filter((item: any) => item !== genId));
@@ -69,6 +61,7 @@ export default function Filter({
     setFilteredMovies(sortedMovies);
     setSelectedOrder(order);
   };
+
   return (
     <>
       <div className="container flex flex-col gap-4">
@@ -76,28 +69,34 @@ export default function Filter({
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger>Genres</AccordionTrigger>
-              {genres.map((genres: any) => (
-                <AccordionContent key={genres.id}>
-                  <div className="flex gap-2">
-                    <input
-                      type="checkbox"
-                      id={genres.id}
-                      value={genres.id}
-                      // checked={selectedGenre === genres.id}
-                      checked={selectedGenre.includes(genres.id)}
-                      // onChange={(e: any) => setSelectedGenre(e.target.value)}
-                      onChange={(e: any) => handleChange(e.target.value)}
-                    />
-                    <Label htmlFor={genres.id}>{genres.name}</Label>
-                  </div>
-                </AccordionContent>
-              ))}
+              <div className="flex flex-wrap w-full h-auto gap-3 ">
+                {genres.map((genres: any) => (
+                  <AccordionContent key={genres.id}>
+                    <div className="flex gap-2">
+                      <Button
+                        type="button"
+                        value={genres.id}
+                        id={genres.id}
+                        onClick={() => handleChange(genres.id)}
+                        className={
+                          selectedGenre.includes(genres.id)
+                            ? "bg-slate-700 text-white"
+                            : ""
+                        }
+                      >
+                        {genres.name}
+                      </Button>
+                    </div>
+                  </AccordionContent>
+                ))}
+              </div>
             </AccordionItem>
             {selectedGenre.length > 0 && (
-              <Button onClick={handleSubmitFilter}>Submit</Button>
+              <Button onClick={handleSubmitFilter}>Search</Button>
             )}
           </Accordion>
         </div>
+
         <div className="sort-section">
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
