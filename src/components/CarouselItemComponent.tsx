@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/legacy/image";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
 import { IItem } from "@/model/types";
+import RatingBar from "./RatingBar";
 export default function CarouselItemComponent({ item }: { item: IItem }) {
   const isMovie = item.media_type === "movie";
 
@@ -21,6 +23,10 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
             placeholder="blur"
             blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
           />
+          <div className="absolute rounded-lg top-0 right-0 w-auto h-auto  ">
+            {/* <span className="inline-block p-2">{item.vote_average}</span> */}
+            <RatingBar rating={Math.round(item.vote_average * 10)} />
+          </div>
         </div>
         <CardHeader className="">
           <CardTitle>{item.original_title || item.name}</CardTitle>

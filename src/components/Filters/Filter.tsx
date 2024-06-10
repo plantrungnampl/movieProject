@@ -91,9 +91,6 @@ export default function Filter({
                 ))}
               </div>
             </AccordionItem>
-            {selectedGenre.length > 0 && (
-              <Button onClick={handleSubmitFilter}>Search</Button>
-            )}
           </Accordion>
         </div>
 
@@ -126,6 +123,11 @@ export default function Filter({
             </AccordionItem>
           </Accordion>
         </div>
+        {selectedGenre.length > 0 && (
+          <Button className="w-full" onClick={handleSubmitFilter}>
+            Search
+          </Button>
+        )}
       </div>
     </>
   );

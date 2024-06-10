@@ -82,6 +82,7 @@ export interface IItem {
   backdrop_path: string;
   release_date: string;
   media_type: string;
+  vote_average: number;
 }
 
 export interface IResult {
