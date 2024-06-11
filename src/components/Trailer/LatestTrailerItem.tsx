@@ -5,9 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../ui/dialog";
 import Image from "next/image";
-import TrailerDialog from "./TrailerDialog";
+import TrailerDialog from "../TrailerDialog";
 import { FaPlay } from "react-icons/fa";
 
 export default function LatestTrailerItem({ videos }: { videos: any[] }) {

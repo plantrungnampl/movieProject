@@ -19,6 +19,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import { TiVideoOutline } from "react-icons/ti";
+import { AiOutlineCarryOut } from "react-icons/ai";
 import { useToast } from "../ui/use-toast";
 import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
@@ -86,19 +95,94 @@ export default function Header() {
     <>
       <div
         className={` justify-between items-center p-3 bg-slate-700 fixed top-0 w-full z-10 shadow-2xl transition duration-300 ease-out transform    ${
-          show ? "flex" : "hidden"
+          show ? "flex transition duration-300 ease-out transform" : "hidden"
         } `}
       >
-        <div className="flex gap-3 items-center">
-          <Suspense fallback={<Loading />}>
-            <MenuItem title="Home" address="/" Icon={AiFillHome} />
-          </Suspense>
-
-          {/* <MenuItem title="About" address="/about" Icon={AiFillInfoCircle} /> */}
-          <Suspense fallback={<Loading />}>
-            <MenuItem title="Top rate" address="/top-rate" Icon={AiFillStar} />
-          </Suspense>
-        </div>
+        {/* nav */}
+        <Menubar>
+          <MenubarMenu>
+            <Link href="/" passHref>
+              <MenubarTrigger className="cursor-pointer">Home</MenubarTrigger>
+            </Link>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Tv Shows</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                <MenuItem
+                  title="Top rate"
+                  address="/top-rate"
+                  Icon={AiFillStar}
+                />
+              </MenubarItem>
+              <MenubarItem>
+                <MenuItem
+                  title="Airring Today"
+                  address="/Airring-Today"
+                  Icon={AiOutlineCarryOut}
+                />
+              </MenubarItem>
+              <MenubarItem>
+                <MenuItem
+                  title="On TV"
+                  address="/On-TV"
+                  Icon={TiVideoOutline}
+                />
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Movie</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                <MenuItem
+                  title="Popular"
+                  address="/Popular"
+                  Icon={AiFillStar}
+                />
+              </MenubarItem>
+              <MenubarItem>
+                <MenuItem
+                  title="Now playing"
+                  address="/Now-playing"
+                  Icon={AiFillStar}
+                />
+              </MenubarItem>
+              <MenubarItem>
+                <MenuItem
+                  title="Up coming"
+                  address="/top-rate"
+                  Icon={AiFillStar}
+                />
+              </MenubarItem>
+              <MenubarItem>
+                <MenuItem
+                  title="Top-rate"
+                  address="/top-rate-movie"
+                  Icon={AiFillStar}
+                />
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>People</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>
+                <MenuItem
+                  title="Popular People"
+                  address="/Popular-People"
+                  Icon={AiFillStar}
+                />
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+        {/* eng */}
+        {/* <div className="flex gap-3 items-center">
+          <MenuItem title="Home" address="/" Icon={AiFillHome} />
+          <MenuItem title="Movie" address="/about" Icon={AiFillHome} />
+          <MenuItem title="Top rate" address="/top-rate" Icon={AiFillStar} />
+        </div> */}
         <div className="w-1/2 ">
           <Suspense fallback={<Loading />}>
             <SearchBox />

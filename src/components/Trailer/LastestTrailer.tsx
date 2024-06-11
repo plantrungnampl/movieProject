@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Loading from "@/app/loading";
 
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/app/api/fetchData";
 import dynamic from "next/dynamic";
 const LatestTrailerItem = dynamic(
-  () => import("@/components/LatestTrailerItem"),
+  () => import("@/components/Trailer/LatestTrailerItem"),
   {
     suspense: true,
   }

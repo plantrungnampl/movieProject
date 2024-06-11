@@ -15,9 +15,12 @@ const CarouselItemComponent = dynamic(
     suspense: true,
   }
 );
-const LastestTrailer = dynamic(() => import("@/components/LastestTrailer"), {
-  suspense: true,
-});
+const LastestTrailer = dynamic(
+  () => import("@/components/Trailer/LastestTrailer"),
+  {
+    suspense: true,
+  }
+);
 
 async function Home() {
   const Data = await fetchData();
