@@ -10,6 +10,7 @@ import { AiFillBook } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
 import { useRouter, useSearchParams } from "next/navigation";
 import { User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { IoPeople } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -26,14 +27,15 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { FaCirclePlay } from "react-icons/fa6";
 import { TiVideoOutline } from "react-icons/ti";
-import { AiOutlineCarryOut } from "react-icons/ai";
+import { AiFillCarryOut } from "react-icons/ai";
 import { useToast } from "../ui/use-toast";
 import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
 import { userProps } from "../../model/types";
 import SearchBox from "@/app/search/SearchBox";
-
+import { AiFillNotification } from "react-icons/ai";
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
@@ -111,21 +113,21 @@ export default function Header() {
               <MenubarItem>
                 <MenuItem
                   title="Top rate"
-                  address="/top-rate"
+                  address="/tv/top-rate"
                   Icon={AiFillStar}
                 />
               </MenubarItem>
               <MenubarItem>
                 <MenuItem
                   title="Airring Today"
-                  address="/Airring-Today"
-                  Icon={AiOutlineCarryOut}
+                  address="/tv/airring-today"
+                  Icon={AiFillCarryOut}
                 />
               </MenubarItem>
               <MenubarItem>
                 <MenuItem
                   title="On TV"
-                  address="/On-TV"
+                  address="/tv/on-tv"
                   Icon={TiVideoOutline}
                 />
               </MenubarItem>
@@ -137,28 +139,28 @@ export default function Header() {
               <MenubarItem>
                 <MenuItem
                   title="Popular"
-                  address="/Popular"
+                  address="/Movie/Popular"
                   Icon={AiFillStar}
                 />
               </MenubarItem>
               <MenubarItem>
                 <MenuItem
                   title="Now playing"
-                  address="/Now-playing"
-                  Icon={AiFillStar}
+                  address="/Movie/Now-playing"
+                  Icon={FaCirclePlay}
                 />
               </MenubarItem>
               <MenubarItem>
                 <MenuItem
                   title="Up coming"
-                  address="/top-rate"
-                  Icon={AiFillStar}
+                  address="/Movie/top-rate"
+                  Icon={AiFillNotification}
                 />
               </MenubarItem>
               <MenubarItem>
                 <MenuItem
                   title="Top-rate"
-                  address="/top-rate-movie"
+                  address="/Movie/top-rate-movie"
                   Icon={AiFillStar}
                 />
               </MenubarItem>
@@ -170,8 +172,8 @@ export default function Header() {
               <MenubarItem>
                 <MenuItem
                   title="Popular People"
-                  address="/Popular-People"
-                  Icon={AiFillStar}
+                  address="/People/Popular-People"
+                  Icon={IoPeople}
                 />
               </MenubarItem>
             </MenubarContent>

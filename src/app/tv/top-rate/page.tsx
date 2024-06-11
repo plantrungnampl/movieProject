@@ -1,10 +1,9 @@
 "use client";
 import { getDataTopRate } from "@/app/api/getDataTopRate";
-import Loading from "@/app/loading";
 import Filter from "@/components/Filters/Filter";
 import TopRateMovies from "@/components/TopRateMovie/TopRateMovies";
 import { TopRateMovieProps } from "@/model/topRate";
-import React, { Fragment, Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export default function TopRate() {
   const [topRate, setTopRate] = React.useState<TopRateMovieProps[]>([]);
