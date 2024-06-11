@@ -37,7 +37,6 @@ export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
   const [user, setUser] = React.useState<userProps | null>(null);
-  const [scrollDirection, setScrollDirection] = useState<string | null>(null);
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -46,11 +45,9 @@ export default function Header() {
     if (window.scrollY > lastScrollY) {
       // if scroll down hide the navbar
       setShow(false);
-      setScrollDirection("down");
     } else {
       // if scroll up show the navbar
       setShow(true);
-      setScrollDirection("up");
     }
 
     // remember current page location to use in the next move
@@ -98,86 +95,87 @@ export default function Header() {
         } `}
       >
         {/* nav */}
-        <Menubar>
-          <MenubarMenu>
-            <Link href="/" passHref>
-              <MenubarTrigger className="cursor-pointer">Home</MenubarTrigger>
-            </Link>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Tv Shows</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>
-                <MenuItem
-                  title="Top rate"
-                  address="/tv/top-rate"
-                  Icon={AiFillStar}
-                />
-              </MenubarItem>
-              <MenubarItem>
-                <MenuItem
-                  title="Airring Today"
-                  address="/tv/airring-today"
-                  Icon={AiFillCarryOut}
-                />
-              </MenubarItem>
-              <MenubarItem>
-                <MenuItem
-                  title="On TV"
-                  address="/tv/on-tv"
-                  Icon={TiVideoOutline}
-                />
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>Movie</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>
-                <MenuItem
-                  title="Popular"
-                  address="/Movie/Popular"
-                  Icon={AiFillStar}
-                />
-              </MenubarItem>
-              <MenubarItem>
-                <MenuItem
-                  title="Now playing"
-                  address="/Movie/Now-playing"
-                  Icon={FaCirclePlay}
-                />
-              </MenubarItem>
-              <MenubarItem>
-                <MenuItem
-                  title="Up coming"
-                  address="/Movie/top-rate"
-                  Icon={AiFillNotification}
-                />
-              </MenubarItem>
-              <MenubarItem>
-                <MenuItem
-                  title="Top-rate"
-                  address="/Movie/top-rate-movie"
-                  Icon={AiFillStar}
-                />
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>People</MenubarTrigger>
-            <MenubarContent>
-              <MenubarItem>
-                <MenuItem
-                  title="Popular People"
-                  address="/People/Popular-People"
-                  Icon={IoPeople}
-                />
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        </Menubar>
-        {/* eng */}
-
+        <div>
+          <Menubar className={`nav ${show ? "flex" : "hidden"}`}>
+            <MenubarMenu>
+              <Link href="/" passHref>
+                <MenubarTrigger className="cursor-pointer">Home</MenubarTrigger>
+              </Link>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Tv Shows</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  <MenuItem
+                    title="Top rate"
+                    address="/tv/top-rate"
+                    Icon={AiFillStar}
+                  />
+                </MenubarItem>
+                <MenubarItem>
+                  <MenuItem
+                    title="Airring Today"
+                    address="/tv/airring-today"
+                    Icon={AiFillCarryOut}
+                  />
+                </MenubarItem>
+                <MenubarItem>
+                  <MenuItem
+                    title="On TV"
+                    address="/tv/on-tv"
+                    Icon={TiVideoOutline}
+                  />
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Movie</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  <MenuItem
+                    title="Popular"
+                    address="/movie/Popular"
+                    Icon={AiFillStar}
+                  />
+                </MenubarItem>
+                <MenubarItem>
+                  <MenuItem
+                    title="Now playing"
+                    address="/movie/Now-playing"
+                    Icon={FaCirclePlay}
+                  />
+                </MenubarItem>
+                <MenubarItem>
+                  <MenuItem
+                    title="Up coming"
+                    address="/movie/top-rate"
+                    Icon={AiFillNotification}
+                  />
+                </MenubarItem>
+                <MenubarItem>
+                  <MenuItem
+                    title="Top-rate"
+                    address="/movie/top-rate-movie"
+                    Icon={AiFillStar}
+                  />
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>People</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>
+                  <MenuItem
+                    title="Popular People"
+                    address="/People/Popular-People"
+                    Icon={IoPeople}
+                  />
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+          {/* eng */}
+        </div>
         <div className="w-1/2 ">
           <Suspense fallback={<Loading />}>
             <SearchBox />

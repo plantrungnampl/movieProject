@@ -95,10 +95,50 @@ const LoginForm = () => {
     } catch (error: any) {
       if (error.code === "auth/user-not-found") {
         setError("User not found");
+        toast({
+          title: "Error",
+          description: "User not found",
+          duration: 2000,
+          style: {
+            background: "red",
+            color: "white",
+          },
+        });
       } else if (error.code === "auth/wrong-password") {
         setError("Wrong password or email");
+        toast({
+          title: "Error",
+          description: "Wrong password or email",
+          duration: 2000,
+          style: {
+            background: "red",
+            color: "white",
+          },
+        });
+      } else if (error.code === "auth/too-many-requests") {
+        setError("Too many requests");
+        toast({
+          title: "Error",
+          description: "Too many requests, please try again later",
+          duration: 2000,
+          style: {
+            background: "red",
+            color: "white",
+          },
+        });
+      } else if (error.code == "auth/invalid-credential") {
+        setError("Invalid email or password");
+        toast({
+          title: "Error",
+          description: "Invalid email or password",
+          duration: 2000,
+          style: {
+            background: "red",
+            color: "white",
+          },
+        });
       } else {
-        setError("Something went wrong");
+        setError("Something went wrong google");
       }
       console.log(error);
     }
