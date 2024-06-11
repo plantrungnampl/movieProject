@@ -1,15 +1,12 @@
 "use client";
 import React, { Suspense, use, useEffect, useState } from "react";
 import MenuItem from "../MenuItem";
-import { AiFillHome } from "react-icons/ai";
-import { AiFillInfoCircle } from "react-icons/ai";
 import { Button } from "../ui/button";
 import ToggleMode from "../ToggleMode";
 import Link from "next/link";
-import { AiFillBook } from "react-icons/ai";
 import { AiFillStar } from "react-icons/ai";
-import { useRouter, useSearchParams } from "next/navigation";
-import { User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { IoPeople } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -180,11 +177,7 @@ export default function Header() {
           </MenubarMenu>
         </Menubar>
         {/* eng */}
-        {/* <div className="flex gap-3 items-center">
-          <MenuItem title="Home" address="/" Icon={AiFillHome} />
-          <MenuItem title="Movie" address="/about" Icon={AiFillHome} />
-          <MenuItem title="Top rate" address="/top-rate" Icon={AiFillStar} />
-        </div> */}
+
         <div className="w-1/2 ">
           <Suspense fallback={<Loading />}>
             <SearchBox />

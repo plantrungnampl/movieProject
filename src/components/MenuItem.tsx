@@ -17,7 +17,7 @@ export default function MenuItem({
     <>
       <Link className="flex gap-1 justify-center items-center" href={address}>
         <Icon />
-        <p className=" hidden sm:block text-sm text-black ">{title}</p>
+        <p className=" hidden sm:block text-sm  ">{title}</p>
       </Link>
     </>
   );
