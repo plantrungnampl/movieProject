@@ -167,7 +167,7 @@ export default function Header() {
                 <MenubarItem>
                   <MenuItem
                     title="Popular People"
-                    address="/People/Popular-People"
+                    address="/people/popular-people"
                     Icon={IoPeople}
                   />
                 </MenubarItem>

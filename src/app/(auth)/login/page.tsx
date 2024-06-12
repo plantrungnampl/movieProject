@@ -21,17 +21,17 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { addDocument } from "@/service/serives";
 import { toast } from "@/components/ui/use-toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
 import { formSchema } from "@/validation/form";
+import { addDocument } from "@/service/serives";
 
 const LoginForm = () => {
   const [error, setError] = useState("");
-  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +49,7 @@ const LoginForm = () => {
       const user = result.user;
       const token = await user.getIdToken();
 
-      // Lưu token vào localStorage
+      // Save token to localStorage
       localStorage.setItem("authToken", token);
       router.push("/");
 
@@ -69,15 +69,18 @@ const LoginForm = () => {
     }
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { email: string; password: string }) => {
+    setError("");
+    setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         data.email,
         data.password
       );
+
       const token = await userCredential.user.getIdToken();
-      const accountId = await userCredential.user.uid;
+      const accountId = userCredential.user.uid;
       localStorage.setItem("authToken", token);
       localStorage.setItem("accountId", accountId);
       router.push("/");
@@ -93,68 +96,47 @@ const LoginForm = () => {
         },
       });
     } catch (error: any) {
-      if (error.code === "auth/user-not-found") {
-        setError("User not found");
-        toast({
-          title: "Error",
-          description: "User not found",
-          duration: 2000,
-          style: {
-            background: "red",
-            color: "white",
-          },
-        });
-      } else if (error.code === "auth/wrong-password") {
-        setError("Wrong password or email");
-        toast({
-          title: "Error",
-          description: "Wrong password or email",
-          duration: 2000,
-          style: {
-            background: "red",
-            color: "white",
-          },
-        });
-      } else if (error.code === "auth/too-many-requests") {
-        setError("Too many requests");
-        toast({
-          title: "Error",
-          description: "Too many requests, please try again later",
-          duration: 2000,
-          style: {
-            background: "red",
-            color: "white",
-          },
-        });
-      } else if (error.code == "auth/invalid-credential") {
-        setError("Invalid email or password");
-        toast({
-          title: "Error",
-          description: "Invalid email or password",
-          duration: 2000,
-          style: {
-            background: "red",
-            color: "white",
-          },
-        });
-      } else {
-        setError("Something went wrong google");
-      }
-      console.log(error);
+      handleFirebaseError(error);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleFirebaseError = (error: any) => {
+    let errorMessage = "An error occurred";
+    if (error.code === "auth/user-not-found") {
+      errorMessage = "User not found";
+    } else if (error.code === "auth/wrong-password") {
+      errorMessage = "Wrong password or email";
+    } else if (error.code === "auth/too-many-requests") {
+      errorMessage = "Too many requests, please try again later";
+    } else if (error.code === "auth/invalid-credential") {
+      errorMessage = "Invalid email or password";
+    }
+
+    setError(errorMessage);
+    toast({
+      title: "Error",
+      description: errorMessage,
+      duration: 2000,
+      style: {
+        background: "red",
+        color: "white",
+      },
+    });
   };
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex justify-between flex-col">
-        <div className="h-28 w-full justify-center flex items-center">
+      <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex flex-col p-3">
+        <div className="h-28 w-full flex justify-center items-center">
           <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
             Welcome
           </span>
         </div>
         <Form {...form}>
           <form
-            className="h-full w-1/2 mx-auto"
+            className="h-full w-1/2 mx-auto space-y-6"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormField
@@ -162,9 +144,13 @@ const LoginForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-black">Email</FormLabel>
+                  <FormLabel className="text-white">Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email@example.com" {...field} />
+                    <Input
+                      autoComplete="off"
+                      placeholder="email@example.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -175,39 +161,47 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-black">Password</FormLabel>
+                  <FormLabel className="text-white">Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="password" type="password" {...field} />
+                    <Input
+                      autoComplete="off"
+                      placeholder="password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormDescription className="text-red-500 text-sm">
-              {error}
-            </FormDescription>
-            <Button className="flex justify-center mt-6 mb-3" type="submit">
-              Submit
+            <Link href="/reset-password">
+              <span className="text-blue-500">Reset Password</span>
+            </Link>
+            {error && (
+              <FormDescription className="text-red-500 text-sm">
+                {error}
+              </FormDescription>
+            )}
+            <Button className="w-full mt-6" type="submit">
+              {isLoading ? "Loading..." : "Submit"}
             </Button>
           </form>
         </Form>
-        <div className="mx-auto">
-          <span className="text-sm block text-center">Hoặc</span>
+        <div className="mx-auto mt-6">
+          <span className="text-sm block text-center">Or</span>
           <Button
-            className="flex justify-center mt-6 mb-3"
+            className="w-full mt-3"
             onClick={handleGoogleLogin}
+            disabled={isLoading}
           >
-            Đăng nhập bằng Google
+            {isLoading ? "Loading..." : "Log in with Google"}
           </Button>
         </div>
-        <div className="h-20 mx-auto">
-          <span className="text-sm ">
-            You not have an account?
-            <Link href={"/register"}>
-              <span className="text-blue-500 font-semibold text-md">
-                {" "}
-                Register Here
-              </span>
+        <div className="mx-auto mt-6 ">
+          <span className="text-sm flex gap-1">
+            {" Don't"} have an account?
+            <Link href="/register">
+              <span className="text-blue-500 font-semibold">Register Here</span>
             </Link>
           </span>
         </div>
