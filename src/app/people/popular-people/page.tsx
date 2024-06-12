@@ -1,6 +1,7 @@
 "use client";
 import { fetchPeople } from "@/app/api/fetchPeople";
 import Loading from "@/app/loading";
+import Paginations from "@/components/Pagination/Paginations";
 import {
   Card,
   CardDescription,
@@ -14,11 +15,12 @@ import React from "react";
 export default function PopularPeople() {
   const [people, setPeople] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [page, setPage] = React.useState(1);
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const people = await fetchPeople();
+        const people = await fetchPeople(page);
         setPeople(people);
       } catch (error) {
         setLoading(false);
@@ -26,8 +28,16 @@ export default function PopularPeople() {
       }
     };
     fetchData();
-  }, []);
-  console.log(people);
+  }, [page]);
+  const handlePreviousPage = () => {
+    if (page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
   return (
     <>
       <div>
@@ -66,6 +76,13 @@ export default function PopularPeople() {
               <Loading />
             </div>
           )}
+        </div>
+        <div className="flex justify-between mt-4">
+          <button onClick={handlePreviousPage} disabled={page === 1}>
+            Previous
+          </button>
+          <span>Page {page}</span>
+          <button onClick={handleNextPage}>Next</button>
         </div>
       </div>
     </>

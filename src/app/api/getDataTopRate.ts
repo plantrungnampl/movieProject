@@ -1,14 +1,14 @@
 "use server";
 import axios from "axios";
 const API_KEY = process.env.API_KEY;
-export async function getDataTopRate() {
+export async function getDataTopRate(page: any) {
   try {
     const [responseTvTopRate, responseMovieTopRate] = await Promise.all([
       axios.get(
-        `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
       ),
       axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
       ),
     ]);
 

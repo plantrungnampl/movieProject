@@ -8,7 +8,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 export default function Filter({
   setFilteredMovies,
