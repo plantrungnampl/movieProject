@@ -1,29 +1,25 @@
 "use server";
 import axios from "axios";
 const API_KEY = process.env.API_KEY;
-export async function getDataTopRate(page: any) {
+const api_url = "https://api.themoviedb.org/3";
+interface toprateResponse {
+  results: any[];
+  totalPages: number;
+}
+export async function getDataTopRate(page: any): Promise<toprateResponse> {
   try {
-    const [responseTvTopRate, responseMovieTopRate] = await Promise.all([
-      axios.get(
-        `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
-      ),
-      axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
-      ),
-    ]);
-
-    if (
-      responseTvTopRate.status !== 200 ||
-      responseMovieTopRate.status !== 200
-    ) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const tvTopRate = responseTvTopRate.data.results;
-    const movieTopRate = responseMovieTopRate.data.results;
-
-    return { tvTopRate, movieTopRate };
+    const response = await axios.get(
+      `${api_url}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
+    );
+    return {
+      results: response.data.results,
+      totalPages: response.data.total_pages,
+    };
   } catch (err) {
     console.error("failed to get data ", err);
+    return {
+      results: [],
+      totalPages: 0,
+    };
   }
 }

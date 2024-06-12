@@ -8,47 +8,44 @@ import React, { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 export default function TopRate() {
   const [topRate, setTopRate] = React.useState<TopRateMovieProps[]>([]);
-  const [movieTopRate, setMovieTopRate] = React.useState<TopRateMovieProps[]>(
-    []
-  );
+
   const [filteredMovies, setFilteredMovies] = React.useState<
     TopRateMovieProps[]
   >([]);
   const [error, setError] = React.useState<string>("");
-  const [loadMore, setLoadMore] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [page, setPage] = React.useState(1);
   const [lastScrollY, setLastScrollY] = React.useState(0);
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const data = await getDataTopRate(page + 1);
-      setFilteredMovies((prev) => [...prev, ...data?.tvTopRate]);
-
+      const data = await getDataTopRate(page);
+      setPage(page + 1);
+      setFilteredMovies((prev) => [...prev, ...data?.results]);
       setLoading(false);
     } catch (err) {
       console.log(err);
       return;
     }
   };
-  const handleScrollDebounce = useDebouncedCallback(() => {
-    if (window.scrollY < lastScrollY) {
-      return;
-    }
-    handleLoadMore();
-  }, 300);
+  // const handleScrollDebounce = useDebouncedCallback(() => {
+  //   if (window.scrollY > lastScrollY) {
+  //     return;
+  //   }
+  //   handleLoadMore();
+  // }, 300);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScrollDebounce);
-    return () => window.removeEventListener("scroll", handleScrollDebounce);
-  }, [handleScrollDebounce]);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScrollDebounce);
+  //   return () => window.removeEventListener("scroll", handleScrollDebounce);
+  // }, [handleScrollDebounce]);
   useEffect(() => {
     async function getTopRate() {
       try {
         const data = await getDataTopRate(page);
-        setTopRate(data?.tvTopRate);
-        setMovieTopRate(data?.movieTopRate);
-        setFilteredMovies(data?.tvTopRate);
+        setTopRate(data?.results);
+        // setMovieTopRate(data?.movieTopRate);
+        setFilteredMovies(data?.results);
       } catch (err) {
         console.log(err);
       }
@@ -57,6 +54,7 @@ export default function TopRate() {
   }, [page]);
 
   if (error) return <div>{error}</div>;
+
   return (
     <>
       <div>
