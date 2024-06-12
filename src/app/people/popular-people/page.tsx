@@ -2,48 +2,53 @@
 import { fetchPeople } from "@/app/api/fetchPeople";
 import Loading from "@/app/loading";
 import Paginations from "@/components/Pagination/Paginations";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-
-export default function PopularPeople() {
-  const [people, setPeople] = React.useState([]);
+import React, { Suspense } from "react";
+interface Person {
+  id: number;
+  profile_path: string;
+  original_title?: string;
+  name: string;
+  original_name?: string;
+  known_for?: { title: string }[];
+}
+export default function PopularPeople({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const [people, setPeople] = React.useState<Person[]>([]);
   const [loading, setLoading] = React.useState(false);
-  const [page, setPage] = React.useState(1);
+  const [pages, setPages] = React.useState(1);
+  const { page } = searchParams;
+  const [totalPages, setTotalPages] = React.useState(0);
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const people = await fetchPeople(page);
-        setPeople(people);
+        const data = await fetchPeople(page ? parseInt(page as string) : 1);
+        setPeople(data.results);
+        setTotalPages(data.totalPages);
+        setLoading(false);
       } catch (error) {
         setLoading(false);
         return;
       }
     };
     fetchData();
-  }, [page]);
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+  }, [page, totalPages]);
+  const currentPage = page ? parseInt(page as string) : 1;
   return (
     <>
       <div>
-        <h2 className="text-2xl font-bold mb-2">Popular People:</h2>
+        <h2 className="font-bold text-2xl">Popular People:</h2>
+
         <div className="flex flex-wrap gap-3">
-          {people.length > 0 ? (
+          {loading ? (
+            <Loading />
+          ) : (
             people.map((item: any) => (
               <div key={item.id}>
                 <Link href={"/"}>
@@ -56,33 +61,28 @@ export default function PopularPeople() {
                         width={100}
                         height={200}
                         layout="responsive"
-                        priority={true}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
                       />
                     </div>
                     <CardHeader className="">
                       <CardTitle>{item.original_name || item.name}</CardTitle>
-                      <CardDescription>
-                        {item.known_for.overview}
-                      </CardDescription>
                     </CardHeader>
                   </Card>
                 </Link>
               </div>
             ))
-          ) : (
-            <div className="flex justify-center items-center">
-              <Loading />
-            </div>
           )}
-        </div>
-        <div className="flex justify-between mt-4">
-          <button onClick={handlePreviousPage} disabled={page === 1}>
-            Previous
-          </button>
-          <span>Page {page}</span>
-          <button onClick={handleNextPage}>Next</button>
+          <div className="flex justify-between mt-4">
+            <Suspense key={currentPage} fallback={<Loading />}>
+              <Paginations
+                currentPage={currentPage}
+                setPage={setPages}
+                totalPages={totalPages}
+              />
+            </Suspense>
+          </div>
         </div>
       </div>
     </>
