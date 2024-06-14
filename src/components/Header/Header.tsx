@@ -107,8 +107,8 @@ export default function Header() {
               <MenubarContent>
                 <MenubarItem>
                   <MenuItem
-                    title="Top rate"
-                    address="/tv/top-rate"
+                    title="Popular"
+                    address="/tv/popular"
                     Icon={AiFillStar}
                   />
                 </MenubarItem>

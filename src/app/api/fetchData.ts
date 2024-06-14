@@ -23,21 +23,21 @@ export async function getSerVerData(userId: string) {
 // fetchData.js
 
 const API_KEY = process.env.API_KEY;
+const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function fetchData() {
   const trendingWeek = await axios.get(
-    `https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`,
+    `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`,
     {
       timeout: 3000,
     }
   );
   const trendingDay = await axios.get(
-    `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&language=en-US&page=1`,
+    `${BASE_URL}/trending/all/day?api_key=${API_KEY}&language=en-US&page=1`,
     {
       timeout: 3000,
     }
   );
-  // const [data1, data2] = await Promise.all([res2.data, res1.data]);
   const [trendingWeeks, trendingDays] = await Promise.all([
     trendingWeek.data,
     trendingDay.data,
@@ -60,7 +60,6 @@ export async function fetchData() {
 
   return tabData;
 }
-const BASE_URL = "https://api.themoviedb.org/3";
 
 export const getPopularMovies = async () => {
   try {

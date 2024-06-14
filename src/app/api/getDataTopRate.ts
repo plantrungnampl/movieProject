@@ -9,7 +9,7 @@ interface toprateResponse {
 export async function getDataTopRate(page: any): Promise<toprateResponse> {
   try {
     const response = await axios.get(
-      `${api_url}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`
+      `${api_url}/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`
     );
     return {
       results: response.data.results,

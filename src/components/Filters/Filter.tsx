@@ -1,5 +1,5 @@
 "use client";
-import { getGenres, getTvByGenre } from "@/app/api/fetchFIlter";
+import { getGenres } from "@/app/api/fetchFIlter";
 import React from "react";
 import {
   Accordion,
@@ -12,14 +12,22 @@ import { Button } from "../ui/button";
 export default function Filter({
   setFilteredMovies,
   filteredMovies,
+  selectedGenre,
+  setSelectedGenre,
+  handleSubmitFilter,
 }: {
   setFilteredMovies: any;
   filteredMovies: any;
+  selectedGenre: any;
+  setSelectedGenre: any;
+  setIsFiltering: any;
+  handleSubmitFilter: () => void;
 }) {
   const [genres, setGenres] = React.useState([]);
-  const [selectedGenre, setSelectedGenre] = React.useState<any[]>([]);
   const [sortOrder, setSortOrder] = React.useState("asc");
   const [selectedOrder, setSelectedOrder] = React.useState("asc");
+  const [loading, setLoading] = React.useState(false);
+
   // fetch genres
   React.useEffect(() => {
     const fetchGenres = async () => {
@@ -28,7 +36,7 @@ export default function Filter({
     };
     fetchGenres();
   }, []);
-  //  get movies data TV by genre
+  //  get data TV by genre
 
   const handleChange = (genId: string | number) => {
     if (selectedGenre.includes(genId)) {
@@ -37,17 +45,13 @@ export default function Filter({
       setSelectedGenre([...selectedGenre, genId]);
     }
   };
-  const handleSubmitFilter = async () => {
-    try {
-      if (selectedGenre.length > 0) {
-        const selectIdGenre = selectedGenre.join(",");
-        const movies = await getTvByGenre(selectIdGenre);
-        setFilteredMovies(movies);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+
+  const handleSubmitFilters = async () => {
+    setLoading(true);
+    await handleSubmitFilter();
+    setLoading(false);
   };
+
   const handleSort = (order: any) => {
     const sortedMovies = [...filteredMovies].sort((a, b) => {
       if (order === "asc") {
@@ -123,9 +127,14 @@ export default function Filter({
           </Accordion>
         </div>
         {selectedGenre.length > 0 && (
-          <Button className="w-full" onClick={handleSubmitFilter}>
+          <Button className="w-full" onClick={handleSubmitFilters}>
             Search
           </Button>
+        )}
+        {loading && (
+          <div className="w-full flex justify-center mt-4">
+            <span>Loading...</span>
+          </div>
         )}
       </div>
     </>
