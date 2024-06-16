@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import TrailerDialog from "@/components/TrailerDialog";
 import BookmarkButton from "@/components/BookmarkButton";
 import { TvDetailProps } from "../../model/types";
+import RatingBar from "../RatingBar";
 const TvDetail = ({
   tvDetail,
   watchList,
@@ -15,13 +16,20 @@ const TvDetail = ({
         <Image
           src={`https://image.tmdb.org/t/p/w500${tvDetail.poster_path}`}
           alt={tvDetail.title}
-          width={500}
-          height={450}
+          width={300}
+          height={400}
           className="object-cover rounded w-full h-full"
         />
+        <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
+          <span className="">
+            <RatingBar rating={Math.round(tvDetail.vote_average * 10)} />
+          </span>
+        </div>
       </div>
       <div className="max-w-[960px]">
-        <h2>{tvDetail.name || tvDetail.original_name}</h2>
+        <h2 className="text-2xl font-bold">
+          {tvDetail.name || tvDetail.original_name}
+        </h2>
         <p>{tvDetail.release_date}</p>
         <div>
           <div className="flex gap-3">

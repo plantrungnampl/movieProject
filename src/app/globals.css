@@ -77,3 +77,12 @@
       @apply bg-background text-foreground ;
     } 
   }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loader {
+    @apply border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full w-4 h-4;
+    animation: spin 1s linear infinite;
+  }

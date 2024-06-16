@@ -52,6 +52,7 @@ export interface TvDetailMovieProps {
   trailerKey: string;
   poster_path: string;
   trailer: string;
+  vote_average: number;
 }
 export interface detaiMovie {
   id: number;

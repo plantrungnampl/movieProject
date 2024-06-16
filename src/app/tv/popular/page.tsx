@@ -19,7 +19,7 @@ export default function TopRate() {
   const [currentPage, setCurrentPage] = React.useState(1);
   const handleLoadMore = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const data = isFiltering
         ? await getTvByGenre(selectedGenre.join(","), currentPage + 1)
         : await getDataPopular(currentPage + 1);
@@ -28,8 +28,6 @@ export default function TopRate() {
       setFilteredMovies((prev: any) => [...prev, ...data.results]);
     } catch (err) {
       console.log(err);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -66,7 +64,7 @@ export default function TopRate() {
   };
 
   if (error) return <div>{error}</div>;
-
+  if (loading) return <div>Loading...</div>;
   return (
     <>
       <div>

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 
 export default function TopRated() {
-  const [topRateData, setTopRatedData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +29,6 @@ export default function TopRated() {
         : await getTopRateTv(currentPage + 1);
       setFilterTopRated([...filterTopRated, ...data.results]);
       setCurrentPage(currentPage + 1);
-      //   setCurrentPage((prev) => prev + 1);
       setTotalPage(data.totalPages);
     } catch (error) {
       console.log(error);
@@ -54,12 +52,12 @@ export default function TopRated() {
     }
   };
   if (error) return <h1>{error}</h1>;
-  if (loading)
-    return (
-      <h1>
-        <Loading />
-      </h1>
-    );
+  // if (loading)
+  //   return (
+  //     <h1>
+  //       <Loading />
+  //     </h1>
+  //   );
   return (
     <>
       <div>
@@ -81,16 +79,16 @@ export default function TopRated() {
             <TopRatedTv topRates={filterTopRated} />
             <div className="w-full">
               <div className="text-center mt-4  ">
-                {currentPage < totalPage && (
-                  <div className="w-full text-center mt-4">
-                    <Button
-                      onClick={handleLoadMore}
-                      className="w-full p-4 rounded-lg mx-auto text-center"
-                    >
-                      {loading ? "Loading..." : "Load More"}
-                    </Button>
-                  </div>
-                )}
+                {/* {currentPage < totalPage && ( */}
+                <div className="w-full text-center mt-4">
+                  <Button
+                    onClick={handleLoadMore}
+                    className="w-full p-4 rounded-lg mx-auto text-center"
+                  >
+                    {loading ? "Loading..." : "Load More"}
+                  </Button>
+                </div>
+                {/* )} */}
               </div>
             </div>
           </div>

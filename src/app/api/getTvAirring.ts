@@ -54,7 +54,7 @@ interface tvArringResponse {
 export const getTvArring = async (page: number | string) => {
   try {
     const res = await axios.get(
-      `${BASE_URL}/tv/airing_today?api_key=${API_KEY}&language=en-US&page=${page}`
+      `${BASE_URL}/tv/airing_today?api_key=${API_KEY}&language=en-US&page=${page}&append_to_response=videos,images`
     );
 
     return {

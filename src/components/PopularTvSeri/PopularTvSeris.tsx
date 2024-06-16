@@ -4,7 +4,6 @@ import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import RatingBar from "../RatingBar";
-import Loading from "@/app/loading";
 
 export default function PopularTvSeris({
   PopularTv,
@@ -73,8 +72,7 @@ export default function PopularTvSeris({
         })
       ) : (
         <div className="flex w-full">
-          <Loading />
-          <h1>not found</h1>
+          <h1>not found movie</h1>
         </div>
       )}
     </>

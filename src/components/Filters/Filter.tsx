@@ -126,14 +126,20 @@ export default function Filter({
           </Accordion>
         </div>
         {selectedGenre.length > 0 && (
-          <Button className="w-full" onClick={handleSubmitFilters}>
-            Search
+          <Button
+            className="w-full"
+            onClick={handleSubmitFilters}
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="loader mr-2"></div>
+                Loading...
+              </div>
+            ) : (
+              "Search"
+            )}
           </Button>
-        )}
-        {loading && (
-          <div className="w-full flex justify-center mt-4">
-            <span>Loading...</span>
-          </div>
         )}
       </div>
     </>
