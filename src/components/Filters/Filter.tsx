@@ -20,7 +20,6 @@ export default function Filter({
   filteredMovies: any;
   selectedGenre: any;
   setSelectedGenre: any;
-  setIsFiltering: any;
   handleSubmitFilter: () => void;
 }) {
   const [genres, setGenres] = React.useState([]);

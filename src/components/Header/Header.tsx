@@ -126,6 +126,13 @@ export default function Header() {
                     Icon={TiVideoOutline}
                   />
                 </MenubarItem>
+                <MenubarItem>
+                  <MenuItem
+                    title="Top Rated"
+                    address="/tv/top-rated"
+                    Icon={TiVideoOutline}
+                  />
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
             <MenubarMenu>

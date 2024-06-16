@@ -6,7 +6,7 @@ import Link from "next/link";
 import RatingBar from "../RatingBar";
 import Loading from "@/app/loading";
 
-export default function TopRateMovies({
+export default function TopRatedTv({
   topRates,
 }: {
   topRates: TopRateMovieProps[];
@@ -32,7 +32,6 @@ export default function TopRateMovies({
                   <div className=" relative">
                     <Image
                       priority={true}
-                      // loading="lazy
                       src={`https://image.tmdb.org/t/p/w500${
                         movieItem.poster_path || movieItem.backdrop_path
                       }`}

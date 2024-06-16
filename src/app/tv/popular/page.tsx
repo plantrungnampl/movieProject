@@ -1,8 +1,8 @@
 "use client";
 import { getTvByGenre } from "@/app/api/fetchFIlter";
-import { getDataTopRate } from "@/app/api/getDataTopRate";
+import { getDataPopular } from "@/app/api/getDataTopRate";
 import Filter from "@/components/Filters/Filter";
-import TopRateMovies from "@/components/TopRateMovie/TopRateMovies";
+import TopRateMovies from "@/components/PopularTvSeri/PopularTvSeris";
 import { Button } from "@/components/ui/button";
 import { TopRateMovieProps } from "@/model/topRate";
 import { useSearchParams } from "next/navigation";
@@ -22,7 +22,7 @@ export default function TopRate() {
       setLoading(true);
       const data = isFiltering
         ? await getTvByGenre(selectedGenre.join(","), currentPage + 1)
-        : await getDataTopRate(currentPage + 1);
+        : await getDataPopular(currentPage + 1);
       // setCurrentPage(currentPage + 1);
       setCurrentPage((prev) => prev + 1);
       setFilteredMovies((prev: any) => [...prev, ...data.results]);
@@ -37,7 +37,7 @@ export default function TopRate() {
     async function getTopRate() {
       try {
         setLoading(true);
-        const data = await getDataTopRate(1);
+        const data = await getDataPopular(1);
         setTotalPage(data?.totalPages); // fech pagination
         setFilteredMovies(data?.results);
       } catch (err) {
@@ -79,13 +79,13 @@ export default function TopRate() {
               setFilteredMovies={setFilteredMovies}
               selectedGenre={selectedGenre}
               setSelectedGenre={setSelectedGenre}
-              setIsFiltering={setIsFiltering}
+              // setIsFiltering={setIsFiltering}
               handleSubmitFilter={handleSubmitFilter}
             />
           </div>
 
           <div className=" w-full flex flex-wrap">
-            <TopRateMovies topRates={filteredMovies} />
+            <TopRateMovies PopularTv={filteredMovies} />
             <div className="w-full">
               <div className="text-center mt-4  ">
                 {currentPage < totalPage && (

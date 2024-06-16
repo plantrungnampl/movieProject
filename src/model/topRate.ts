@@ -2,7 +2,6 @@ export interface TopRateMovieProps {
   id: number;
   backdrop_path: string;
   title: string;
-  //   genre_ids: [18, 80];
   original_language: string;
   original_name: string;
   overview: string;
