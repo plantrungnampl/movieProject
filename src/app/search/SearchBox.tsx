@@ -48,7 +48,7 @@ function SearchBox() {
 }
 function SearchResultsWb() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading number={1} />}>
       <SearchBox />
     </Suspense>
   );
