@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "./api/fetchData";
 import dynamic from "next/dynamic";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { LoadingSkeletonCard } from "@/components/HomePage/LoadingSkeletonCard";
 
 const LastestTrailer = dynamic(
   () => import("@/components/Trailer/LastestTrailer"),
@@ -16,7 +17,7 @@ const HomeTrendding = dynamic(
   () => import("@/components/HomePage/HomeTrendding"),
   {
     ssr: false,
-    // loading: () => <LoadingSkeleton />,
+    // loading: () => <LoadingSkeletonCard />,
   }
 );
 

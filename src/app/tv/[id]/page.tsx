@@ -60,9 +60,9 @@ export default function Detail({ params }: DetailProps) {
     return () => unsubscribe();
   }, [id]);
 
-  // if (loading) {
-  //   return <Loading number={1} />;
-  // }
+  if (loading) {
+    return <Loading number={1} />;
+  }
 
   if (error) {
     return <div>Something went wrong: {error} </div>;
@@ -120,7 +120,7 @@ export default function Detail({ params }: DetailProps) {
   };
 
   return (
-    <Suspense fallback={<Loading number={TvDetail.length} />}>
+    <Suspense fallback={<Loading number={1} />}>
       <TvDetail
         watchList={watchList}
         tvDetail={detail}

@@ -23,22 +23,21 @@ export default function HomeTrendding({
   return (
     <>
       <div>
-        <Tabs defaultValue="Today">
-          {/* map tap */}
-          <div className="flex gap-5 items-center mb-3 ">
-            <p className="text-xl p-1 rounded">Trending</p>
-            <TabsList>
-              {data.map((tab: any) => (
-                <TabsTrigger key={tab.value} value={tab.value}>
-                  {tab.value}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-          {/* map data */}
-          {isLoading ? (
-            <Skeleton />
-          ) : (
+        <div>
+          <Tabs defaultValue="Today">
+            {/* map tap */}
+            <div className="flex gap-5 items-center mb-3 ">
+              <p className="text-xl p-1 rounded">Trending</p>
+              <TabsList>
+                {data.map((tab: any) => (
+                  <TabsTrigger key={tab.value} value={tab.value}>
+                    {tab.value}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+            {/* map data */}
+
             <div>
               {data.map((tab: any) => (
                 <TabsContent key={tab.value} value={tab.value}>
@@ -57,8 +56,8 @@ export default function HomeTrendding({
                 </TabsContent>
               ))}
             </div>
-          )}
-        </Tabs>
+          </Tabs>
+        </div>
       </div>
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {

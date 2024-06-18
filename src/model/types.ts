@@ -51,6 +51,7 @@ export interface TvDetailMovieProps {
   release_date: string;
   trailerKey: string;
   poster_path: string;
+  backdrop_path: string;
   trailer: string;
   vote_average: number;
 }

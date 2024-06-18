@@ -4,7 +4,7 @@ import { Source_Sans_3 } from "@next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
-// import Script from "next/script";
+import Script from "next/script";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
 const sourceSansPro = Source_Sans_3({
@@ -31,9 +31,9 @@ export default function RootLayout({
           name="description"
           content={metadata.description ?? "default description"}
         />
+        <Script src="/head-script.js" strategy="beforeInteractive" />
       </head>
 
-      {/* <Script src="/head-script.js" strategy="beforeInteractive" /> */}
       <body className={sourceSansPro.className}>
         <ThemeProvider
           attribute="class"
@@ -41,11 +41,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <Script src="/body-script.js" strategy="afterInteractive" /> */}
+          <Script src="/body-script.js" strategy="afterInteractive" />
           <Header />
           <Toaster />
           <SpeedInsights />
           <Suspense>{children}</Suspense>
+          <Script src="/script.js" />
         </ThemeProvider>
       </body>
     </html>
