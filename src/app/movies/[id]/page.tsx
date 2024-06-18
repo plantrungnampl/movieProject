@@ -117,7 +117,7 @@ export default function Detail({ params }: DetailProps) {
   };
 
   if (loading) {
-    return <Loading />;
+    return <Loading number={1} />;
   }
 
   if (error) {
