@@ -22,6 +22,12 @@ const TvDetail = ({
             width={300}
             height={400}
             className="object-cover rounded w-full h-full"
+            blurDataURL={`https://image.tmdb.org/t/p/w500${
+              tvDetail?.poster_path || tvDetail?.backdrop_path
+            }`}
+            layout="responsive"
+            placeholder="blur"
+            loading="lazy"
           />
           <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
             <span className="">

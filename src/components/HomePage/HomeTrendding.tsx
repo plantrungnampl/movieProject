@@ -44,10 +44,7 @@ export default function HomeTrendding({
                   <div className="">
                     <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl custom-scrollbar snap-x ">
                       {tab.result.map((item: any) => (
-                        <div
-                          key={item.id}
-                          className="flex-shrink-0 snap-center w-fit flex "
-                        >
+                        <div key={item.id}>
                           <CarouselItemComponent item={item} />
                         </div>
                       ))}

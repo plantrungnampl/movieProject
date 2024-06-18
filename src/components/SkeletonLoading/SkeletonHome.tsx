@@ -578,7 +578,7 @@ export const LoadingSkeletonHomeTrailer = () => (
         <div className="flex p-9 gap-4 overflow-x-auto overflow-y-hidden max-w-screen-xl snap-x transition-colors custom-scrollbar">
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -586,7 +586,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -594,7 +594,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -602,7 +602,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -610,7 +610,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -618,7 +618,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -626,7 +626,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -634,7 +634,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -642,7 +642,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -650,7 +650,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -658,7 +658,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -666,7 +666,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -674,7 +674,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -682,7 +682,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -690,7 +690,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -698,7 +698,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -706,7 +706,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -714,7 +714,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -722,7 +722,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>
@@ -730,7 +730,7 @@ export const LoadingSkeletonHomeTrailer = () => (
           </div>
           <div className="relative min-w-[400px]">
             <div className="min-w-[400px] relative">
-              <SVGSkeleton className="rounded-3xl object-contain w-[400px] h-[300px]" />
+              <SVGSkeleton className="rounded-3xl object-contain w-[300] h-[225px]" />
               <div className="absolute flex items-center justify-center">
                 <SVGSkeleton className="hidden" />
               </div>

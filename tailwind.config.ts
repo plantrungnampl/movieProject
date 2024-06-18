@@ -17,6 +17,9 @@ const config = {
       },
     },
     extend: {
+      height: {
+        customs: "calc(220px * 1.5)",
+      },
       gridTemplateColumns: {
         "auto-fit-minmax": "repeat(auto-fit, minmax(250px, 1fr))",
       },

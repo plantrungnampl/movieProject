@@ -23,11 +23,11 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
         transition: "background-image 0.3s ease-in-out",
       }}
     >
-      <div className="flex p-9 gap-4 overflow-x-auto overflow-y-hidden max-w-screen-xl snap-x transition-colors custom-scrollbar ">
+      <div className="flex p-9 gap-3 overflow-x-auto overflow-y-hidden max-w-screen-xl snap-x transition-colors custom-scrollbar ">
         {videos.map((movie: any) => (
           <div
             key={movie.id}
-            className="relative min-w-[400px] overflow-hidden bg-cover bg-no-repeat "
+            className="relative min-w-[300px]  overflow-hidden bg-cover bg-no-repeat "
             onMouseEnter={() =>
               setBackgroundImages(
                 `https://img.youtube.com/vi/${movie.videoKey}/0.jpg`
@@ -37,12 +37,12 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
             {movie.videoKey ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <div className="cursor-pointer min-w-[400px]  relative transition duration-300 ease-in-out hover:scale-110 ">
+                  <div className="cursor-pointer w-[300px]  relative transition duration-300 ease-in-out hover:scale-110 ">
                     <Image
                       src={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                       alt={movie.title || movie.name}
-                      width={400}
-                      height={300}
+                      width={300}
+                      height={400}
                       className="rounded-3xl object-cover w-full h-full "
                       priority={true}
                       layout="responsive"

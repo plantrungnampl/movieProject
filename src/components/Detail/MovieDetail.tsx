@@ -17,8 +17,12 @@ const MovieDetail = ({
           src={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
           alt={detail.title}
           width={300}
-          height={300}
+          height={400}
+          layout="responsive"
+          loading="lazy"
           className="object-cover rounded w-full h-full"
+          blurDataURL={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
+          placeholder="blur"
         />
       </div>
       <div className="max-w-[960px]">
