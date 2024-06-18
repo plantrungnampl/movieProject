@@ -9,22 +9,33 @@ import {
 } from "@/components/ui/accordion";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function Filter({
   setFilteredMovies,
   filteredMovies,
   selectedGenre,
   setSelectedGenre,
   handleSubmitFilter,
+  handleSort,
 }: {
   setFilteredMovies: any;
   filteredMovies: any;
   selectedGenre: any;
   setSelectedGenre: any;
   handleSubmitFilter: () => void;
+  handleSort: (order: string) => void;
 }) {
   const [genres, setGenres] = React.useState([]);
-  const [sortOrder, setSortOrder] = React.useState("asc");
-  const [selectedOrder, setSelectedOrder] = React.useState("asc");
+  // const [sortOrder, setSortOrder] = React.useState("vote_average.desc");
+  const [selectedOrder, setSelectedOrder] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
   // fetch genres
@@ -44,26 +55,38 @@ export default function Filter({
       setSelectedGenre([...selectedGenre, genId]);
     }
   };
-
-  const handleSubmitFilters = async () => {
-    setLoading(true);
-    await handleSubmitFilter();
-    setLoading(false);
-  };
-
-  const handleSort = (order: any) => {
-    const sortedMovies = [...filteredMovies].sort((a, b) => {
-      if (order === "asc") {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
-      }
-    });
-    setSortOrder(order);
-    setFilteredMovies(sortedMovies);
+  const handleSortChange = (order: string) => {
     setSelectedOrder(order);
+    // setSortOrder(order);
   };
-
+  // const handleSubmitFilters = async () => {
+  //   try {
+  //     setLoading(true);
+  //     handleSort(selectedOrder);
+  //     // handleSubmitFilter();
+  //   } catch (errror) {
+  //     console.log(errror);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const handleSubmitFilters = async () => {
+    try {
+      setLoading(true);
+      if (selectedGenre.length > 0 && selectedOrder) {
+        handleSort(selectedOrder);
+        handleSubmitFilter();
+      } else if (selectedGenre.length > 0) {
+        handleSubmitFilter();
+      } else if (selectedOrder) {
+        handleSort(selectedOrder);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <div className="container flex flex-col gap-4">
@@ -101,31 +124,40 @@ export default function Filter({
             <AccordionItem value="item-1">
               <AccordionTrigger>Sort</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-2">
-                <div className="flex gap-2">
-                  <input
-                    type="checkbox"
-                    id="asc"
-                    value="asc"
-                    onChange={(e: any) => handleSort(e.target.value)}
-                    checked={selectedOrder === "asc"}
-                  />
-                  <Label htmlFor="asc">A-Z</Label>
-                </div>
-                <div className="flex gap-2">
-                  <input
-                    type="checkbox"
-                    id="desc"
-                    value="desc"
-                    onChange={(e: any) => handleSort(e.target.value)}
-                    checked={selectedOrder === "desc"}
-                  />
-                  <Label htmlFor="desc">Z-A</Label>
-                </div>
+                <Select
+                  onValueChange={handleSortChange}
+                  // defaultValue={sortOrder}
+                  defaultValue=""
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select Sort" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Sort by</SelectLabel>
+                      <SelectItem value="name.asc">name A-Z</SelectItem>
+                      <SelectItem value="name.desc">name Z-A</SelectItem>
+                      <SelectItem value="popularity.desc">
+                        Popularity Descending
+                      </SelectItem>
+                      <SelectItem value="popularity.asc">
+                        Popularity Ascending
+                      </SelectItem>
+                      <SelectItem value="vote_average.desc">
+                        Rating Descending
+                      </SelectItem>
+                      <SelectItem value="vote_average.asc">
+                        Rating Ascending
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
         </div>
-        {selectedGenre.length > 0 && (
+
+        {(selectedGenre.length > 0 || selectedOrder) && (
           <Button
             className="w-full"
             onClick={handleSubmitFilters}

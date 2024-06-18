@@ -13,7 +13,6 @@ import {
   removeFromWatchList,
 } from "@/service/serives";
 import MovieDetail from "@/components/Detail/MovieDetail";
-export const revalidate = 3600;
 export default function Detail({ params }: DetailProps) {
   const { id } = params;
   const router = useRouter();

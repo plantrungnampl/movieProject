@@ -72,12 +72,13 @@ export const getTvArring = async (page: number | string) => {
 
 export const getTvArringByGenre = async (
   genreIds: string,
-  page: number
+  page: number,
+  sortOder: string
 ): Promise<tvArringResponse> => {
   try {
     const today = new Date().toISOString().split("T")[0];
     const res = await axios.get(
-      `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genreIds}&air_date.gte=${today}&air_date.lte=${today}`
+      `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genreIds}&air_date.gte=${today}&air_date.lte=${today}&sort_by=${sortOder}`
     );
 
     return {

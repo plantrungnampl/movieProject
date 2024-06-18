@@ -20,7 +20,7 @@ export async function generateMetadata(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US&append_to_response=videos,credits,images,keywords,release_dates,translations`
   );
   const movie = res.data;
-  console.log(movie);
+  // console.log(movie);
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
@@ -34,7 +34,7 @@ export async function generateMetadata(
       images: [
         movie.images?.posters?.[0]?.file_path
           ? `https://image.tmdb.org/t/p/original${movie.images.posters[0].file_path}`
-          : "/some-specific-page-image.jpg",
+          : "",
         ...previousImages,
       ],
     },
@@ -44,7 +44,7 @@ export async function generateMetadata(
       description: movie.overview,
       images: movie.images?.posters?.[0]?.file_path
         ? `https://image.tmdb.org/t/p/original${movie.images.posters[0].file_path}`
-        : "/some-specific-page-image.jpg",
+        : "",
     },
     other: {
       "script:ld+json": JSON.stringify({
@@ -53,7 +53,7 @@ export async function generateMetadata(
         name: movie.title,
         image: movie.images?.posters?.[0]?.file_path
           ? `https://image.tmdb.org/t/p/original${movie.images.posters[0].file_path}`
-          : "/some-specific-page-image.jpg",
+          : "",
         description: movie.overview,
         director: movie.credits?.crew
           ?.filter((crew: any) => crew.job === "Director")
@@ -82,23 +82,9 @@ export async function getDataMovieServer(id: string) {
     );
 
     const data = resMovie.data;
-    console.log(data);
     return data;
   } catch (error: any) {
     console.error("Fetching error: ", error.message);
     return { error: error.message };
   }
 }
-
-// export async function getDataTrailerServer() {
-//   try {
-//     const res = await axios.get(
-//       `https://api.themoviedb.org/3/movie/?api_key=${API_KEY}&language=en-US&append_to_response=videos,credits,images,keywords,release_dates,translations`
-//     );
-//     const data = res.data;
-//     return data;
-//   } catch (error: any) {
-//     console.error("Fetching error: ", error.message);
-//     return { error: error.message };
-//   }
-// }

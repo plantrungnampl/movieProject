@@ -1,19 +1,16 @@
+"use client";
 import { TopRateMovieProps } from "@/model/topRate";
-import React, { Fragment } from "react";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import Image from "next/legacy/image";
-import Link from "next/link";
+import React from "react";
 import RatingBar from "../RatingBar";
+import Image from "next/image";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import Link from "next/link";
 
-export default function PopularTvSeris({
-  PopularTv,
-}: {
-  PopularTv: TopRateMovieProps[];
-}) {
+export default function OnTvs({ onTv }: { onTv: TopRateMovieProps[] }) {
   return (
     <>
-      {PopularTv.length > 0 ? (
-        PopularTv.map((movieItem) => {
+      {onTv.length > 0 ? (
+        onTv.map((movieItem) => {
           const isMovie = movieItem.media_type === "movie";
           const href = isMovie
             ? `/movies/${movieItem.id}`
@@ -23,12 +20,14 @@ export default function PopularTvSeris({
               key={movieItem.id}
               className="relative flex flex-col bg-clip-border rounded-xl w-1/5"
             >
-              <Link href={href}>
+              <Link
+                // className="relative flex flex-col bg-clip-border rounded-xl w-1/5"
+                href={href}
+              >
                 <Card className="relative mx-4 mt-4 overflow-hidden bg-clip-border rounded-xl flex-card-cal">
-                  <div className=" relative">
+                  <div className=" relative h-[250px]">
                     <Image
                       priority={true}
-                      // loading="lazy
                       src={`https://image.tmdb.org/t/p/w500${
                         movieItem.poster_path || movieItem.backdrop_path
                       }`}
@@ -69,7 +68,7 @@ export default function PopularTvSeris({
         })
       ) : (
         <div className="flex w-full">
-          <h1>not found movie</h1>
+          <h1>not found</h1>
         </div>
       )}
     </>

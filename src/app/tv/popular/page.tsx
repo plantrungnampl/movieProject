@@ -1,6 +1,7 @@
 "use client";
 import { getTvByGenre } from "@/app/api/fetchFIlter";
 import { getDataPopular } from "@/app/api/getDataTopRate";
+import Loading from "@/app/loading";
 import Filter from "@/components/Filters/Filter";
 import TopRateMovies from "@/components/PopularTvSeri/PopularTvSeris";
 import { Button } from "@/components/ui/button";
@@ -17,13 +18,12 @@ export default function TopRate() {
   const [isFiltering, setIsFiltering] = React.useState(false);
   const [selectedGenre, setSelectedGenre] = React.useState<any[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [sortOder, setSortOrder] = React.useState("popularity.desc");
   const handleLoadMore = async () => {
     try {
-      // setLoading(true);
       const data = isFiltering
-        ? await getTvByGenre(selectedGenre.join(","), currentPage + 1)
+        ? await getTvByGenre(selectedGenre.join(","), currentPage + 1, sortOder)
         : await getDataPopular(currentPage + 1);
-      // setCurrentPage(currentPage + 1);
       setCurrentPage((prev) => prev + 1);
       setFilteredMovies((prev: any) => [...prev, ...data.results]);
     } catch (err) {
@@ -52,7 +52,7 @@ export default function TopRate() {
       setLoading(true);
       setIsFiltering(true);
       // setCurrentPage(1);
-      const tv = await getTvByGenre(selectedGenre.join(","), 1);
+      const tv = await getTvByGenre(selectedGenre.join(","), 1, sortOder);
       setFilteredMovies(tv.results);
       setTotalPage(tv.totalPages);
       setCurrentPage(1);
@@ -62,9 +62,28 @@ export default function TopRate() {
       setLoading(false);
     }
   };
-
+  const handleSort = async (order: string) => {
+    try {
+      setLoading(true);
+      setCurrentPage(1);
+      setIsFiltering(true);
+      const data = await getTvByGenre(selectedGenre.join(","), 1, order);
+      setSortOrder(order);
+      setFilteredMovies(data?.results);
+      setTotalPage(data?.totalPages);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   if (error) return <div>{error}</div>;
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   return (
     <>
       <div>
@@ -79,6 +98,7 @@ export default function TopRate() {
               setSelectedGenre={setSelectedGenre}
               // setIsFiltering={setIsFiltering}
               handleSubmitFilter={handleSubmitFilter}
+              handleSort={handleSort}
             />
           </div>
 

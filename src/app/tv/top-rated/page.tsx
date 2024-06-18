@@ -1,5 +1,8 @@
 "use client";
-import { getTopRateTv, getTopRateTvByGenre } from "@/app/api/getTopRatedTv";
+import {
+  getTopRateTv,
+  getTopRateTvByGenre,
+} from "@/app/api/tvShows/getTopRatedTv";
 import Loading from "@/app/loading";
 import Filter from "@/components/Filters/Filter";
 import TopRatedTv from "@/components/TopRateMovies/TopRateMovie";
@@ -13,20 +16,37 @@ export default function TopRated() {
   const [totalPage, setTotalPage] = useState(0);
   const [filterTopRated, setFilterTopRated] = useState<any[]>([]);
   const [selectGenres, setSelectedGenre] = useState<any[]>([]);
-  const [isFilterGenres, setIsFilterGenres] = useState(false);
+  const [isFilterGenres, setIsFilterGenres] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = React.useState("vote_count.desc");
+
   useEffect(() => {
     const fetchData = async () => {
-      const dataTopRated = await getTopRateTv(1);
-      setFilterTopRated(dataTopRated.results);
+      try {
+        setLoading(true);
+        const dataTopRated = await getTopRateTv(1);
+        setFilterTopRated(dataTopRated?.results);
+        setTotalPage(dataTopRated?.totalPages);
+        setCurrentPage(1);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
+
   const handleLoadMore = async () => {
     try {
       setLoading(true);
       const data = isFilterGenres
-        ? await getTopRateTvByGenre(selectGenres.toString(), currentPage + 1)
+        ? await getTopRateTvByGenre(
+            selectGenres.join(","),
+            currentPage + 1,
+            sortOrder
+          )
         : await getTopRateTv(currentPage + 1);
+
       setFilterTopRated([...filterTopRated, ...data.results]);
       setCurrentPage(currentPage + 1);
       setTotalPage(data.totalPages);
@@ -36,28 +56,44 @@ export default function TopRated() {
       setLoading(false);
     }
   };
+
   const handleSubmitFilter = async () => {
     try {
       setLoading(true);
       setIsFilterGenres(true);
+      const data = await getTopRateTvByGenre(
+        selectGenres.join(","),
+        1,
+        sortOrder
+      );
       setCurrentPage(1);
-      const data = await getTopRateTvByGenre(selectGenres.toString(), 1);
       setFilterTopRated(data?.results);
       setTotalPage(data.totalPages);
-      setCurrentPage(1);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
   if (error) return <h1>{error}</h1>;
-  // if (loading)
-  //   return (
-  //     <h1>
-  //       <Loading />
-  //     </h1>
-  //   );
+
+  const handleSort = async (order: string) => {
+    try {
+      setLoading(true);
+      setSortOrder(order);
+      setCurrentPage(1);
+      setIsFilterGenres(true);
+      const data = await getTopRateTvByGenre(selectGenres.join(","), 1, order);
+
+      setFilterTopRated(data?.results);
+      setTotalPage(data.totalPages);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <>
       <div>
@@ -72,6 +108,7 @@ export default function TopRated() {
               setSelectedGenre={setSelectedGenre}
               // setIsFiltering={setIsFiltering}
               handleSubmitFilter={handleSubmitFilter}
+              handleSort={handleSort}
             />
           </div>
 

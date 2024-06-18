@@ -1,27 +1,29 @@
 "use client";
-import { getTvArring, getTvArringByGenre } from "@/app/api/getTvAirring";
+import {
+  getTvArring,
+  getTvArringByGenre,
+} from "@/app/api/tvShows/getTvAirring";
 import Filter from "@/components/Filters/Filter";
 import TvArringTodays from "@/components/TvArringToday/TvArringTodays";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
+
 import React, { useEffect } from "react";
 
 export default function ArringToday() {
-  const [tvArringToday, setTvArringToday] = React.useState<any[]>([]);
   const [filteredMovies, setFilteredMovies] = React.useState<any[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [selectGenres, setSelectGenres] = React.useState([]);
   const [totalPage, setTotalPage] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [isFilteringGenre, setIsFilteringGenre] = React.useState(false);
+  const [sortOder, setSortOrder] = React.useState("name.asc");
 
   useEffect(() => {
     const fetchDataArringToday = async () => {
       const data = await getTvArring(1);
-      setTotalPage(data?.totalPages);
-      setCurrentPage(1);
       setFilteredMovies(data?.results);
+      setCurrentPage(1);
+      setTotalPage(data?.totalPages);
     };
     fetchDataArringToday();
   }, []);
@@ -33,7 +35,8 @@ export default function ArringToday() {
       setCurrentPage(1);
       const dataGenreFilter = await getTvArringByGenre(
         selectGenres.toString(),
-        1
+        1,
+        sortOder
       );
       setCurrentPage(1);
       setFilteredMovies(dataGenreFilter?.results);
@@ -49,13 +52,33 @@ export default function ArringToday() {
     try {
       setLoading(true);
       const data = isFilteringGenre
-        ? await getTvArringByGenre(selectGenres.toString(), currentPage + 1)
+        ? await getTvArringByGenre(
+            selectGenres.toString(),
+            currentPage + 1,
+            sortOder
+          )
         : await getTvArring(currentPage + 1);
       setCurrentPage((pre) => pre + 1);
       setTotalPage(data?.totalPages);
       setFilteredMovies([...filteredMovies, ...data?.results]);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleSort = async (order: string) => {
+    try {
+      setLoading(true);
+      setSortOrder(order);
+      setCurrentPage(1);
+      setIsFilteringGenre(true);
+      const data = await getTvArringByGenre("", 1, order);
+
+      setFilteredMovies(data?.results);
+      setTotalPage(data.totalPages);
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -73,6 +96,7 @@ export default function ArringToday() {
                 handleSubmitFilter={handleSubmitFilter}
                 selectedGenre={selectGenres}
                 filteredMovies={filteredMovies}
+                handleSort={handleSort}
               />
             </div>
             <div className=" w-full flex flex-wrap">
