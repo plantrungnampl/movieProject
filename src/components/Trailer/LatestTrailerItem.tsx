@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import TrailerDialog from "../TrailerDialog";
 import { FaPlay } from "react-icons/fa";
+import Head from "next/head";
 
 export default function LatestTrailerItem({ videos }: { videos: any[] }) {
   const [backgroundImages, setBackgroundImages] = React.useState("");
@@ -23,6 +24,16 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
         transition: "background-image 0.3s ease-in-out",
       }}
     >
+      <Head>
+        {videos.map((movie: any) => (
+          <link
+            key={movie.id}
+            rel="preload"
+            href={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
+            as="image"
+          />
+        ))}
+      </Head>
       <div className="flex p-9 gap-3 overflow-x-auto overflow-y-hidden max-w-screen-xl snap-x transition-colors custom-scrollbar ">
         {videos.map((movie: any) => (
           <div
@@ -48,6 +59,9 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
                       layout="responsive"
                       placeholder="blur"
                       blurDataURL={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
+                      decoding="async"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
+                      loading="eager"
                     />
                     <div className="absolute inset-0 flex items-center justify-center transition duration-300 ease-in-out hover:scale-150">
                       <FaPlay className="text-white text-6xl opacity-75" />

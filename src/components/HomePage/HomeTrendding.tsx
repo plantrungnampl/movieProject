@@ -1,9 +1,6 @@
 "use client";
-import Loading from "@/app/loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import dynamic from "next/dynamic";
-import { Skeleton } from "../SkeletonLoading/Skeleton";
-import { LoadingSkeleton } from "../SkeletonLoading/SkeletonLoading";
 import { LoadingSkeletonCard } from "./LoadingSkeletonCard";
 const CarouselItemComponent = dynamic(
   () => import("@/components/CarouselItemComponent"),

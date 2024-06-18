@@ -5,12 +5,20 @@ import Link from "next/link";
 import { IItem } from "@/model/types";
 import RatingBar from "./RatingBar";
 import { LoadingSkeleton } from "./SkeletonLoading/SkeletonLoading";
+import Head from "next/head";
 export default function CarouselItemComponent({ item }: { item: IItem }) {
   const isMovie = item.media_type === "movie";
 
   const href = isMovie ? `/movies/${item.id}` : `/tv/${item.id}`;
   return (
     <>
+      <Head>
+        <link
+          rel="preload"
+          href={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+          as="image"
+        />
+      </Head>
       <Link className="flex" href={href}>
         <Card className="flex-card-cal flex flex-col justify-start items-start ">
           <div className=" w-[200px] min-h-[200px] h-customs relative   ">
@@ -23,7 +31,10 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
               layout="responsive"
               priority={true}
               placeholder="blur"
+              loading="eager"
+              decoding="async"
               blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
             />
             <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
               <span>
