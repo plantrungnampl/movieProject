@@ -211,7 +211,7 @@ const LoginForm = () => {
 };
 
 const LoginFormSuspense = () => (
-  <Suspense fallback={<Loading />}>
+  <Suspense fallback={<Loading number={3} />}>
     <LoginForm />
   </Suspense>
 );

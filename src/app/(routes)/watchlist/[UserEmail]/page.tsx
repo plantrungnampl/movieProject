@@ -38,7 +38,7 @@ function FavoriteMovie() {
 
   return (
     <div>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading number={20} />}>
         {watchListUser.length > 0 ? (
           <div>
             <h1 className="font-bold text-2xl">My Watchlist </h1>
@@ -50,7 +50,7 @@ function FavoriteMovie() {
           </div>
         ) : (
           <div>
-            <Loading />
+            <Loading number={20} />
           </div>
         )}
       </Suspense>
@@ -60,7 +60,7 @@ function FavoriteMovie() {
 function FavWp() {
   return (
     <>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading number={20} />}>
         <FavoriteMovie />
       </Suspense>
     </>

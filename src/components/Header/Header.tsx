@@ -184,7 +184,7 @@ export default function Header() {
           {/* eng */}
         </div>
         <div className="w-1/2 ">
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<Loading number={1} />}>
             <SearchBox />
           </Suspense>
         </div>

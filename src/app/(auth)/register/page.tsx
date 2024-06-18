@@ -168,7 +168,7 @@ const RegisterPage = () => {
 };
 
 const Register = () => (
-  <Suspense fallback={<Loading />}>
+  <Suspense fallback={<Loading number={1} />}>
     <RegisterPage />
   </Suspense>
 );

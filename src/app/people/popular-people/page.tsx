@@ -47,7 +47,7 @@ export default function PopularPeople({
 
         <div className="flex flex-wrap gap-3">
           {loading ? (
-            <Loading />
+            <Loading number={20} />
           ) : (
             people.map((item: any) => (
               <div key={item.id}>
@@ -75,7 +75,7 @@ export default function PopularPeople({
             ))
           )}
           <div className="flex justify-between mt-4">
-            <Suspense key={currentPage} fallback={<Loading />}>
+            <Suspense key={currentPage} fallback={<Loading number={1} />}>
               <Paginations
                 currentPage={currentPage}
                 setPage={setPages}

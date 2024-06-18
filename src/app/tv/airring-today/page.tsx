@@ -3,6 +3,7 @@ import {
   getTvArring,
   getTvArringByGenre,
 } from "@/app/api/tvShows/getTvAirring";
+import Loading from "@/app/loading";
 // import Filter from "@/components/Filters/Filter";
 // import TvArringTodays from "@/components/TvArringToday/TvArringTodays";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,7 @@ import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 const TvArringTodays = dynamic(
   () => import("@/components/TvArringToday/TvArringTodays"),
-  { ssr: false }
+  { ssr: false, loading: () => <Loading number={20} /> }
 );
 const Filter = dynamic(() => import("@/components/Filters/Filter"), {
   ssr: false,
