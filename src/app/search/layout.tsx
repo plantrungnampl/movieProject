@@ -71,7 +71,7 @@ export default function Searchlayout({
               </li>
             </ul>
           </div>
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Suspense fallback={<Loading number={7} />}>{children}</Suspense>
         </div>
       </MaxWidthWrapper>
     </>

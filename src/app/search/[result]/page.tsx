@@ -9,7 +9,6 @@ import axios from "axios";
 import Image from "next/legacy/image";
 import Link from "next/link";
 import { notFound, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 const API_KEY = process.env.API_KEY;
 // result is type: "movie" | "tv" | "person" | "collection" | "company" | "keyword"
