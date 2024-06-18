@@ -1,75 +1,44 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import React, { Suspense, useEffect } from "react";
-import Loading from "./loading";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+"use client";
+import React, { useEffect, useState } from "react";
 import { fetchData } from "./api/fetchData";
-import { Metadata } from "next";
 import dynamic from "next/dynamic";
-export const metadata: Metadata = {
-  title: "Home ",
-  description: "This is a movies project for eductional purposes",
-};
-const CarouselItemComponent = dynamic(
-  () => import("@/components/CarouselItemComponent"),
-  {
-    suspense: true,
-  }
-);
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+
 const LastestTrailer = dynamic(
   () => import("@/components/Trailer/LastestTrailer"),
   {
-    suspense: true,
+    ssr: false,
   }
 );
 
-async function Home() {
-  const Data = await fetchData();
+// Dynamic import for HomeTrendding
+const HomeTrendding = dynamic(
+  () => import("@/components/HomePage/HomeTrendding"),
+  {
+    ssr: false,
+    // loading: () => <LoadingSkeleton />,
+  }
+);
 
-  return (
-    <>
-      <div>
-        <Tabs defaultValue="Today">
-          {/* map tap */}
-          <div className="flex gap-5 items-center mb-3 ">
-            <p className="text-xl p-1 rounded">Trending</p>
-            <TabsList>
-              {Data.map((tab) => (
-                <TabsTrigger key={tab.value} value={tab.value}>
-                  {tab.value}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-          {/* map data */}
+export default function Home() {
+  const [data, setData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-          {Data.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value}>
-              <div className="">
-                <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl snap-x ">
-                  {tab.result.map((item: any) => (
-                    <div
-                      key={item.id}
-                      className="flex-shrink-0 snap-center w-fit flex "
-                    >
-                      <CarouselItemComponent item={item} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </div>
-    </>
-  );
-}
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      const result = await fetchData();
+      setData(result);
+      setIsLoading(false);
+    };
+    getData();
+  }, []);
 
-function HomePageWrapper() {
   return (
     <>
       <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 ">
         <div>
-          <Home />
+          <HomeTrendding data={data} isLoading={isLoading} />
           <div className="mt-14">
             <LastestTrailer />
           </div>
@@ -78,5 +47,3 @@ function HomePageWrapper() {
     </>
   );
 }
-
-export default HomePageWrapper;

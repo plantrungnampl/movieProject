@@ -74,15 +74,15 @@ export default function PopularPeople({
               </div>
             ))
           )}
-          <div className="flex justify-between mt-4">
-            <Suspense key={currentPage} fallback={<Loading number={1} />}>
-              <Paginations
-                currentPage={currentPage}
-                setPage={setPages}
-                totalPages={totalPages}
-              />
-            </Suspense>
-          </div>
+        </div>
+        <div className="flex justify-between mt-4">
+          <Suspense key={currentPage} fallback={<Loading number={1} />}>
+            <Paginations
+              currentPage={currentPage}
+              setPage={setPages}
+              totalPages={totalPages}
+            />
+          </Suspense>
         </div>
       </div>
     </>

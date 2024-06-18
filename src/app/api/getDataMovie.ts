@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Metadata, ResolvingMetadata } from "next";
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 interface Props {
   params: {
     id: string;

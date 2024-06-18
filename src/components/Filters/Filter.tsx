@@ -59,17 +59,7 @@ export default function Filter({
     setSelectedOrder(order);
     // setSortOrder(order);
   };
-  // const handleSubmitFilters = async () => {
-  //   try {
-  //     setLoading(true);
-  //     handleSort(selectedOrder);
-  //     // handleSubmitFilter();
-  //   } catch (errror) {
-  //     console.log(errror);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+
   const handleSubmitFilters = async () => {
     try {
       setLoading(true);

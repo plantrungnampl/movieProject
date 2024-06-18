@@ -22,7 +22,7 @@ export async function getSerVerData(userId: string) {
 // get data today and this week
 // fetchData.js
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function fetchData() {
@@ -66,38 +66,6 @@ export const getPopularMovies = async () => {
     return [];
   }
 };
-// export const fetchAllData = async () => {
-//   try {
-//     const getInthreatMovie = await axios.get(
-//       `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`,
-//       {
-//         timeout: 3000,
-//       }
-//     );
-//     const getLatestTrailers = await axios.get(
-//       `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`,
-//       {
-//         timeout: 3000,
-//       }
-//     );
-//     const [inThreatMovie, latestTrailers] = await Promise.all([
-//       getInthreatMovie.data,
-//       getLatestTrailers.data,
-//     ]);
-//     if (getInthreatMovie.status !== 200 || getLatestTrailers.status !== 200) {
-//       throw new Error("Failed to fetch data");
-//     }
-//     const Popular = latestTrailers.results;
-//     const ThreatMovie = inThreatMovie.results;
-//     const tabData = [
-//       { value: "Popular", result: Popular },
-//       { value: "In theaters", result: ThreatMovie },
-//     ];
-//     return tabData;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 export const getVideoDetails = async (id: string | number) => {
   try {

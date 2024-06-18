@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import React, { useCallback } from "react";
 import {
   Pagination,
@@ -12,7 +11,6 @@ import {
 } from "@/components/ui/pagination";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
 interface PaginationsProps {
   currentPage: number;
   setPage: (page: number) => void;

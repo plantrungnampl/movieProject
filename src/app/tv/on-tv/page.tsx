@@ -1,18 +1,16 @@
 "use client";
 import { getOnAirTv, getOnAirTvByGenre } from "@/app/api/tvShows/fetchOnAir";
 import Loading from "@/app/loading";
-// import Filter from "@/components/Filters/Filter";
-// import OnTvs from "@/components/OnTv/OnTvs";
+import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 const OnTvs = dynamic(() => import("@/components/OnTv/OnTvs"), {
   ssr: false,
-  loading: () => <Loading number={20} />,
+  loading: () => <LoadingSkeleton />,
 });
 const Filter = dynamic(() => import("@/components/Filters/Filter"), {
   ssr: false,
-  loading: () => <Loading number={20} />,
 });
 export default function OnTv() {
   const [error, setError] = React.useState<string>("");
@@ -88,6 +86,9 @@ export default function OnTv() {
       setLoading(false);
     }
   };
+  if (error) {
+    return <h1>Error: {error}</h1>;
+  }
   return (
     <>
       <div>

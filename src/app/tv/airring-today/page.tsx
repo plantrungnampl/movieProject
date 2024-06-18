@@ -4,15 +4,14 @@ import {
   getTvArringByGenre,
 } from "@/app/api/tvShows/getTvAirring";
 import Loading from "@/app/loading";
-// import Filter from "@/components/Filters/Filter";
-// import TvArringTodays from "@/components/TvArringToday/TvArringTodays";
+import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 
 import React, { useEffect } from "react";
 const TvArringTodays = dynamic(
   () => import("@/components/TvArringToday/TvArringTodays"),
-  { ssr: false, loading: () => <Loading number={20} /> }
+  { ssr: false, loading: () => <LoadingSkeleton /> }
 );
 const Filter = dynamic(() => import("@/components/Filters/Filter"), {
   ssr: false,
@@ -95,7 +94,7 @@ export default function ArringToday() {
     <>
       <div>
         <div>
-          <h2>Arring Today</h2>
+          <h2 className="font-bold text-2xl">Arring Today</h2>
           <div className="flex">
             <div className="shadow-lg p-3 w-1/3 ">
               <Filter

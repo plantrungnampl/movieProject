@@ -1,5 +1,5 @@
 "use server";
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 export async function getDataMovieTv(id: string) {
   if (!id) {
     return { error: "ID is missing" };

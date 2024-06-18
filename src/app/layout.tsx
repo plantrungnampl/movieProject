@@ -4,15 +4,13 @@ import { Source_Sans_3 } from "@next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
-import Loading from "./loading";
+// import Script from "next/script";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
-import { Analytics } from "@vercel/analytics/react";
-
-// const inter = Inter({ subsets: ["latin"] });
 const sourceSansPro = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,6 +32,8 @@ export default function RootLayout({
           content={metadata.description ?? "default description"}
         />
       </head>
+
+      {/* <Script src="/head-script.js" strategy="beforeInteractive" /> */}
       <body className={sourceSansPro.className}>
         <ThemeProvider
           attribute="class"
@@ -41,19 +41,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* <Script src="/body-script.js" strategy="afterInteractive" /> */}
           <Header />
           <Toaster />
-          <Analytics />
           <SpeedInsights />
-          <Suspense
-            fallback={
-              <div className="loading mt-[62px]">
-                <Loading number={Math.floor(Math.random() * 100) + 10} />
-              </div>
-            }
-          >
-            {children}
-          </Suspense>
+          <Suspense>{children}</Suspense>
         </ThemeProvider>
       </body>
     </html>

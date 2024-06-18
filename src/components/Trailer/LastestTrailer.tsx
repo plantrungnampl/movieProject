@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import Loading from "@/app/loading";
 
 import {
   getInTheatersMovies,
@@ -9,10 +8,12 @@ import {
   getVideoDetails,
 } from "@/app/api/fetchData";
 import dynamic from "next/dynamic";
+import { LoadingSkeletonHomeTrailer } from "../SkeletonLoading/SkeletonHome";
 const LatestTrailerItem = dynamic(
   () => import("@/components/Trailer/LatestTrailerItem"),
   {
     suspense: true,
+    loading: () => <LoadingSkeletonHomeTrailer />,
   }
 );
 // 1.create []
@@ -73,14 +74,14 @@ const LastestTrailer = () => {
 
         <TabsContent value="Popular">
           {loading ? (
-            <Loading number={20} />
+            <LoadingSkeletonHomeTrailer />
           ) : (
             activeTab === "Popular" && <LatestTrailerItem videos={videos} />
           )}
         </TabsContent>
         <TabsContent value="In theaters">
           {loading ? (
-            <Loading number={20} />
+            <LoadingSkeletonHomeTrailer />
           ) : (
             activeTab === "In theaters" && <LatestTrailerItem videos={videos} />
           )}

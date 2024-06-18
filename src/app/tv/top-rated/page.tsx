@@ -3,6 +3,7 @@ import {
   getTopRateTv,
   getTopRateTvByGenre,
 } from "@/app/api/tvShows/getTopRatedTv";
+import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 // import Filter from "@/components/Filters/Filter";
 // import TopRatedTv from "@/components/TopRateMovies/TopRateMovie";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ const TopRatedTv = dynamic(
   () => import("@/components/TopRateMovies/TopRateMovie"),
   {
     ssr: false,
+    loading: () => <LoadingSkeleton />,
   }
 );
 export default function TopRated() {

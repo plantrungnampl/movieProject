@@ -1,5 +1,5 @@
 import { TopRateMovieProps } from "@/model/topRate";
-import React, { Fragment } from "react";
+import React from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/legacy/image";
 import Link from "next/link";

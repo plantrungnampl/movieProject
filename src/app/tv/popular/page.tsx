@@ -2,6 +2,7 @@
 import { getTvByGenre } from "@/app/api/fetchFIlter";
 import { getDataPopular } from "@/app/api/getDataTopRate";
 import Loading from "@/app/loading";
+import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 // import Filter from "@/components/Filters/Filter";
 import { Button } from "@/components/ui/button";
 import { TopRateMovieProps } from "@/model/topRate";
@@ -13,6 +14,7 @@ const TopRateMovies = dynamic(
   () => import("@/components/PopularTvSeri/PopularTvSeris"),
   {
     ssr: false,
+    loading: () => <LoadingSkeleton />,
   }
 );
 const Filter = dynamic(() => import("@/components/Filters/Filter"), {
@@ -88,12 +90,7 @@ export default function TopRate() {
     }
   };
   if (error) return <div>{error}</div>;
-  if (loading)
-    return (
-      <div className="">
-        <Loading number={filteredMovies.length} />
-      </div>
-    );
+
   return (
     <>
       <div>
