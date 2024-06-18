@@ -20,7 +20,7 @@ function NotFound() {
 }
 function NotFoundPage() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading number={1} />}>
       <NotFound />
     </Suspense>
   );
