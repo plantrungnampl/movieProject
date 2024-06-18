@@ -27,16 +27,10 @@ const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function fetchData() {
   const trendingWeek = await axios.get(
-    `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`,
-    {
-      timeout: 3000,
-    }
+    `${BASE_URL}/trending/all/week?api_key=${API_KEY}&language=en-US&page=1`
   );
   const trendingDay = await axios.get(
-    `${BASE_URL}/trending/all/day?api_key=${API_KEY}&language=en-US&page=1`,
-    {
-      timeout: 3000,
-    }
+    `${BASE_URL}/trending/all/day?api_key=${API_KEY}&language=en-US&page=1`
   );
   const [trendingWeeks, trendingDays] = await Promise.all([
     trendingWeek.data,

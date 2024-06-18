@@ -16,7 +16,7 @@ export default function WatchLists({ item }: { item: IItem }) {
           <Image
             src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
             width={200}
-            height={200}
+            height={300}
             alt="card-image"
             className="object-cover w-full h-full"
           />

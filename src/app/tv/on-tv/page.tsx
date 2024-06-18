@@ -1,11 +1,19 @@
 "use client";
 import { getOnAirTv, getOnAirTvByGenre } from "@/app/api/tvShows/fetchOnAir";
-import Filter from "@/components/Filters/Filter";
-import OnTvs from "@/components/OnTv/OnTvs";
+import Loading from "@/app/loading";
+// import Filter from "@/components/Filters/Filter";
+// import OnTvs from "@/components/OnTv/OnTvs";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
-
+const OnTvs = dynamic(() => import("@/components/OnTv/OnTvs"), {
+  ssr: false,
+  loading: () => <Loading number={20} />,
+});
+const Filter = dynamic(() => import("@/components/Filters/Filter"), {
+  ssr: false,
+  loading: () => <Loading number={20} />,
+});
 export default function OnTv() {
   const [error, setError] = React.useState<string>("");
   const [loading, setLoading] = React.useState(false);

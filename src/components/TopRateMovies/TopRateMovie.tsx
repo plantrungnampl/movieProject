@@ -72,7 +72,7 @@ export default function TopRatedTv({
         })
       ) : (
         <div className="flex w-full">
-          <Loading />
+          <Loading number={topRates.length} />
           <h1>not found</h1>
         </div>
       )}

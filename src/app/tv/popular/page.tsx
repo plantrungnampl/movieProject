@@ -2,12 +2,22 @@
 import { getTvByGenre } from "@/app/api/fetchFIlter";
 import { getDataPopular } from "@/app/api/getDataTopRate";
 import Loading from "@/app/loading";
-import Filter from "@/components/Filters/Filter";
-import TopRateMovies from "@/components/PopularTvSeri/PopularTvSeris";
+// import Filter from "@/components/Filters/Filter";
 import { Button } from "@/components/ui/button";
 import { TopRateMovieProps } from "@/model/topRate";
-import { useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
+// import TopRateMovies from "@/components/PopularTvSeri/PopularTvSeris";
+
+const TopRateMovies = dynamic(
+  () => import("@/components/PopularTvSeri/PopularTvSeris"),
+  {
+    ssr: false,
+  }
+);
+const Filter = dynamic(() => import("@/components/Filters/Filter"), {
+  ssr: false,
+});
 export default function TopRate() {
   const [filteredMovies, setFilteredMovies] = React.useState<
     TopRateMovieProps[]
@@ -80,8 +90,8 @@ export default function TopRate() {
   if (error) return <div>{error}</div>;
   if (loading)
     return (
-      <div>
-        <Loading />
+      <div className="">
+        <Loading number={filteredMovies.length} />
       </div>
     );
   return (
@@ -96,7 +106,6 @@ export default function TopRate() {
               setFilteredMovies={setFilteredMovies}
               selectedGenre={selectedGenre}
               setSelectedGenre={setSelectedGenre}
-              // setIsFiltering={setIsFiltering}
               handleSubmitFilter={handleSubmitFilter}
               handleSort={handleSort}
             />

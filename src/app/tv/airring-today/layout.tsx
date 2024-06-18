@@ -8,7 +8,7 @@ export default function DetailMovieslayout({
 }) {
   return (
     <div>
-      <Suspense fallback={<Loading />}>{children}</Suspense>
+      <Suspense fallback={<Loading number={20} />}>{children}</Suspense>
     </div>
   );
 }

@@ -73,14 +73,14 @@ const LastestTrailer = () => {
 
         <TabsContent value="Popular">
           {loading ? (
-            <Loading />
+            <Loading number={20} />
           ) : (
             activeTab === "Popular" && <LatestTrailerItem videos={videos} />
           )}
         </TabsContent>
         <TabsContent value="In theaters">
           {loading ? (
-            <Loading />
+            <Loading number={20} />
           ) : (
             activeTab === "In theaters" && <LatestTrailerItem videos={videos} />
           )}

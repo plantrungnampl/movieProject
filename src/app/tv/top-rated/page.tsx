@@ -3,12 +3,20 @@ import {
   getTopRateTv,
   getTopRateTvByGenre,
 } from "@/app/api/tvShows/getTopRatedTv";
-import Loading from "@/app/loading";
-import Filter from "@/components/Filters/Filter";
-import TopRatedTv from "@/components/TopRateMovies/TopRateMovie";
+// import Filter from "@/components/Filters/Filter";
+// import TopRatedTv from "@/components/TopRateMovies/TopRateMovie";
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-
+const Filter = dynamic(() => import("@/components/Filters/Filter"), {
+  ssr: false,
+});
+const TopRatedTv = dynamic(
+  () => import("@/components/TopRateMovies/TopRateMovie"),
+  {
+    ssr: false,
+  }
+);
 export default function TopRated() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

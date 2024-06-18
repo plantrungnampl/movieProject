@@ -67,18 +67,14 @@ async function Home() {
 function HomePageWrapper() {
   return (
     <>
-      <Suspense fallback={<Loading />}>
-        <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 ">
-          <div>
-            <Home />
-            <div className="mt-14">
-              <Suspense fallback={<Loading />}>
-                <LastestTrailer />
-              </Suspense>
-            </div>
+      <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 ">
+        <div>
+          <Home />
+          <div className="mt-14">
+            <LastestTrailer />
           </div>
-        </MaxWidthWrapper>
-      </Suspense>
+        </div>
+      </MaxWidthWrapper>
     </>
   );
 }

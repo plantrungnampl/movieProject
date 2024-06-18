@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Loading from "@/app/loading";
 
 import { getDataMovieTv } from "@/app/api/getMovieTv";
@@ -60,9 +60,9 @@ export default function Detail({ params }: DetailProps) {
     return () => unsubscribe();
   }, [id]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading number={1} />;
+  // }
 
   if (error) {
     return <div>Something went wrong: {error} </div>;
@@ -120,10 +120,12 @@ export default function Detail({ params }: DetailProps) {
   };
 
   return (
-    <TvDetail
-      watchList={watchList}
-      tvDetail={detail}
-      handleBookmarkClick={handleBookmarkClick}
-    />
+    <Suspense fallback={<Loading number={TvDetail.length} />}>
+      <TvDetail
+        watchList={watchList}
+        tvDetail={detail}
+        handleBookmarkClick={handleBookmarkClick}
+      />
+    </Suspense>
   );
 }

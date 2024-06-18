@@ -45,7 +45,15 @@ export default function RootLayout({
           <Toaster />
           <Analytics />
           <SpeedInsights />
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Suspense
+            fallback={
+              <div className="loading mt-[62px]">
+                <Loading number={Math.floor(Math.random() * 100) + 10} />
+              </div>
+            }
+          >
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

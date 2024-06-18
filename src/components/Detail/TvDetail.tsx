@@ -56,3 +56,4 @@ const TvDetail = ({
 };
 
 export default TvDetail;
+export const revalidate = 60;

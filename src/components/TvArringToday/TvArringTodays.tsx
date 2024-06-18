@@ -73,7 +73,7 @@ export default function TvArringTodays({
         })
       ) : (
         <div className="flex w-full">
-          <Loading />
+          <Loading number={filteredMovies.length} />
           <h1>not found</h1>
         </div>
       )}

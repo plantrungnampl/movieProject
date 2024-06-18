@@ -3,12 +3,19 @@ import {
   getTvArring,
   getTvArringByGenre,
 } from "@/app/api/tvShows/getTvAirring";
-import Filter from "@/components/Filters/Filter";
-import TvArringTodays from "@/components/TvArringToday/TvArringTodays";
+// import Filter from "@/components/Filters/Filter";
+// import TvArringTodays from "@/components/TvArringToday/TvArringTodays";
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
 
 import React, { useEffect } from "react";
-
+const TvArringTodays = dynamic(
+  () => import("@/components/TvArringToday/TvArringTodays"),
+  { ssr: false }
+);
+const Filter = dynamic(() => import("@/components/Filters/Filter"), {
+  ssr: false,
+});
 export default function ArringToday() {
   const [filteredMovies, setFilteredMovies] = React.useState<any[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
