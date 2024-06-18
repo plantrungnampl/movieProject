@@ -48,19 +48,18 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
             {movie.videoKey ? (
               <Dialog>
                 <DialogTrigger asChild>
-                  <div className="cursor-pointer w-[300px]  relative transition duration-300 ease-in-out hover:scale-110 ">
+                  <div className="cursor-pointer w-full h-auto relative transition duration-300 ease-in-out hover:scale-110 ">
                     <Image
                       src={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                       alt={movie.title || movie.name}
                       width={300}
                       height={400}
-                      className="rounded-3xl object-cover w-full h-full "
+                      className="rounded-3xl w-auto h-auto object-cover"
                       priority={true}
-                      layout="responsive"
                       placeholder="blur"
                       blurDataURL={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                       decoding="async"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
                       loading="eager"
                     />
                     <div className="absolute inset-0 flex items-center justify-center transition duration-300 ease-in-out hover:scale-150">

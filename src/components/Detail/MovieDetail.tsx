@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { FaHeart } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import TrailerDialog from "@/components/TrailerDialog";
@@ -18,12 +18,15 @@ const MovieDetail = ({
           alt={detail.title}
           width={300}
           height={400}
-          layout="responsive"
           loading="lazy"
           className="object-cover rounded w-full h-full"
           blurDataURL={`https://image.tmdb.org/t/p/w500${detail.poster_path}`}
           placeholder="blur"
-        />
+          sizes="100vw"
+          style={{
+            width: "100%",
+            height: "auto"
+          }} />
       </div>
       <div className="max-w-[960px]">
         <h2>{detail.title || detail.original_title}</h2>

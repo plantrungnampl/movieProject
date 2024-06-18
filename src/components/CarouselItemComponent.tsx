@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
 import { IItem } from "@/model/types";
@@ -28,13 +28,16 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
               className="object-cover w-full h-full rounded-t-lg  "
               width={200}
               height={300}
-              layout="responsive"
               priority={true}
               placeholder="blur"
               loading="eager"
               decoding="async"
               blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
             />
             <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
               <span>

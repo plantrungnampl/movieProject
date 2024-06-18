@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, Suspense } from "react";
 import Loading from "@/app/loading";
-
 import { getDataMovieTv } from "@/app/api/getMovieTv";
 import { DetailProps } from "../../../model/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -10,7 +9,6 @@ import {
   ifExitItem,
   removeFromWatchList,
 } from "@/service/serives";
-import { isLoggedIn } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "@/utils/toastUtil";
 import TvDetail from "@/components/Detail/TvDetail";
@@ -40,7 +38,6 @@ export default function Detail({ params }: DetailProps) {
             video.site === "YouTube"
         );
         setDetail({ ...data, trailerKey: trailer?.key || null });
-        // setDetail(data);
       }
       setLoading(false);
     }

@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { FaHeart } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import TrailerDialog from "@/components/TrailerDialog";
@@ -25,10 +25,13 @@ const TvDetail = ({
             blurDataURL={`https://image.tmdb.org/t/p/w500${
               tvDetail?.poster_path || tvDetail?.backdrop_path
             }`}
-            layout="responsive"
             placeholder="blur"
             loading="lazy"
-          />
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto"
+            }} />
           <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
             <span className="">
               <RatingBar rating={Math.round(tvDetail.vote_average * 10)} />

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 const SearchResults = ({
@@ -41,7 +41,10 @@ const SearchResults = ({
                     alt={item.original_title || item.name}
                     width={300}
                     height={300}
-                  />
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto"
+                    }} />
                 </div>
               </CardHeader>
               <CardContent className="flex flex-col justify-center gap-2">

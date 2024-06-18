@@ -31,7 +31,6 @@ export default function RootLayout({
           name="description"
           content={metadata.description ?? "default description"}
         />
-        <Script src="/head-script.js" strategy="beforeInteractive" />
       </head>
 
       <body className={sourceSansPro.className}>
@@ -41,12 +40,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Script src="/body-script.js" strategy="afterInteractive" />
           <Header />
           <Toaster />
           <SpeedInsights />
           <Suspense>{children}</Suspense>
-          <Script src="/script.js" />
         </ThemeProvider>
       </body>
     </html>

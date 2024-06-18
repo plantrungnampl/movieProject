@@ -1,6 +1,6 @@
 import React from "react";
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Button } from "../ui/button";
 import { IItem } from "@/model/types";
 import Link from "next/link";
@@ -19,7 +19,10 @@ export default function WatchLists({ item }: { item: IItem }) {
             height={300}
             alt="card-image"
             className="object-cover w-full h-full"
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </div>
         <div className="p-6">
           <div className="bg-black w-fit rounded-3xl">
