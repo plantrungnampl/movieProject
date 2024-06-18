@@ -37,7 +37,7 @@ export default function TopRatedTv({
                       }`}
                       alt={movieItem.original_name || movieItem.name}
                       className="object-cover rounded w-full h-full"
-                      width={500}
+                      width={400}
                       height={600}
                       blurDataURL={`https://image.tmdb.org/t/p/w500${
                         movieItem.poster_path || movieItem.backdrop_path

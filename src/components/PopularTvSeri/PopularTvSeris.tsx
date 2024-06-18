@@ -21,7 +21,7 @@ export default function PopularTvSeris({
           return (
             <div
               key={movieItem.id}
-              className="relative flex flex-col bg-clip-border rounded-xl w-1/5"
+              className="relative flex flex-col bg-clip-border rounded-xl w-1/5 "
             >
               <Link href={href}>
                 <Card className="relative mx-4 mt-4 overflow-hidden bg-clip-border rounded-xl flex-card-cal">
@@ -34,7 +34,7 @@ export default function PopularTvSeris({
                       }`}
                       alt={movieItem.original_name || movieItem.name}
                       className="object-cover rounded w-full h-full"
-                      width={500}
+                      width={400}
                       height={600}
                       blurDataURL={`https://image.tmdb.org/t/p/w500${
                         movieItem.poster_path || movieItem.backdrop_path
