@@ -31,8 +31,8 @@ const nextConfig = {
             7680,
 
             921
-        ], // Các kích thước hình ảnh được tối ưu hóa
-        formats: ['image/avif', 'image/webp'],
+        ],
+        // formats: ['image/avif', 'image/webp'],
 
 
 
