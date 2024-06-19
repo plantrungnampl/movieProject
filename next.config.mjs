@@ -13,6 +13,7 @@ const nextConfig = {
             'images.remotePatterns.com',
             'img.youtube.com',
             'images.unsplash.com',
+            'movie-project-gilt.vercel.app',
         ],
         loader: 'default',
         path: '/_next/image',
@@ -32,7 +33,7 @@ const nextConfig = {
 
             921
         ],
-        // formats: ['image/avif', 'image/webp'],
+        formats: ['image/avif', 'image/webp'],
 
 
 
