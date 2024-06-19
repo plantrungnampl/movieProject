@@ -36,7 +36,7 @@ const nextConfig = {
         formats: ['image/avif', 'image/webp'],
 
 
-
+        unoptimized: false
 
     },
     env: {
