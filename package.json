@@ -13,6 +13,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
     "@next/bundle-analyzer": "^14.2.3",
+    "@plaiceholder/next": "^3.0.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -37,6 +38,7 @@
     "firebase": "^10.12.2",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
+    
     "react": "^18",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18",
@@ -44,6 +46,7 @@
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.3",
     "react-player": "^2.16.0",
+    "sharp": "^0.33.4",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

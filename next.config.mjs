@@ -7,16 +7,24 @@ const nextConfig = {
         missingSuspenseWithCSRBailout: false,
     },
     images: {
-        remotePatterns: [
-            { hostname: 'images.unsplash.com', protocol: "https", port: '' },
-            { hostname: 'lh3.googleusercontent.com' },
-            { hostname: 'images.remotePatterns.com' },
-            { hostname: 'img.youtube.com' },
-            { hostname: 'image.tmdb.org' }
+        // remotePatterns: [
+        //     { hostname: 'images.unsplash.com', protocol: "https", port: '' },
+        //     { hostname: 'lh3.googleusercontent.com' },
+        //     { hostname: 'images.remotePatterns.com' },
+        //     { hostname: 'img.youtube.com' },
+        //     { hostname: 'image.tmdb.org' },
+
+        // ],
+        domains: [
+            'image.tmdb.org',
+            'lh3.googleusercontent.com',
+            'images.remotePatterns.com',
+            'img.youtube.com',
+            'images.unsplash.com',
         ],
-        // 'image.tmdb.org', 'lh3.googleusercontent.com', 'images.remotePatterns.com', 'images.remotePatterns.com', 'img.youtube.com',  "images.unsplash.com",
         loader: 'default',
         path: '/_next/image',
+
         deviceSizes: [320, 420, 768, 1024, 1200,], // Các kích thước thiết bị hỗ trợ
         imageSizes: [
             320,
