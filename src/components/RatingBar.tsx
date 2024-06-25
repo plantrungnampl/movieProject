@@ -8,11 +8,11 @@ interface RatingCircleProps {
 
 const getColor = (rating: number) => {
   if (rating >= 70) {
-    return "#4caf50"; // Green
+    return "#4caf50";
   } else if (rating >= 40) {
-    return "#ffeb3b"; // Yellow
+    return "#ffeb3b";
   } else {
-    return "#f44336"; // Red
+    return "#f44336";
   }
 };
 

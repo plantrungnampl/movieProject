@@ -1,11 +1,9 @@
 "use client";
 import React, { Suspense } from "react";
-// import { Input } from "./ui/input";
-import { AiOutlineSearch } from "react-icons/ai";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createUrl } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import Loading from "@/app/loading";
+import Loading from "../loading";
 
 function SearchBox() {
   const [search, setSearch] = React.useState("");
@@ -48,7 +46,7 @@ function SearchBox() {
 }
 function SearchResultsWb() {
   return (
-    <Suspense fallback={<Loading number={1} />}>
+    <Suspense fallback={"loading..."}>
       <SearchBox />
     </Suspense>
   );

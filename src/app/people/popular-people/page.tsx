@@ -2,6 +2,7 @@
 import { fetchPeople } from "@/app/api/fetchPeople";
 import Loading from "@/app/loading";
 import Paginations from "@/components/Pagination/Paginations";
+import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,21 +26,26 @@ export default function PopularPeople({
   const { page } = searchParams;
   const [totalPages, setTotalPages] = React.useState(0);
   React.useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
-        setLoading(true);
-        const data = await fetchPeople(page ? parseInt(page as string) : 1);
+        // const data = await fetchPeople(page ? page.toString() : 1);
+        const res = await fetch(
+          `/api/tmdb/people?page=${page ? page.toString() : 1}`
+        );
+        const data = await res.json();
         setPeople(data.results);
         setTotalPages(data.totalPages);
+        // setPeople(data.results);
+        // setTotalPages(data.totalPages);
         setLoading(false);
       } catch (error) {
-        setLoading(false);
-        return;
+        console.log(error);
       }
     };
     fetchData();
   }, [page, totalPages]);
-  const currentPage = page ? parseInt(page as string) : 1;
+  const currentPage = page ? parseInt(page.toString()) : 1;
   return (
     <>
       <div>
@@ -76,7 +82,7 @@ export default function PopularPeople({
           )}
         </div>
         <div className="flex justify-between mt-4">
-          <Suspense key={currentPage} fallback={<Loading number={1} />}>
+          <Suspense key={currentPage.toString()} fallback={<LoadingSkeleton />}>
             <Paginations
               currentPage={currentPage}
               setPage={setPages}

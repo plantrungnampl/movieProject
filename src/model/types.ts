@@ -8,10 +8,6 @@ export interface UserWatchList {
   release_date: string;
 }
 
-export interface UserTest {
-  id?: string;
-  watchlist?: UserWatchList[];
-}
 export interface DetailProps {
   params: {
     id: string;
@@ -22,7 +18,6 @@ export interface userProps {
   password: string;
   displayName: string;
   photoURL: string;
-
   uid: string;
   emailVerified: boolean;
   reloadUserInfo: {
@@ -66,7 +61,6 @@ export interface detaiMovie {
   original_title: string;
   trailerKey: string;
 }
-// button bookmarks props:
 export interface BookmarkButtonProps {
   watchList: boolean | null;
   handleBookmarkClick: () => void;
@@ -85,9 +79,4 @@ export interface IItem {
   release_date: string;
   media_type: string;
   vote_average: number;
-}
-
-export interface IResult {
-  result: IItem[];
-  result1: IItem[];
 }

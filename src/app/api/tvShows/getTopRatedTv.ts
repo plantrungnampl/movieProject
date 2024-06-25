@@ -1,8 +1,7 @@
 "use server";
+import { API_KEY, BASE_URL } from "@/lib/constants";
 import axios from "axios";
 
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const BASE_URL = "https://api.themoviedb.org/3";
 interface topRateResponse {
   results: any[];
   totalPages: number;

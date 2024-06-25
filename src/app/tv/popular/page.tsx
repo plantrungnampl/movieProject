@@ -1,14 +1,9 @@
 "use client";
-import { getTvByGenre } from "@/app/api/fetchFIlter";
-import { getDataPopular } from "@/app/api/getDataTopRate";
-import Loading from "@/app/loading";
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
-// import Filter from "@/components/Filters/Filter";
 import { Button } from "@/components/ui/button";
 import { TopRateMovieProps } from "@/model/topRate";
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
-// import TopRateMovies from "@/components/PopularTvSeri/PopularTvSeris";
 
 const TopRateMovies = dynamic(
   () => import("@/components/PopularTvSeri/PopularTvSeris"),
@@ -33,13 +28,21 @@ export default function TopRate() {
   const [sortOder, setSortOrder] = React.useState("popularity.desc");
   const handleLoadMore = async () => {
     try {
-      const data = isFiltering
-        ? await getTvByGenre(selectedGenre.join(","), currentPage + 1, sortOder)
-        : await getDataPopular(currentPage + 1);
+      setLoading(true);
+      const res = isFiltering
+        ? await fetch(
+            `/api/tmdb/getTvShowPopularByGenre?page=${
+              currentPage + 1
+            }&sort_by=${sortOder}&with_genres=${selectedGenre.join(",")}`
+          )
+        : await fetch(`/api/tmdb/tvShowPopular?page=${currentPage + 1}`);
+      const data = await res.json();
       setCurrentPage((prev) => prev + 1);
       setFilteredMovies((prev: any) => [...prev, ...data.results]);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,8 +50,10 @@ export default function TopRate() {
     async function getTopRate() {
       try {
         setLoading(true);
-        const data = await getDataPopular(1);
-        setTotalPage(data?.totalPages); // fech pagination
+        const res = await fetch(`/api/tmdb/tvShowPopular?page=${currentPage}`);
+        const data = await res.json();
+        // fech pagination
+        setTotalPage(data?.totalPages);
         setFilteredMovies(data?.results);
       } catch (err) {
         console.log(err);
@@ -63,8 +68,13 @@ export default function TopRate() {
     try {
       setLoading(true);
       setIsFiltering(true);
-      // setCurrentPage(1);
-      const tv = await getTvByGenre(selectedGenre.join(","), 1, sortOder);
+      setCurrentPage(1);
+      const res = await fetch(
+        `/api/tmdb/getTvShowPopularByGenre?page=1&sortOder=${sortOder}&genreId=${selectedGenre.join(
+          ","
+        )}`
+      );
+      const tv = await res.json();
       setFilteredMovies(tv.results);
       setTotalPage(tv.totalPages);
       setCurrentPage(1);
@@ -79,7 +89,12 @@ export default function TopRate() {
       setLoading(true);
       setCurrentPage(1);
       setIsFiltering(true);
-      const data = await getTvByGenre(selectedGenre.join(","), 1, order);
+      const res = await fetch(
+        `/api/tmdb/getTvShowPopularByGenre?page=${currentPage}&sort_by=${sortOder}&with_genres=${selectedGenre.join(
+          ","
+        )}`
+      );
+      const data = await res.json();
       setSortOrder(order);
       setFilteredMovies(data?.results);
       setTotalPage(data?.totalPages);
@@ -97,7 +112,7 @@ export default function TopRate() {
         <h1 className="font-bold text-2xl">Top Rated Movies</h1>
 
         <div className="flex">
-          <div className="shadow-lg p-3 w-1/3 ">
+          <div className="shadow-lg p-3 w-1/3  h-fit  ">
             <Filter
               filteredMovies={filteredMovies}
               setFilteredMovies={setFilteredMovies}

@@ -2,11 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-import {
-  getInTheatersMovies,
-  getLatestTrailers,
-  getVideoDetails,
-} from "@/app/api/fetchData";
 import dynamic from "next/dynamic";
 import { LoadingSkeletonHomeTrailer } from "../SkeletonLoading/SkeletonHome";
 const LatestTrailerItem = dynamic(
@@ -20,7 +15,13 @@ const LatestTrailerItem = dynamic(
 //2 fetch 2 API latest and now playing movies in []
 //3create const variabale  use promise.all wait for both to finish and create new const variable get videoDetails
 //4 get Video key from videoDetails
-
+const fetchMovies = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return response.json();
+};
 const LastestTrailer = () => {
   const [videos, setVideos] = useState<any[] | any>([]);
   const [activeTab, setActiveTab] = useState("Popular");
@@ -31,10 +32,10 @@ const LastestTrailer = () => {
       let trailerLatest: any[] = [];
       switch (activeTab) {
         case "Popular":
-          trailerLatest = await getLatestTrailers();
+          trailerLatest = await fetchMovies("/api/tmdb/latestTrailer");
           break;
         case "In theaters":
-          trailerLatest = await getInTheatersMovies();
+          trailerLatest = await fetchMovies("/api/tmdb/inTheatersMovies");
           break;
 
         default:
@@ -42,7 +43,9 @@ const LastestTrailer = () => {
       }
       const movieDetails = await Promise.all(
         trailerLatest.map(async (item) => {
-          const details = await getVideoDetails(item.id);
+          const details = await fetchMovies(
+            `/api/tmdb/videoDetails?id=${item.id}`
+          );
           const trailer = details.find(
             (video: any) => video.type === "Trailer"
           );
@@ -76,14 +79,22 @@ const LastestTrailer = () => {
           {loading ? (
             <LoadingSkeletonHomeTrailer />
           ) : (
-            activeTab === "Popular" && <LatestTrailerItem videos={videos} />
+            activeTab === "Popular" && (
+              <div>
+                <LatestTrailerItem videos={videos} />
+              </div>
+            )
           )}
         </TabsContent>
         <TabsContent value="In theaters">
           {loading ? (
             <LoadingSkeletonHomeTrailer />
           ) : (
-            activeTab === "In theaters" && <LatestTrailerItem videos={videos} />
+            activeTab === "In theaters" && (
+              <div>
+                <LatestTrailerItem videos={videos} />
+              </div>
+            )
           )}
         </TabsContent>
       </Tabs>

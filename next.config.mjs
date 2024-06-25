@@ -1,12 +1,12 @@
-/** @type {import('next').NextConfig} */
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+
     compress: true,
     reactStrictMode: true,
-    experimental: {
-        missingSuspenseWithCSRBailout: false,
-    },
+
     images: {
+        minimumCacheTTL: 31536000,
         domains: [
             'image.tmdb.org',
             'lh3.googleusercontent.com',

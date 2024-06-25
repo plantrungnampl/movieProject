@@ -1,6 +1,4 @@
 "use client";
-import { getOnAirTv, getOnAirTvByGenre } from "@/app/api/tvShows/fetchOnAir";
-import Loading from "@/app/loading";
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
@@ -23,7 +21,9 @@ export default function OnTv() {
   const [sortOrder, setSortOrder] = React.useState("name.esc");
   useEffect(() => {
     const fetchDataOnTv = async () => {
-      const data = await getOnAirTv(1);
+      // const data = await getOnAirTv(1);
+      const res = await fetch(`/api/tmdb/getOnAirTv?page=1`);
+      const data = await res.json();
       setFilteredMovies(data?.results);
       setTotalPage(data?.totalPages);
       setCurrentPage(1);
@@ -34,13 +34,12 @@ export default function OnTv() {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const data = isFiltering
-        ? await getOnAirTvByGenre(
-            selectedGenre.toString(),
-            currentPage + 1,
-            sortOrder
+      const res = isFiltering
+        ? await fetch(
+            `/api/tmdb/getOnAirTvByGenre?page=1&sortOder=${sortOrder}&genreIds=${selectedGenre.toString()}`
           )
-        : await getOnAirTv(currentPage + 1);
+        : await fetch(`/api/tmdb/getOnAirTv?page=${currentPage + 1}`);
+      const data = await res.json();
       setCurrentPage(currentPage + 1);
       setTotalPage(data.totalPages);
       setFilteredMovies([...filteredMovies, ...data.results]);
@@ -54,11 +53,10 @@ export default function OnTv() {
     try {
       setLoading(true);
       setIsFiltering(true);
-      const data = await getOnAirTvByGenre(
-        selectedGenre.join(","),
-        1,
-        sortOrder
+      const res = await fetch(
+        `/api/tmdb/getOnAirTvByGenre?page=1&sortOder=${sortOrder}&genreIds=${selectedGenre.toString()}`
       );
+      const data = await res.json();
       setCurrentPage(1);
       setFilteredMovies(data.results);
       setTotalPage(data.totalPages);
@@ -76,7 +74,11 @@ export default function OnTv() {
       setSortOrder(order);
       setCurrentPage(1);
       setIsFiltering(true);
-      const data = await getOnAirTvByGenre("", 1, order);
+      // const data = await getOnAirTvByGenre("", 1, order);
+      const res = await fetch(
+        `/api/tmdb/getOnAirTvByGenre?page=1&sortOder=${sortOrder}&genreIds=${selectedGenre.toString()}`
+      );
+      const data = await res.json();
 
       setFilteredMovies(data?.results);
       setTotalPage(data.totalPages);
@@ -95,7 +97,7 @@ export default function OnTv() {
         <h1 className="font-bold text-2xl">Top Rated Movies</h1>
 
         <div className="flex">
-          <div className="shadow-lg p-3 w-1/3 ">
+          <div className="shadow-lg p-3 w-1/3 h-fit ">
             <Filter
               filteredMovies={filteredMovies}
               setFilteredMovies={setFilteredMovies}

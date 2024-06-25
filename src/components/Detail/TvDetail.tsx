@@ -12,7 +12,7 @@ const TvDetail = ({
 }: TvDetailProps) => {
   return (
     <div>
-      <div className="relative flex gap-5 bg-clip-border rounded-xl shadow-md w-full flex-row mb-4">
+      <div className="relative flex gap-5 bg-clip-border rounded-xl shadow-md w-full flex-row mb-4 ">
         <div className="relative w-1/5 m-0 overflow-hidden rounded-r-none bg-clip-border rounded-xl shrink-0">
           <Image
             src={`https://image.tmdb.org/t/p/w500${
@@ -30,8 +30,9 @@ const TvDetail = ({
             sizes="100vw"
             style={{
               width: "100%",
-              height: "auto"
-            }} />
+              height: "auto",
+            }}
+          />
           <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
             <span className="">
               <RatingBar rating={Math.round(tvDetail.vote_average * 10)} />

@@ -1,5 +1,4 @@
 "use client";
-import { getGenres } from "@/app/api/fetchFIlter";
 import React from "react";
 import {
   Accordion,
@@ -7,7 +6,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import {
   Select,
@@ -19,8 +17,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 export default function Filter({
-  setFilteredMovies,
-  filteredMovies,
   selectedGenre,
   setSelectedGenre,
   handleSubmitFilter,
@@ -34,19 +30,17 @@ export default function Filter({
   handleSort: (order: string) => void;
 }) {
   const [genres, setGenres] = React.useState([]);
-  // const [sortOrder, setSortOrder] = React.useState("vote_average.desc");
   const [selectedOrder, setSelectedOrder] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  // fetch genres
   React.useEffect(() => {
     const fetchGenres = async () => {
-      const genres = await getGenres();
-      setGenres(genres);
+      const res = await fetch("/api/tmdb/getGenres");
+      const data = await res.json();
+      setGenres(data);
     };
     fetchGenres();
   }, []);
-  //  get data TV by genre
 
   const handleChange = (genId: string | number) => {
     if (selectedGenre.includes(genId)) {
@@ -57,7 +51,6 @@ export default function Filter({
   };
   const handleSortChange = (order: string) => {
     setSelectedOrder(order);
-    // setSortOrder(order);
   };
 
   const handleSubmitFilters = async () => {
@@ -92,10 +85,11 @@ export default function Filter({
                         type="button"
                         value={genres.id}
                         id={genres.id}
+                        variant="outline"
                         onClick={() => handleChange(genres.id)}
                         className={
                           selectedGenre.includes(genres.id)
-                            ? "bg-slate-700 text-white"
+                            ? "bg-slate-500 text-white"
                             : ""
                         }
                       >

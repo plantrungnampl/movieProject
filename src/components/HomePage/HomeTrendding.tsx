@@ -2,6 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import dynamic from "next/dynamic";
 import { LoadingSkeletonCard } from "./LoadingSkeletonCard";
+import { IItem } from "@/model/types";
 const CarouselItemComponent = dynamic(
   () => import("@/components/CarouselItemComponent"),
   {
@@ -10,13 +11,7 @@ const CarouselItemComponent = dynamic(
   }
 );
 
-export default function HomeTrendding({
-  data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: boolean;
-}) {
+export default function HomeTrendding({ data }: { data: IItem[] }) {
   return (
     <>
       <div>
@@ -39,7 +34,7 @@ export default function HomeTrendding({
               {data.map((tab: any) => (
                 <TabsContent key={tab.value} value={tab.value}>
                   <div className="">
-                    <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl custom-scrollbar snap-x ">
+                    <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl custom-scrollbar snap-x p-5 ">
                       {tab.result.map((item: any) => (
                         <div key={item.id}>
                           <CarouselItemComponent item={item} />

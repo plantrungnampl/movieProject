@@ -1,6 +1,5 @@
+import { API_KEY } from "@/lib/constants";
 import axios from "axios";
-
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY; // Sử dụng NEXT_PUBLIC prefix để biến môi trường có thể truy cập được từ client-side
 
 export const fetchSearchResults = async (searchValue: string) => {
   try {
@@ -11,5 +10,20 @@ export const fetchSearchResults = async (searchValue: string) => {
   } catch (error) {
     console.error("Error fetching search results:", error);
     throw error;
+  }
+};
+
+export const fetchSearchCollections = async (
+  result: any,
+  searchValue: string
+) => {
+  try {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/search/${result}?api_key=${API_KEY}&query=${searchValue}&include_adult=false&language=en-US&page=1`
+    );
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };

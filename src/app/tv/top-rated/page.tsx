@@ -30,17 +30,17 @@ export default function TopRated() {
   const [sortOrder, setSortOrder] = React.useState("vote_count.desc");
 
   useEffect(() => {
+    setLoading(true);
+
     const fetchData = async () => {
       try {
-        setLoading(true);
         const dataTopRated = await getTopRateTv(1);
         setFilterTopRated(dataTopRated?.results);
         setTotalPage(dataTopRated?.totalPages);
         setCurrentPage(1);
+        setLoading(false);
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchData();
@@ -110,13 +110,12 @@ export default function TopRated() {
         <h1 className="font-bold text-2xl">Top Rated Movies</h1>
 
         <div className="flex">
-          <div className="shadow-lg p-3 w-1/3 ">
+          <div className="shadow-lg p-3 w-1/3 h-fit ">
             <Filter
               filteredMovies={filterTopRated}
               setFilteredMovies={setFilterTopRated}
               selectedGenre={selectGenres}
               setSelectedGenre={setSelectedGenre}
-              // setIsFiltering={setIsFiltering}
               handleSubmitFilter={handleSubmitFilter}
               handleSort={handleSort}
             />

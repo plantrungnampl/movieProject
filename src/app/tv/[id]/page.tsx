@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, Suspense } from "react";
 import Loading from "@/app/loading";
-import { getDataMovieTv } from "@/app/api/getMovieTv";
 import { DetailProps } from "../../../model/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
@@ -21,10 +20,11 @@ export default function Detail({ params }: DetailProps) {
   const [error, setError] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [watchList, setWatchList] = useState<boolean | null | any>(null);
-  console.log(detail);
   useEffect(() => {
     async function fetchData() {
-      const data = await getDataMovieTv(id);
+      // const data = await getDataMovieTv(id);
+      const res = await fetch(`/api/tmdb/detailsTv/?id=${id}`);
+      const data = await res.json();
       if (data.error) {
         setError(data.error);
       } else {

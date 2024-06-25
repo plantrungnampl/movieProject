@@ -20,8 +20,8 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
         />
       </Head>
       <Link className="flex" href={href}>
-        <Card className="flex-card-cal flex flex-col justify-start items-start ">
-          <div className=" w-[200px] min-h-[200px] h-customs relative   ">
+        <Card className=" transition ease-out hover:scale-110 flex-card-cal flex flex-col justify-start items-start ">
+          <div className=" w-[200px] min-h-[200px] h-customs relative    ">
             <Image
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               alt={item.original_title || item.name}

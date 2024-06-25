@@ -18,7 +18,9 @@ const SearchPage = async ({
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <SearchResults results={results} searchValue={searchValue} />
+      <div className="">
+        <SearchResults results={results} searchValue={searchValue} />
+      </div>
     </Suspense>
   );
 };

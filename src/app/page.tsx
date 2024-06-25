@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchData } from "./api/fetchData";
+// import { fetchData } from "./api/fetchData";
 import dynamic from "next/dynamic";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { LoadingSkeletonCard } from "@/components/HomePage/LoadingSkeletonCard";
+import { revalidate } from "@/components/Detail/TvDetail";
 
 const LastestTrailer = dynamic(
   () => import("@/components/Trailer/LastestTrailer"),
@@ -26,11 +26,16 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const getData = async () => {
-      setIsLoading(true);
-      const result = await fetchData();
-      setData(result);
-      setIsLoading(false);
+      try {
+        const result = await fetch(`/api/tmdb/todayAndTrending`);
+        const dataRes = await result.json();
+        setData(dataRes);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getData();
   }, []);
@@ -39,7 +44,7 @@ export default function Home() {
     <>
       <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 ">
         <div>
-          <HomeTrendding data={data} isLoading={isLoading} />
+          <HomeTrendding data={data} />
           <div className="mt-14">
             <LastestTrailer />
           </div>

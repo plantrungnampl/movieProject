@@ -50,14 +50,12 @@ export default function Header() {
       setShow(true);
     }
 
-    // remember current page location to use in the next move
     setLastScrollY(window.scrollY);
   };
 
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
 
-    // cleanup function
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
@@ -94,7 +92,6 @@ export default function Header() {
           show ? "flex transition duration-300 ease-out transform" : "hidden"
         } `}
       >
-        {/* nav */}
         <div>
           <Menubar className={`nav ${show ? "flex" : "hidden"}`}>
             <MenubarMenu>
@@ -135,7 +132,7 @@ export default function Header() {
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
-            <MenubarMenu>
+            {/* <MenubarMenu>
               <MenubarTrigger>Movie</MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>
@@ -167,7 +164,7 @@ export default function Header() {
                   />
                 </MenubarItem>
               </MenubarContent>
-            </MenubarMenu>
+            </MenubarMenu> */}
             <MenubarMenu>
               <MenubarTrigger>People</MenubarTrigger>
               <MenubarContent>
@@ -181,7 +178,6 @@ export default function Header() {
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
-          {/* eng */}
         </div>
         <div className="w-1/2 ">
           <Suspense fallback={<Loading number={1} />}>

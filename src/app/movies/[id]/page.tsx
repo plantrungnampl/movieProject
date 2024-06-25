@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast } from "@/components/ui/use-toast";
-import { getDataMovieServer } from "@/app/api/getDataMovie";
 import { DetailProps } from "../../../model/types";
 import Loading from "@/app/loading";
 import { isLoggedIn } from "@/utils/auth";
@@ -37,7 +36,9 @@ export default function Detail({ params }: DetailProps) {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getDataMovieServer(id);
+      // const data = await getDataMovieServer(id);
+      const res = await fetch(`/api/tmdb/detailsMovie/?id=${id}`);
+      const data = await res.json();
       if (data.error) {
         setError(data.error);
       } else {
@@ -67,7 +68,6 @@ export default function Detail({ params }: DetailProps) {
       id: detail?.id,
       title: detail?.title,
       overview: detail?.overview,
-      // media_type: detail?.media_type,
       poster_path: detail?.poster_path,
       backdrop_path: detail?.backdrop_path,
       vote_average: detail?.vote_average,
