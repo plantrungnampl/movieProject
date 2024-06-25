@@ -22,7 +22,7 @@ export default function ArringToday() {
 
   useEffect(() => {
     const fetchDataArringToday = async () => {
-      const res = await fetch(`/api/tmdb/getTvArring?page=${currentPage}`);
+      const res = await fetch(`/api/tmdb/getTvArring?page=1`);
 
       const data = await res.json();
       setFilteredMovies(data?.results);

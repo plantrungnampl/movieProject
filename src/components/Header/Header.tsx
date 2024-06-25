@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, use, useEffect, useState } from "react";
+import React, { Suspense, use, useCallback, useEffect, useState } from "react";
 import MenuItem from "../MenuItem";
 import { Button } from "../ui/button";
 import ToggleMode from "../ToggleMode";
@@ -40,8 +40,7 @@ export default function Header() {
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-
-  const controlNavbar = () => {
+  const controlNavbar = useCallback(() => {
     if (window.scrollY > lastScrollY) {
       // if scroll down hide the navbar
       setShow(false);
@@ -51,7 +50,7 @@ export default function Header() {
     }
 
     setLastScrollY(window.scrollY);
-  };
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
@@ -59,7 +58,7 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", controlNavbar);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, controlNavbar]);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       setUser(currentUser);

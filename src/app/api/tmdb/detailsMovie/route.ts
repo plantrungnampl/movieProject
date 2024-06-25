@@ -1,13 +1,13 @@
 "use server";
 import { API_KEY, BASE_URL } from "@/lib/constants";
 import axios from "axios";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest): Promise<NextResponse<any>> {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   if (!id) {
-    return { error: "ID is missing" };
+    return NextResponse.json({ error: "ID is missing" }, { status: 400 });
   }
 
   try {
@@ -20,6 +20,6 @@ export async function GET(request: Request) {
     // return data;
   } catch (error: any) {
     console.error("Fetching error: ", error.message);
-    return NextResponse.json([], { status: 500 });
+    return NextResponse.json({ error: "error " }, { status: 500 });
   }
 }

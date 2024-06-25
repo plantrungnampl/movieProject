@@ -50,7 +50,7 @@ export default function TopRate() {
     async function getTopRate() {
       try {
         setLoading(true);
-        const res = await fetch(`/api/tmdb/tvShowPopular?page=${currentPage}`);
+        const res = await fetch(`/api/tmdb/tvShowPopular?page=1`);
         const data = await res.json();
         // fech pagination
         setTotalPage(data?.totalPages);
