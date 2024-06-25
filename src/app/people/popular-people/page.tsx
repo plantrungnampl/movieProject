@@ -1,5 +1,4 @@
 "use client";
-import { fetchPeople } from "@/app/api/fetchPeople";
 import Loading from "@/app/loading";
 import Paginations from "@/components/Pagination/Paginations";
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
