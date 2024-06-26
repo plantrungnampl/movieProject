@@ -21,11 +21,8 @@ export default function HomeTrendding({ data }: { data: IItem[] }) {
             <div className="flex gap-5 items-center mb-3 ">
               <p className="text-xl p-1 rounded">Trending</p>
               <TabsList>
-                {data.map((tab: any) => (
-                  <TabsTrigger key={tab.value} value={tab.value}>
-                    {tab.value}
-                  </TabsTrigger>
-                ))}
+                <TabsTrigger value="Today">Today</TabsTrigger>
+                <TabsTrigger value="Thisweek">This week</TabsTrigger>
               </TabsList>
             </div>
             {/* map data */}

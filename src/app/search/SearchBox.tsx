@@ -3,10 +3,9 @@ import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createUrl } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import Loading from "../loading";
 
 function SearchBox() {
-  const [search, setSearch] = React.useState("");
+  // const [search, setSearch] = React.useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,10 +44,6 @@ function SearchBox() {
   );
 }
 function SearchResultsWb() {
-  return (
-    <Suspense fallback={"loading..."}>
-      <SearchBox />
-    </Suspense>
-  );
+  return <SearchBox />;
 }
 export default SearchResultsWb;

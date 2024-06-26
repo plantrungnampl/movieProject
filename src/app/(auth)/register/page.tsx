@@ -87,7 +87,7 @@ const RegisterPage = () => {
       <div className="h-screen flex justify-center items-center">
         <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex justify-between flex-col">
           <div className="h-28 w-full justify-center flex items-center">
-            <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
+            <span className="text-3xl text-black font-mono font-semibold bg-red-300 p-3 rounded-lg">
               Register
             </span>
           </div>

@@ -1,11 +1,6 @@
 "use client";
-import {
-  getTopRateTv,
-  getTopRateTvByGenre,
-} from "@/app/api/tvShows/getTopRatedTv";
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
-// import Filter from "@/components/Filters/Filter";
-// import TopRatedTv from "@/components/TopRateMovies/TopRateMovie";
+
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
@@ -31,10 +26,10 @@ export default function TopRated() {
 
   useEffect(() => {
     setLoading(true);
-
     const fetchData = async () => {
       try {
-        const dataTopRated = await getTopRateTv(1);
+        const res = await fetch(`/api/tmdb/getTopRatedTvShow?page=1`);
+        const dataTopRated = await res.json();
         setFilterTopRated(dataTopRated?.results);
         setTotalPage(dataTopRated?.totalPages);
         setCurrentPage(1);
@@ -49,14 +44,14 @@ export default function TopRated() {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const data = isFilterGenres
-        ? await getTopRateTvByGenre(
-            selectGenres.join(","),
-            currentPage + 1,
-            sortOrder
+      const res = isFilterGenres
+        ? await fetch(
+            `/api/tmdb/getTopRatedTvShowByGenre?page=${
+              currentPage + 1
+            }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`
           )
-        : await getTopRateTv(currentPage + 1);
-
+        : await fetch(`/api/tmdb/getTopRatedTvShow?page=${currentPage + 1}`);
+      const data = await res.json();
       setFilterTopRated([...filterTopRated, ...data.results]);
       setCurrentPage(currentPage + 1);
       setTotalPage(data.totalPages);
@@ -71,11 +66,12 @@ export default function TopRated() {
     try {
       setLoading(true);
       setIsFilterGenres(true);
-      const data = await getTopRateTvByGenre(
-        selectGenres.join(","),
-        1,
-        sortOrder
+      const res = await fetch(
+        `/api/tmdb/getTopRatedTvShowByGenre?page=${
+          currentPage + 1
+        }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`
       );
+      const data = await res.json();
       setCurrentPage(1);
       setFilterTopRated(data?.results);
       setTotalPage(data.totalPages);
@@ -94,7 +90,11 @@ export default function TopRated() {
       setSortOrder(order);
       setCurrentPage(1);
       setIsFilterGenres(true);
-      const data = await getTopRateTvByGenre(selectGenres.join(","), 1, order);
+      const res = await fetch(
+        `/api/tmdb/getTopRatedTvShowByGenre?page=1&sortOder=${sortOrder}&genreId=${selectGenres.toString()} `
+      );
+      const data = await res.json();
+      setSortOrder(order);
 
       setFilterTopRated(data?.results);
       setTotalPage(data.totalPages);

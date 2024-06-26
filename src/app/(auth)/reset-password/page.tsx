@@ -54,28 +54,50 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex flex-col mx-auto my-0 bg-slate-600 p-80 shadow-2xl rounded-xl">
-      <h1 className="text-white text-2xl font-bold">Reset your Password</h1>
+    <div className="w-full max-w-md mx-auto p-6">
+      <div className="mt-7 bg-white  rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700 border-2 border-indigo-300">
+        <div className="p-4 sm:p-7">
+          <div className="text-center">
+            <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
+              Forgot password?
+            </h1>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              Remember your password?
+              <a
+                className="text-blue-600 decoration-2 hover:underline font-medium"
+                href="/login"
+              >
+                Login here
+              </a>
+            </p>
+          </div>
 
-      {error && <p>{error}</p>}
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white">Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="example@gmail.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
+          {error && <p>{error}</p>}
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-8"
+            >
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="block text-sm font-bold ml-1 mb-2 dark:text-white">
+                      Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="example@gmail.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 }

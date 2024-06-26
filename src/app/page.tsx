@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 // import { fetchData } from "./api/fetchData";
 import dynamic from "next/dynamic";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { revalidate } from "@/components/Detail/TvDetail";
 
 const LastestTrailer = dynamic(
   () => import("@/components/Trailer/LastestTrailer"),
@@ -17,7 +16,6 @@ const HomeTrendding = dynamic(
   () => import("@/components/HomePage/HomeTrendding"),
   {
     ssr: false,
-    // loading: () => <LoadingSkeletonCard />,
   }
 );
 
@@ -29,8 +27,8 @@ export default function Home() {
     setIsLoading(true);
     const getData = async () => {
       try {
-        const result = await fetch(`/api/tmdb/todayAndTrending`);
-        const dataRes = await result.json();
+        const res = await fetch(`/api/tmdb/todayAndTrending`);
+        const dataRes = await res.json();
         setData(dataRes);
         setIsLoading(false);
       } catch (error) {

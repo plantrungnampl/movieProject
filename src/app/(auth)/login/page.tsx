@@ -130,7 +130,7 @@ const LoginForm = () => {
     <div className="h-screen flex justify-center items-center">
       <div className="w-1/2 rounded-md bg-slate-600 shadow-lg flex flex-col p-3">
         <div className="h-28 w-full flex justify-center items-center">
-          <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">
+          <span className="text-3xl text-black font-mono font-semibold bg-red-300 p-3 rounded-lg">
             Welcome
           </span>
         </div>

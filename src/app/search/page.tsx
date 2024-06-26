@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import SearchResults from "@/components/SearchResults";
-import { fetchSearchResults } from "../api/fetchSearchResults";
 
 export const metadata = {
   title: "search",
@@ -13,15 +12,17 @@ const SearchPage = async ({
   searchParams: { [key: string]: string };
 }) => {
   const { q: searchValue } = searchParams;
-  const data = await fetchSearchResults(searchValue);
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/tmdb/searchResults?q=${searchValue}`
+  );
+  const data = await res.json();
   const results = data.results;
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className="">
-        <SearchResults results={results} searchValue={searchValue} />
-      </div>
-    </Suspense>
+    <div>
+      <SearchResults results={results} searchValue={searchValue} />
+    </div>
   );
 };
 
