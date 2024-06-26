@@ -24,7 +24,6 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { FaCirclePlay } from "react-icons/fa6";
 import { TiVideoOutline } from "react-icons/ti";
 import { AiFillCarryOut } from "react-icons/ai";
 import { useToast } from "../ui/use-toast";
@@ -32,7 +31,7 @@ import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
 import { userProps } from "../../model/types";
 import SearchBox from "@/app/search/SearchBox";
-import { AiFillNotification } from "react-icons/ai";
+import { useDebouncedCallback } from "use-debounce";
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
@@ -40,7 +39,7 @@ export default function Header() {
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const controlNavbar = useCallback(() => {
+  const controlNavbar = useDebouncedCallback(() => {
     if (window.scrollY > lastScrollY) {
       // if scroll down hide the navbar
       setShow(false);
@@ -50,7 +49,7 @@ export default function Header() {
     }
 
     setLastScrollY(window.scrollY);
-  }, [lastScrollY]);
+  }, 100);
 
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
