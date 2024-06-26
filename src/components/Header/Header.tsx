@@ -39,7 +39,7 @@ export default function Header() {
 
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const controlNavbar = useDebouncedCallback(() => {
+  const controlNavbar = useCallback(() => {
     if (window.scrollY > lastScrollY) {
       // if scroll down hide the navbar
       setShow(false);
@@ -49,7 +49,7 @@ export default function Header() {
     }
 
     setLastScrollY(window.scrollY);
-  }, 100);
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.addEventListener("scroll", controlNavbar);
