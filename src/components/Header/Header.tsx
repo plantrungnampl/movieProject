@@ -130,7 +130,9 @@ export default function Header() {
               </MenubarContent>
             </MenubarMenu>
             <MenubarMenu>
-              <MenubarTrigger>People</MenubarTrigger>
+              <MenubarTrigger>
+                <Suspense>People</Suspense>
+              </MenubarTrigger>
               <MenubarContent>
                 <MenubarItem>
                   <MenuItem
