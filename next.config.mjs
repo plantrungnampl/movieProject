@@ -1,9 +1,22 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
+    // async headers() {
+    //     return [
+    //         {
+    //             source: '/(.*)',
+    //             headers: [
+    //                 {
+    //                     key: 'Cache-Control',
+    //                     value: 'public, max-age=3600, s-maxage=7200, stale-while-revalidate=86400',
+    //                 },
+    //             ],
+    //         },
+    //     ];
+    // },
     compress: true,
     reactStrictMode: true,
+
 
     images: {
         minimumCacheTTL: 31536000,
@@ -23,19 +36,11 @@ const nextConfig = {
             320,
             420,
             768,
+            300,
             1024,
-            1200,
-            1920,
-            2560,
-            3840,
-            5120,
-            7680,
 
-            921
         ],
         formats: ['image/avif', 'image/webp'],
-
-
         unoptimized: false
 
     },

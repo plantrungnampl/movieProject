@@ -15,9 +15,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<any>> {
       `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=en-US&append_to_response=videos,credits,images,keywords,release_dates,translations`
     );
 
-    // const data = resMovie.data;
     return NextResponse.json(resMovie.data, { status: 200 });
-    // return data;
   } catch (error: any) {
     console.error("Fetching error: ", error.message);
     return NextResponse.json({ error: "error " }, { status: 500 });

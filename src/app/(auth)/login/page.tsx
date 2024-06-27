@@ -43,8 +43,8 @@ const LoginForm = () => {
   const ggProvider = new GoogleAuthProvider();
 
   const handleGoogleLogin = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const result = await signInWithPopup(auth, ggProvider);
       const user = result.user;
       const token = await user.getIdToken();

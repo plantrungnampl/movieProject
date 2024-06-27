@@ -32,7 +32,6 @@ export default function TvArringTodays({
                   <div className=" relative">
                     <Image
                       priority={true}
-                      // loading="lazy
                       src={`https://image.tmdb.org/t/p/w500${
                         movieItem.poster_path || movieItem.backdrop_path
                       }`}
@@ -44,11 +43,7 @@ export default function TvArringTodays({
                         movieItem.poster_path || movieItem.backdrop_path
                       }`}
                       placeholder="blur"
-                      sizes="100vw"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                      }}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute rounded-3xl bottom-0 bg-black w-auto h-auto  ">
                       <span className="">

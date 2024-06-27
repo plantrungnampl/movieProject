@@ -4,7 +4,6 @@ import { Source_Sans_3 } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
-import Script from "next/script";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
 const sourceSansPro = Source_Sans_3({
@@ -43,7 +42,15 @@ export default function RootLayout({
           <Header />
           <Toaster />
           <SpeedInsights />
-          <Suspense>{children}</Suspense>
+          <Suspense
+            fallback={
+              <div>
+                <h1>Loading.....................</h1>
+              </div>
+            }
+          >
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

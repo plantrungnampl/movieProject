@@ -11,13 +11,20 @@ import {
   ifExitItem,
   removeFromWatchList,
 } from "@/service/serives";
+import useSWR from "swr";
 import MovieDetail from "@/components/Detail/MovieDetail";
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function Detail({ params }: DetailProps) {
   const { id } = params;
   const router = useRouter();
-  const [detail, setDetail] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: detail,
+    error,
+    isLoading,
+  } = useSWR(`/api/tmdb/detailsMovie/?id=${id}`, fetcher);
+  // const [detail, setDetail] = useState<any>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [watchList, setWatchList] = useState<boolean | null | any>(null);
 
@@ -34,23 +41,22 @@ export default function Detail({ params }: DetailProps) {
     return () => unsubscribe();
   }, [id]);
 
-  useEffect(() => {
-    async function fetchData() {
-      // const data = await getDataMovieServer(id);
-      const res = await fetch(`/api/tmdb/detailsMovie/?id=${id}`);
-      const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        const trailer = data.videos?.results?.find(
-          (video: any) => video.type === "Trailer" && video.site === "YouTube"
-        );
-        setDetail({ ...data, trailerKey: trailer?.key || null });
-      }
-      setLoading(false);
-    }
-    fetchData();
-  }, [id]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const res = await fetch(`/api/tmdb/detailsMovie/?id=${id}`);
+  //     const data = await res.json();
+  //     if (data.error) {
+  //       setError(data.error);
+  //     } else {
+  //       const trailer = data.videos?.results?.find(
+  //         (video: any) => video.type === "Trailer" && video.site === "YouTube"
+  //       );
+  //       setDetail({ ...data, trailerKey: trailer?.key || null });
+  //     }
+  //     setLoading(false);
+  //   }
+  //   fetchData();
+  // }, [id]);
   const handleBookmarkClick = async () => {
     if (!isLoggedIn()) {
       toast({
@@ -116,7 +122,7 @@ export default function Detail({ params }: DetailProps) {
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Loading number={1} />;
   }
 

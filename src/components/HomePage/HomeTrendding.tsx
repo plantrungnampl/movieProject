@@ -10,7 +10,6 @@ const CarouselItemComponent = dynamic(
     loading: () => <LoadingSkeletonCard />,
   }
 );
-
 export default function HomeTrendding({ data }: { data: IItem[] }) {
   return (
     <>
@@ -21,14 +20,18 @@ export default function HomeTrendding({ data }: { data: IItem[] }) {
             <div className="flex gap-5 items-center mb-3 ">
               <p className="text-xl p-1 rounded">Trending</p>
               <TabsList>
-                <TabsTrigger value="Today">Today</TabsTrigger>
-                <TabsTrigger value="Thisweek">This week</TabsTrigger>
+                <TabsTrigger value="Today" className=" font-bold">
+                  Today
+                </TabsTrigger>
+                <TabsTrigger value="Thisweek" className=" font-bold">
+                  This week
+                </TabsTrigger>
               </TabsList>
             </div>
             {/* map data */}
 
             <div>
-              {data.map((tab: any) => (
+              {data?.map((tab: any) => (
                 <TabsContent key={tab.value} value={tab.value}>
                   <div className="">
                     <div className="flex gap-4 overflow-x-auto overflow-y-hidden  max-w-screen-xl custom-scrollbar snap-x p-5 ">

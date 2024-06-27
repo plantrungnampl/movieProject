@@ -31,7 +31,6 @@ import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
 import { userProps } from "../../model/types";
 import SearchBox from "@/app/search/SearchBox";
-import { useDebouncedCallback } from "use-debounce";
 export default function Header() {
   const route = useRouter();
   const { toast } = useToast();
@@ -130,39 +129,6 @@ export default function Header() {
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
-            {/* <MenubarMenu>
-              <MenubarTrigger>Movie</MenubarTrigger>
-              <MenubarContent>
-                <MenubarItem>
-                  <MenuItem
-                    title="Popular"
-                    address="/movie/Popular"
-                    Icon={AiFillStar}
-                  />
-                </MenubarItem>
-                <MenubarItem>
-                  <MenuItem
-                    title="Now playing"
-                    address="/movie/Now-playing"
-                    Icon={FaCirclePlay}
-                  />
-                </MenubarItem>
-                <MenubarItem>
-                  <MenuItem
-                    title="Up coming"
-                    address="/movie/top-rate"
-                    Icon={AiFillNotification}
-                  />
-                </MenubarItem>
-                <MenubarItem>
-                  <MenuItem
-                    title="Top-rate"
-                    address="/movie/top-rate-movie"
-                    Icon={AiFillStar}
-                  />
-                </MenubarItem>
-              </MenubarContent>
-            </MenubarMenu> */}
             <MenubarMenu>
               <MenubarTrigger>People</MenubarTrigger>
               <MenubarContent>
@@ -178,9 +144,7 @@ export default function Header() {
           </Menubar>
         </div>
         <div className="w-1/2 ">
-          <Suspense fallback={<Loading number={1} />}>
-            <SearchBox />
-          </Suspense>
+          <SearchBox />
         </div>
         {user ? (
           <div className="flex gap-2 ">

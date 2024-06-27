@@ -55,6 +55,7 @@ export const addToWatchList = async (userId: any, dataId: any, data: any) => {
     });
   }
 };
+//check if data movie exist in watchlist
 export const ifExitItem = async (userId: any, dataId: string) => {
   try {
     const docRef = await doc(

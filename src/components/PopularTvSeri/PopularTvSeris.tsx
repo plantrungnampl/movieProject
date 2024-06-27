@@ -10,9 +10,9 @@ export default function PopularTvSeris({
 }: {
   PopularTv: TopRateMovieProps[];
 }) {
-  return <>
-    {PopularTv.length > 0 ? (
-      PopularTv.map((movieItem) => {
+  return (
+    <>
+      {PopularTv.map((movieItem) => {
         const isMovie = movieItem.media_type === "movie";
         const href = isMovie
           ? `/movies/${movieItem.id}`
@@ -40,10 +40,8 @@ export default function PopularTvSeris({
                     }`}
                     placeholder="blur"
                     sizes="100vw"
-                    style={{
-                      width: "100%",
-                      height: "auto"
-                    }} />
+                    rel="preconnect"
+                  />
                   <div className="absolute rounded-3xl bottom-0 bg-black w-auto h-auto  ">
                     <span className="">
                       <RatingBar
@@ -68,11 +66,7 @@ export default function PopularTvSeris({
             </Link>
           </div>
         );
-      })
-    ) : (
-      <div className="flex w-full">
-        <h1>not found movie</h1>
-      </div>
-    )}
-  </>;
+      })}
+    </>
+  );
 }
