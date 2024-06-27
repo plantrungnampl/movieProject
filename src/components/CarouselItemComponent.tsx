@@ -20,7 +20,7 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
         />
       </Head>
       <Link className="flex" href={href}>
-        <Card className=" transition ease-out hover:scale-110 flex-card-cal flex flex-col justify-start items-start ">
+        <Card className=" w-[200px] max-h-[400px] transition ease-out hover:scale-110 flex-card-cal flex flex-col justify-start items-start ">
           <div className=" w-[200px] min-h-[200px] h-customs relative    ">
             <Image
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
@@ -31,7 +31,6 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
               priority={true}
               placeholder="blur"
               loading="eager"
-              decoding="async"
               blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
               style={{
