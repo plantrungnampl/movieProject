@@ -17,7 +17,9 @@ const nextConfig = {
     compress: true,
     reactStrictMode: true,
 
-
+    experimental: {
+        missingSuspenseWithCSRBailout: false,
+    },
     images: {
         minimumCacheTTL: 31536000,
         domains: [

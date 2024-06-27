@@ -120,7 +120,7 @@ interface Person {
   known_for?: { title: string }[];
 }
 
-function PopularPeople({
+export default function PopularPeople({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -181,13 +181,5 @@ function PopularPeople({
         </div>
       </div>
     </>
-  );
-}
-
-export default function PopularPeoplePage() {
-  return (
-    <Suspense fallback={<Loading number={1} />}>
-      <PopularPeople searchParams={{ page: "1" }} />
-    </Suspense>
   );
 }
