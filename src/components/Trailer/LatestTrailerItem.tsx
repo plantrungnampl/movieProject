@@ -54,7 +54,6 @@ export default function LatestTrailerItem({ videos }: { videos: any[] }) {
                           placeholder="blur"
                           blurDataURL={`https://img.youtube.com/vi/${movie.videoKey}/0.jpg`}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
-                          // loading="lazy"
                           loading="eager"
                         />
                         <div className="absolute inset-0 flex items-center justify-center transition duration-300 ease-in-out hover:scale-150">
