@@ -1,4 +1,3 @@
-// <MaxWidthWrapper>
 import Loading from "@/app/loading";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import React, { Suspense } from "react";

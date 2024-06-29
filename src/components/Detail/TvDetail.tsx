@@ -5,33 +5,31 @@ import TrailerDialog from "@/components/TrailerDialog";
 import BookmarkButton from "@/components/BookmarkButton";
 import { TvDetailProps } from "../../model/types";
 import RatingBar from "../RatingBar";
+import { Suspense } from "react";
 const TvDetail = ({
   tvDetail,
   watchList,
   handleBookmarkClick,
+  trailerKey,
 }: TvDetailProps) => {
+  const posterUrl = `https://image.tmdb.org/t/p/w500${
+    tvDetail?.poster_path || tvDetail?.backdrop_path
+  }`;
+
   return (
-    <div>
-      <div className="relative flex gap-5 bg-clip-border rounded-xl shadow-md w-full flex-row mb-4 ">
+    <div className="relative flex gap-5 bg-clip-border rounded-xl shadow-md w-full flex-row mb-4 bg-cover bg-center  ">
+      <div className="relative p-5 flex gap-5 bg-clip-border rounded-xl  w-full flex-row mb-4 ">
         <div className="relative w-1/5 m-0 overflow-hidden rounded-r-none bg-clip-border rounded-xl shrink-0">
           <Image
-            src={`https://image.tmdb.org/t/p/w500${
-              tvDetail?.poster_path || tvDetail?.backdrop_path
-            }`}
+            src={posterUrl}
             alt={tvDetail.title}
             width={300}
             height={400}
             className="object-cover rounded w-full h-full"
-            blurDataURL={`https://image.tmdb.org/t/p/w500${
-              tvDetail?.poster_path || tvDetail?.backdrop_path
-            }`}
+            blurDataURL={posterUrl}
             placeholder="blur"
             loading="lazy"
             sizes="100vw"
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
           />
           <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
             <span className="">
@@ -53,10 +51,13 @@ const TvDetail = ({
               <Button>
                 <FaHeart />
               </Button>
-              <TrailerDialog
-                trailer={tvDetail.trailerKey}
-                buttonTitle="Video trailers "
-              />
+              <Suspense fallback={<div>Loading....</div>}>
+                <TrailerDialog
+                  buttonTitle="Video trailers "
+                  trailer={trailerKey}
+                  title={tvDetail.name || tvDetail.original_name}
+                />
+              </Suspense>
             </div>
             <div className="mt-3">
               <h3 className="font-bold">Overview</h3>
@@ -70,4 +71,3 @@ const TvDetail = ({
 };
 
 export default TvDetail;
-export const revalidate = 60;

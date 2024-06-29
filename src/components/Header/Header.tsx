@@ -27,7 +27,6 @@ import {
 import { TiVideoOutline } from "react-icons/ti";
 import { AiFillCarryOut } from "react-icons/ai";
 import { useToast } from "../ui/use-toast";
-import Loading from "@/app/loading";
 import { auth } from "@/service/firebase";
 import { userProps } from "../../model/types";
 import SearchBox from "@/app/search/SearchBox";

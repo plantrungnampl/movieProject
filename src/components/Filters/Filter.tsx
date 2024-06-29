@@ -22,7 +22,7 @@ export default function Filter({
   handleSubmitFilter,
   handleSort,
 }: {
-  setFilteredMovies: any;
+  // setFilteredMovies: any;
   filteredMovies: any;
   selectedGenre: any;
   setSelectedGenre: any;

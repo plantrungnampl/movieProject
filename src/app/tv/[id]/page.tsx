@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, lazy } from "react";
 import Loading from "@/app/loading";
 import { DetailProps } from "../../../model/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -10,39 +10,31 @@ import {
 } from "@/service/serives";
 import { useRouter } from "next/navigation";
 import { toast } from "@/utils/toastUtil";
-import TvDetail from "@/components/Detail/TvDetail";
-
+import useSWR from "swr";
+import { fetcher } from "../../../lib/constants";
+import DetailTvlayout from "./layout";
+const TvDetail = lazy(() => import("@/components/Detail/TvDetail"));
 export default function Detail({ params }: DetailProps) {
   const router = useRouter();
   const { id } = params;
-  const [detail, setDetail] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [watchList, setWatchList] = useState<boolean | null | any>(null);
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
+  const {
+    data: detail,
+    error,
+    isLoading,
+  } = useSWR(`/api/tmdb/detailsTv/?id=${id}`, fetcher);
+
   useEffect(() => {
-    async function fetchData() {
-      // const data = await getDataMovieTv(id);
-      const res = await fetch(`/api/tmdb/detailsTv/?id=${id}`);
-      const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        const trailer = data?.videos?.results?.find(
-          (video: any) =>
-            (video.type === "Teaser" ||
-              video.type === "Trailer" ||
-              "Behind the Scenes" ||
-              "Featurette" ||
-              "Clip") &&
-            video.site === "YouTube"
-        );
-        setDetail({ ...data, trailerKey: trailer?.key || null });
-      }
-      setLoading(false);
+    if (detail) {
+      const trailer = detail.videos?.results?.find(
+        (video: any) => video.type === "Trailer" && video.site === "YouTube"
+      );
+      setTrailerKey(trailer?.key || null);
     }
-    fetchData();
-  }, [id]);
+  }, [detail]);
 
   useEffect(() => {
     const auth = getAuth();
@@ -57,7 +49,7 @@ export default function Detail({ params }: DetailProps) {
     return () => unsubscribe();
   }, [id]);
 
-  if (loading) {
+  if (isLoading) {
     return <Loading number={1} />;
   }
 
@@ -115,14 +107,15 @@ export default function Detail({ params }: DetailProps) {
       console.log(err);
     }
   };
-
+  const backdropUrl = `https://image.tmdb.org/t/p/original${detail.backdrop_path}`;
   return (
-    <Suspense fallback={<Loading number={1} />}>
+    <DetailTvlayout backdropUrl={backdropUrl}>
       <TvDetail
         watchList={watchList}
         tvDetail={detail}
         handleBookmarkClick={handleBookmarkClick}
+        trailerKey={trailerKey}
       />
-    </Suspense>
+    </DetailTvlayout>
   );
 }

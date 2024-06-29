@@ -39,22 +39,6 @@ export default function Home() {
   if (!data.length) {
     return <div>Not found data</div>;
   }
-  // if (isLoading) return <div>Loading...</div>;
-  // if (error) return <div>Failed to load: {error}</div>;
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   const getData = async () => {
-  //     try {
-  //       const res = await fetch(`/api/tmdb/todayAndTrending`);
-  //       const dataRes = await res.json();
-  //       setData(dataRes);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getData();
-  // }, []);
   return (
     <>
       <MaxWidthWrapper className="pb-24 pt-10 lg:grid lg:grid-col-1 sm:pb-32 lg:gap-x-0 xl:gap-x-8 lg:pt-24 xl:pt-32 lg:pb-52 ">

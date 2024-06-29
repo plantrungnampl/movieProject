@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast } from "@/components/ui/use-toast";
@@ -12,8 +12,11 @@ import {
   removeFromWatchList,
 } from "@/service/serives";
 import useSWR from "swr";
-import MovieDetail from "@/components/Detail/MovieDetail";
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { fetcher } from "@/lib/constants";
+import DetailTvlayout from "@/app/tv/[id]/layout";
+
+const MovieDetail = lazy(() => import("@/components/Detail/MovieDetail"));
+
 export default function Detail({ params }: DetailProps) {
   const { id } = params;
   const router = useRouter();
@@ -22,11 +25,10 @@ export default function Detail({ params }: DetailProps) {
     error,
     isLoading,
   } = useSWR(`/api/tmdb/detailsMovie/?id=${id}`, fetcher);
-  // const [detail, setDetail] = useState<any>(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
+
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [watchList, setWatchList] = useState<boolean | null | any>(null);
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
 
   useEffect(() => {
     const auth = getAuth();
@@ -41,22 +43,15 @@ export default function Detail({ params }: DetailProps) {
     return () => unsubscribe();
   }, [id]);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await fetch(`/api/tmdb/detailsMovie/?id=${id}`);
-  //     const data = await res.json();
-  //     if (data.error) {
-  //       setError(data.error);
-  //     } else {
-  //       const trailer = data.videos?.results?.find(
-  //         (video: any) => video.type === "Trailer" && video.site === "YouTube"
-  //       );
-  //       setDetail({ ...data, trailerKey: trailer?.key || null });
-  //     }
-  //     setLoading(false);
-  //   }
-  //   fetchData();
-  // }, [id]);
+  useEffect(() => {
+    if (detail) {
+      const trailer = detail.videos?.results?.find(
+        (video: any) => video.type === "Trailer" && video.site === "YouTube"
+      );
+      setTrailerKey(trailer?.key || null);
+    }
+  }, [detail]);
+
   const handleBookmarkClick = async () => {
     if (!isLoggedIn()) {
       toast({
@@ -79,7 +74,6 @@ export default function Detail({ params }: DetailProps) {
       vote_average: detail?.vote_average,
       release_date: detail?.release_date,
     };
-    console.log(detail);
     const dataId = detail?.id.toString();
 
     try {
@@ -129,12 +123,16 @@ export default function Detail({ params }: DetailProps) {
   if (error) {
     return <div>Đã có lỗi xảy ra: {error}</div>;
   }
+  const backdropUrl = `https://image.tmdb.org/t/p/original${detail.backdrop_path}`;
 
   return (
-    <MovieDetail
-      detail={detail}
-      watchList={watchList}
-      handleBookmarkClick={handleBookmarkClick}
-    />
+    <DetailTvlayout backdropUrl={backdropUrl}>
+      <MovieDetail
+        detail={detail}
+        watchList={watchList}
+        trailerKey={trailerKey}
+        handleBookmarkClick={handleBookmarkClick}
+      />
+    </DetailTvlayout>
   );
 }

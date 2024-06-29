@@ -4,7 +4,6 @@ import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import Link from "next/link";
 import { IItem } from "@/model/types";
 import RatingBar from "./RatingBar";
-import { LoadingSkeleton } from "./SkeletonLoading/SkeletonLoading";
 import Head from "next/head";
 export default function CarouselItemComponent({ item }: { item: IItem }) {
   const isMovie = item.media_type === "movie";
@@ -33,10 +32,6 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
               loading="eager"
               blurDataURL={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
             />
             <div className="absolute rounded-3xl left-2 bottom-0 bg-black w-auto h-auto  ">
               <span>

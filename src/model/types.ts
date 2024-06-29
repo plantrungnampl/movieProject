@@ -28,6 +28,7 @@ export interface MovieDetailProps {
   detail: detaiMovie;
   watchList: boolean | null;
   handleBookmarkClick: () => void;
+  trailerKey: string | null;
 }
 
 export interface TvDetailProps {
@@ -35,6 +36,7 @@ export interface TvDetailProps {
   watchList: boolean | null;
   handleBookmarkClick: () => void;
   // trailer: string;
+  trailerKey: string | null;
 }
 export interface TvDetailMovieProps {
   id: number;
