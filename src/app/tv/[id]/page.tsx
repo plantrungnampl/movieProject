@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/utils/toastUtil";
 import useSWR from "swr";
 import { fetcher } from "../../../lib/constants";
-import DetailTvlayout from "./layout";
+import { DetailTvlayout } from "./layout";
 const TvDetail = lazy(() => import("@/components/Detail/TvDetail"));
 export default function Detail({ params }: DetailProps) {
   const router = useRouter();
