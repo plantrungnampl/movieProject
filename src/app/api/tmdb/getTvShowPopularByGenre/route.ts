@@ -1,23 +1,23 @@
 import { API_KEY, BASE_URL } from "@/lib/constants";
 import axios from "axios";
 import { NextResponse } from "next/server";
-interface toprateResponse {
+interface TopRateResponse {
   results: any[];
   totalPages: number;
 }
 export async function GET(
   req: Request
-): Promise<NextResponse<toprateResponse>> {
+): Promise<NextResponse<TopRateResponse>> {
   const { searchParams } = new URL(req.url);
   const page = searchParams.get("page") || "1";
-  const sortOder = searchParams.get("sortOder") || "popularity.desc";
-  const genreId = searchParams.get("genreId");
+  const sortOrder = searchParams.get("sort_by");
+  const genreId = searchParams.get("with_genres");
   try {
     const response = await axios.get(
-      `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genreId}&sort_by=${sortOder}`
+      `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genreId}&sort_by=${sortOrder}`
     );
 
-    const data: toprateResponse = {
+    const data: TopRateResponse = {
       results: response.data.results,
       totalPages: response.data.total_pages,
     };

@@ -2,8 +2,11 @@
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { fetcher } from "@/lib/constants";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
+import useSWRInfinite from "swr/infinite";
 const Filter = dynamic(() => import("@/components/Filters/Filter"), {
   ssr: false,
 });
@@ -16,94 +19,75 @@ const TopRatedTv = dynamic(
 );
 export default function TopRated() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [filterTopRated, setFilterTopRated] = useState<any[]>([]);
   const [selectGenres, setSelectedGenre] = useState<any[]>([]);
-  const [isFilterGenres, setIsFilterGenres] = useState<boolean>(false);
-  const [sortOrder, setSortOrder] = React.useState("vote_count.desc");
-
-  useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`/api/tmdb/getTopRatedTvShow?page=1`);
-        const dataTopRated = await res.json();
-        setFilterTopRated(dataTopRated?.results);
-        setTotalPage(dataTopRated?.totalPages);
-        setCurrentPage(1);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const handleLoadMore = async () => {
-    try {
-      setLoading(true);
-      const res = isFilterGenres
-        ? await fetch(
-            `/api/tmdb/getTopRatedTvShowByGenre?page=${
-              currentPage + 1
-            }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`
-          )
-        : await fetch(`/api/tmdb/getTopRatedTvShow?page=${currentPage + 1}`);
-      const data = await res.json();
-      setFilterTopRated([...filterTopRated, ...data.results]);
-      setCurrentPage(currentPage + 1);
-      setTotalPage(data.totalPages);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+  const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = React.useState("name.esc");
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (previousPageData && !previousPageData.results.length) return null; // reached the end
+    if (isFiltering) {
+      return `/api/tmdb/getTopRatedTvShowByGenre?page=${
+        pageIndex + 1
+      }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`;
+    } else {
+      return `/api/tmdb/getTopRatedTvShow?page=${pageIndex + 1}`;
     }
+
+    // const baseUrl = `/api/tmdb/getTopRatedTvShow?page=${pageIndex + 1}`;
+    // const genreUrl = `/api/tmdb/getTopRatedTvShowByGenre?page=${
+    //   pageIndex + 1
+    // }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`;
+
+    // return isFilterGenres ? genreUrl : baseUrl;
   };
-
-  const handleSubmitFilter = async () => {
-    try {
-      setLoading(true);
-      setIsFilterGenres(true);
-      const res = await fetch(
-        `/api/tmdb/getTopRatedTvShowByGenre?page=${
-          currentPage + 1
-        }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`
-      );
-      const data = await res.json();
-      setCurrentPage(1);
-      setFilterTopRated(data?.results);
-      setTotalPage(data.totalPages);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+  const { data, error, isLoading, size, setSize, mutate } = useSWRInfinite(
+    getKey,
+    fetcher,
+    {
+      parallel: true,
+      revalidateFirstPage: false,
     }
+  );
+  useEffect(() => {
+    if (data) {
+      const newData = [].concat(...data.map((el) => el.results));
+      setFilterTopRated(newData);
+      if (data[0]?.totalPages) {
+        setTotalPage(data[0]?.totalPages);
+      }
+    }
+  }, [data]);
+
+  const isLoadingMore =
+    isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.results?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.results.length < 20);
+  const handleSubmitFilter = async () => {
+    setLoading(true);
+    await mutate();
+    setIsFiltering(true);
+    setSize(1);
+    setLoading(false);
   };
 
   if (error) return <h1>{error}</h1>;
 
   const handleSort = async (order: string) => {
+    setLoading(true);
     try {
-      setLoading(true);
       setSortOrder(order);
-      setCurrentPage(1);
-      setIsFilterGenres(true);
-      const res = await fetch(
-        `/api/tmdb/getTopRatedTvShowByGenre?page=1&sortOder=${sortOrder}&genreId=${selectGenres.toString()} `
-      );
-      const data = await res.json();
-      setSortOrder(order);
-
-      setFilterTopRated(data?.results);
-      setTotalPage(data.totalPages);
-    } catch (error) {
-      console.log(error);
-    } finally {
+      setIsFiltering(true);
+      setSize(1);
+      await mutate();
       setLoading(false);
+    } catch (err) {
+      console.log(err);
     }
   };
+  console.log(selectGenres);
+  console.log(filterTopRated);
   return (
     <>
       <div>
@@ -112,12 +96,11 @@ export default function TopRated() {
         <div className="flex">
           <div className="shadow-lg p-3 w-1/3 h-fit ">
             <Filter
-              filteredMovies={filterTopRated}
-              setFilteredMovies={setFilterTopRated}
               selectedGenre={selectGenres}
               setSelectedGenre={setSelectedGenre}
               handleSubmitFilter={handleSubmitFilter}
               handleSort={handleSort}
+              setIsFilterGenres={setIsFiltering}
             />
           </div>
 
@@ -125,16 +108,17 @@ export default function TopRated() {
             <TopRatedTv topRates={filterTopRated} />
             <div className="w-full">
               <div className="text-center mt-4  ">
-                {/* {currentPage < totalPage && ( */}
-                <div className="w-full text-center mt-4">
+                {!isReachingEnd && (
                   <Button
-                    onClick={handleLoadMore}
+                    disabled={isLoadingMore || isReachingEnd}
+                    onClick={() => setSize(size + 1)}
                     className="w-full p-4 rounded-lg mx-auto text-center"
                   >
-                    {loading ? "Loading..." : "Load More"}
+                    {isLoadingMore ? "Loading..." : "Load More"}
                   </Button>
-                </div>
-                {/* )} */}
+                )}
+                {isReachingEnd && <p>No more movies</p>}
+                <p>Total Pages: {totalPage}</p>
               </div>
             </div>
           </div>

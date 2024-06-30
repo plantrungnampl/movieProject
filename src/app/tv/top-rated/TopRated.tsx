@@ -1,32 +1,25 @@
 "use client";
-import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import { fetcher } from "@/lib/constants";
-import dynamic from "next/dynamic";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
-const OnTvs = dynamic(() => import("@/components/OnTv/OnTvs"), {
-  ssr: false,
-  loading: () => <LoadingSkeleton />,
-});
-const Filter = dynamic(() => import("@/components/Filters/Filter"), {
-  ssr: false,
-});
-export default function OnTv() {
-  const [loading, setLoading] = React.useState(false);
-  const [totalPage, setTotalPage] = React.useState(0);
-  const [isFiltering, setIsFiltering] = React.useState(false);
-  const [selectedGenre, setSelectedGenre] = React.useState<any[]>([]);
-  const [filteredMovies, setFilteredMovies] = React.useState<any[]>([]);
-  const [sortOrder, setSortOrder] = React.useState("name.asc");
+import { Filter, TopRatedTv } from "./page";
+
+export default function TopRated() {
+  const [loading, setLoading] = useState(false);
+  const [totalPage, setTotalPage] = useState(0);
+  const [filterTopRated, setFilterTopRated] = useState<any[]>([]);
+  const [selectGenres, setSelectedGenre] = useState<any[]>([]);
+  const [isFilterGenres, setIsFilterGenres] = useState<boolean>(false);
+  const [sortOrder, setSortOrder] = React.useState("name.esc");
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.results.length) return null; // reached the end
-    if (isFiltering) {
-      return `/api/tmdb/getOnAirTvByGenre?page=${
+    if (isFilterGenres) {
+      return `/api/tmdb/getTopRatedTvShowByGenre?page=${
         pageIndex + 1
-      }&sortOrder=${sortOrder}&genreIds=${selectedGenre.join(",")}`;
+      }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`;
     } else {
-      return `/api/tmdb/getOnAirTv?page=${pageIndex + 1}`;
+      return `/api/tmdb/getTopRatedTvShow?page=${pageIndex + 1}`;
     }
   };
   const { data, error, isLoading, size, setSize, mutate } = useSWRInfinite(
@@ -40,29 +33,38 @@ export default function OnTv() {
   useEffect(() => {
     if (data) {
       const newData = [].concat(...data.map((el) => el.results));
-      setFilteredMovies(newData);
+      setFilterTopRated(newData);
       if (data[0]?.totalPages) {
         setTotalPage(data[0]?.totalPages);
       }
     }
   }, [data]);
+
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
   const isEmpty = data?.[0]?.results?.length === 0;
   const isReachingEnd =
     isEmpty || (data && data[data.length - 1]?.results.length < 20);
-  const handleSubmitFilter = () => {
-    setLoading(true);
-    setIsFiltering(true);
-    setSize(1);
-    setLoading(false);
+  const handleSubmitFilter = async () => {
+    try {
+      setLoading(true);
+      setIsFilterGenres(true);
+      setSize(1);
+      // mutate();
+      setIsFilterGenres(false);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  if (error) return <h1>{error}</h1>;
 
   const handleSort = async (order: string) => {
     setLoading(true);
     try {
       setSortOrder(order);
-      setIsFiltering(true);
+      setIsFilterGenres(true);
       setSize(1);
       mutate();
       setLoading(false);
@@ -70,9 +72,8 @@ export default function OnTv() {
       console.log(err);
     }
   };
-  if (error) {
-    return <h1>Error: {error}</h1>;
-  }
+  console.log(selectGenres);
+  console.log(filterTopRated);
   return (
     <>
       <div>
@@ -81,18 +82,16 @@ export default function OnTv() {
         <div className="flex">
           <div className="shadow-lg p-3 w-1/3 h-fit ">
             <Filter
-              // filteredMovies={filteredMovies}
-              // setFilteredMovies={setFilteredMovies}
-              selectedGenre={selectedGenre}
+              filteredMovies={filterTopRated}
+              selectedGenre={selectGenres}
               setSelectedGenre={setSelectedGenre}
               handleSubmitFilter={handleSubmitFilter}
               handleSort={handleSort}
-              setIsFilterGenres={setIsFiltering}
             />
           </div>
 
           <div className=" w-full flex flex-wrap">
-            <OnTvs onTv={filteredMovies} />
+            <TopRatedTv topRates={filterTopRated} />
             <div className="w-full">
               <div className="text-center mt-4  ">
                 {!isReachingEnd && (

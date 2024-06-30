@@ -4,11 +4,11 @@ const nextConfig = {
     // async headers() {
     //     return [
     //         {
-    //             source: '/(.*)',
+    //             source: '/api/tmdb',
     //             headers: [
     //                 {
     //                     key: 'Cache-Control',
-    //                     value: 'public, max-age=3600, s-maxage=7200, stale-while-revalidate=86400',
+    //                     value: 's-maxage=10, stale-while-revalidate',
     //                 },
     //             ],
     //         },

@@ -11,7 +11,7 @@ export async function GET(
   const { searchParams } = new URL(req.url);
   const page = searchParams.get("page") || 1;
   const genreId = searchParams.get("genreId");
-  const sortingOrder = searchParams.get("sortingOrder");
+  const sortingOrder = searchParams.get("sortingOrder") || "vote_average.desc";
   try {
     const res = await axios.get(
       `${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&page=${page}&with_genres=${genreId}&sort_by=${sortingOrder}`

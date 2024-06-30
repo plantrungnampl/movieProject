@@ -105,11 +105,12 @@ import Loading from "@/app/loading";
 import Paginations from "@/components/Pagination/Paginations";
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { fetcher } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import useSWR from "swr";
-import { fetcher } from "@/lib/constants";
+// import { fetcher } from "@/lib/constants";
 
 interface Person {
   id: number;
@@ -130,7 +131,10 @@ export default function PopularPeople({
 
   const { data, error } = useSWR(
     `/api/tmdb/people?page=${currentPage}`,
-    fetcher
+    fetcher,
+    {
+      refreshInterval: 10000,
+    }
   );
 
   if (error) return <div>Failed to load</div>;

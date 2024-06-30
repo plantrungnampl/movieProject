@@ -21,13 +21,13 @@ export default function Filter({
   setSelectedGenre,
   handleSubmitFilter,
   handleSort,
+  setIsFilterGenres,
 }: {
-  // setFilteredMovies: any;
-  filteredMovies: any;
   selectedGenre: any;
   setSelectedGenre: any;
   handleSubmitFilter: () => void;
   handleSort: (order: string) => void;
+  setIsFilterGenres: any;
 }) {
   const [genres, setGenres] = React.useState([]);
   const [selectedOrder, setSelectedOrder] = React.useState("");
@@ -45,6 +45,7 @@ export default function Filter({
   const handleChange = (genId: string | number) => {
     if (selectedGenre.includes(genId)) {
       setSelectedGenre(selectedGenre.filter((item: any) => item !== genId));
+      setIsFilterGenres(false);
     } else {
       setSelectedGenre([...selectedGenre, genId]);
     }
@@ -57,8 +58,8 @@ export default function Filter({
     try {
       setLoading(true);
       if (selectedGenre.length > 0 && selectedOrder) {
-        handleSort(selectedOrder);
         handleSubmitFilter();
+        handleSort(selectedOrder);
       } else if (selectedGenre.length > 0) {
         handleSubmitFilter();
       } else if (selectedOrder) {
