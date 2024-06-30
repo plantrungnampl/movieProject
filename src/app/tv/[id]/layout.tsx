@@ -1,11 +1,11 @@
 import React, { Suspense } from "react";
 
-export default function DetailTvlayout({
+export function DetailTvlayout({
   children,
   backdropUrl,
 }: {
-  children: React.ReactNode;
   backdropUrl: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="mt-[61px] relative w-full min-h-screen ">
