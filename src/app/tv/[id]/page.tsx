@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Loading from "@/app/loading";
 import { DetailProps } from "../../../model/types";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -12,8 +12,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/utils/toastUtil";
 import useSWR from "swr";
 import { fetcher } from "../../../lib/constants";
-import { DetailTvlayout } from "./layout";
 const TvDetail = lazy(() => import("@/components/Detail/TvDetail"));
+const Background = lazy(() => import("@/components/Background"));
 export default function Detail({ params }: DetailProps) {
   const router = useRouter();
   const { id } = params;
@@ -109,13 +109,26 @@ export default function Detail({ params }: DetailProps) {
   };
   const backdropUrl = `https://image.tmdb.org/t/p/original${detail.backdrop_path}`;
   return (
-    <DetailTvlayout backdropUrl={backdropUrl}>
-      <TvDetail
-        watchList={watchList}
-        tvDetail={detail}
-        handleBookmarkClick={handleBookmarkClick}
-        trailerKey={trailerKey}
-      />
-    </DetailTvlayout>
+    <Background src={backdropUrl}>
+      <div className="absolute top-0 left-0 w-full h-full ">
+        <div
+          style={{
+            background:
+              "linear-gradient(to right, rgba(220, 220, 220, 1) calc((50vw - 170px) - 340px), rgba(220, 220, 220, 0.84) 50%, rgba(220, 220, 220, 0.84) 100%)",
+            minHeight: "100vh",
+          }}
+        >
+          <Suspense fallback={<Loading number={1} />}>
+            <TvDetail
+              watchList={watchList}
+              tvDetail={detail}
+              handleBookmarkClick={handleBookmarkClick}
+              trailerKey={trailerKey}
+            />
+            {/* <div>aaaaa</div> */}
+          </Suspense>
+        </div>
+      </div>
+    </Background>
   );
 }

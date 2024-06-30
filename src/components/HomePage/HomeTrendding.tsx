@@ -17,7 +17,7 @@ export default function HomeTrendding({ data }: { data: IItem[] }) {
         <div>
           <Tabs defaultValue="Today">
             {/* map tap */}
-            <div className="flex gap-5 items-center mb-3 ">
+            <div className="flex gap-5 items-center mb-3">
               <p className="text-xl p-1 rounded">Trending</p>
               <TabsList>
                 <TabsTrigger value="Today" className=" font-bold">

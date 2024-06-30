@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, lazy } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast } from "@/components/ui/use-toast";
@@ -13,7 +13,8 @@ import {
 } from "@/service/serives";
 import useSWR from "swr";
 import { fetcher } from "@/lib/constants";
-import DetailTvlayout from "@/app/tv/[id]/layout";
+// import Background from "@/components/Background";
+const Background = lazy(() => import("@/components/Background"));
 
 const MovieDetail = lazy(() => import("@/components/Detail/MovieDetail"));
 
@@ -123,16 +124,30 @@ export default function Detail({ params }: DetailProps) {
   if (error) {
     return <div>Đã có lỗi xảy ra: {error}</div>;
   }
-  const backdropUrl = `https://image.tmdb.org/t/p/original${detail.backdrop_path}`;
+  const backdropUrl = `https://image.tmdb.org/t/p/original${
+    detail.backdrop_path || detail.poster_path
+  }`;
 
   return (
-    <DetailTvlayout backdropUrl={backdropUrl}>
-      <MovieDetail
-        detail={detail}
-        watchList={watchList}
-        trailerKey={trailerKey}
-        handleBookmarkClick={handleBookmarkClick}
-      />
-    </DetailTvlayout>
+    <Background src={backdropUrl}>
+      <div className="absolute top-0 left-0 w-full h-full  ">
+        <div
+          style={{
+            background:
+              "linear-gradient(to right, rgba(220, 220, 220, 1) calc((50vw - 170px) - 340px), rgba(220, 220, 220, 0.84) 50%, rgba(220, 220, 220, 0.84) 100%)",
+            minHeight: "100vh",
+          }}
+        >
+          <Suspense fallback={<Loading number={1} />}>
+            <MovieDetail
+              detail={detail}
+              watchList={watchList}
+              trailerKey={trailerKey}
+              handleBookmarkClick={handleBookmarkClick}
+            />
+          </Suspense>
+        </div>
+      </div>
+    </Background>
   );
 }

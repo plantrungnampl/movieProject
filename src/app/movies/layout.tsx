@@ -8,7 +8,7 @@ export default function DetailMovieslayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mt-[61px] w-full">
+    <div className="mt-[61px] relative w-full">
       <div>
         <Suspense fallback={<Loading number={1} />}>{children}</Suspense>
       </div>
