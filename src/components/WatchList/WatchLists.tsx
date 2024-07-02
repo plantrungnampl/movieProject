@@ -1,14 +1,14 @@
+"use client";
 import React from "react";
-
 import Image from "next/image";
-import { Button } from "../ui/button";
-import { IItem } from "@/model/types";
 import Link from "next/link";
+import { IItem } from "@/model/types";
 import RatingBar from "../RatingBar";
 
 export default function WatchLists({ item }: { item: IItem }) {
   const isMovie = item.media_type === "movie";
   const href = isMovie ? `/movies/${item.id}` : `/tv/${item.id}`;
+
   return (
     <Link href={href}>
       <div className="relative flex bg-clip-border rounded-xl shadow-md w-full flex-row mb-4">
@@ -21,8 +21,9 @@ export default function WatchLists({ item }: { item: IItem }) {
             className="object-cover w-full h-full"
             style={{
               maxWidth: "100%",
-              height: "auto"
-            }} />
+              height: "auto",
+            }}
+          />
         </div>
         <div className="p-6">
           <div className="bg-black w-fit rounded-3xl">
@@ -37,11 +38,6 @@ export default function WatchLists({ item }: { item: IItem }) {
           <p className="block mb-8 font-sans text-base antialiased font-normal leading-relaxed ">
             {item.overview}
           </p>
-          {/* <a href="#" className="inline-block">
-            <Button className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center  uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none ">
-              Add to Favorite
-            </Button>
-          </a> */}
         </div>
       </div>
     </Link>

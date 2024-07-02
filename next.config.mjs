@@ -1,30 +1,14 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // async headers() {
-    //     return [
-    //         {
-    //             source: '/api/tmdb',
-    //             headers: [
-    //                 {
-    //                     key: 'Cache-Control',
-    //                     value: 's-maxage=10, stale-while-revalidate',
-    //                 },
-    //             ],
-    //         },
-    //     ];
-    // },
-    // experimental: {
-    //     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
-    // },
-    experimental: {
-        optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
-    },
+
+
     compress: true,
     reactStrictMode: true,
 
     experimental: {
         missingSuspenseWithCSRBailout: false,
+        optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
     },
     images: {
         minimumCacheTTL: 31536000,

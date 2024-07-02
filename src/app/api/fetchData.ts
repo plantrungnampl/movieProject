@@ -1,4 +1,3 @@
-"use server";
 import { db } from "@/service/firebase";
 
 import { collection, getDocs } from "firebase/firestore";

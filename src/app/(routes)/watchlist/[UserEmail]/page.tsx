@@ -1,33 +1,30 @@
 "use client";
-import { getUserDataWatchList } from "@/app/api/fetchData";
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getUserDataWatchList } from "@/app/api/fetchData";
 import WatchLists from "@/components/WatchList/WatchLists";
-import { getUserId } from "@/app/api/getEmail";
-import Loading from "@/app/loading";
 
 export default function FavoriteMovie() {
-  const [watchListUser, setWatchListUser] = React.useState<any[]>([]);
-  const [currentUser, setCurrentUser] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [watchListUser, setWatchListUser] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       if (currentUser?.uid) {
         const data: any = await getUserDataWatchList(currentUser?.uid);
-        setWatchListUser(data);
-        setLoading(false);
+        const plainData = JSON.parse(JSON.stringify(data));
+        // setWatchListUser(data);
+        setWatchListUser(plainData);
       } else {
         setWatchListUser([]);
       }
-    }
+      setLoading(false);
+    };
+
     fetchData();
   }, [currentUser?.uid]);
-  useEffect(() => {
-    async function getUerId() {
-      await getUserId(currentUser?.uid);
-    }
-    getUerId();
-  }, [currentUser?.uid]);
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -36,24 +33,26 @@ export default function FavoriteMovie() {
     return () => unsubscribe();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <Suspense fallback={<Loading number={20} />}>
-        <h1 className="font-bold text-2xl">My Watchlist </h1>
-        {watchListUser.length > 0 ? (
-          <div>
-            {watchListUser.map((item) => (
-              <div key={item.id}>
-                <WatchLists item={item} />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div>
-            <h1>Watch List empty</h1>
-          </div>
-        )}
-      </Suspense>
+      <h1 className="font-bold text-2xl">My Watchlist</h1>
+      {watchListUser.length > 0 ? (
+        <div>
+          {watchListUser.map((item) => (
+            <div key={item.id}>
+              <WatchLists item={item} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <h1>Watch List empty</h1>
+        </div>
+      )}
     </div>
   );
 }
