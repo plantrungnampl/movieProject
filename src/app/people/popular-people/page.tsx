@@ -108,7 +108,7 @@ import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetcher } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import useSWR from "swr";
 // import { fetcher } from "@/lib/constants";
 
@@ -120,14 +120,21 @@ interface Person {
   original_name?: string;
   known_for?: { title: string }[];
 }
-
+export const dynamic = "force-dynamic";
 export default function PopularPeople({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const { page } = searchParams;
-  const currentPage = page ? parseInt(page.toString()) : 1;
+  // const { page } = searchParams;
+  // const currentPage = page ? parseInt(page.toString()) : 1;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    if (searchParams.page) {
+      setCurrentPage(parseInt(searchParams.page.toString()));
+    }
+  }, [searchParams.page]);
 
   const { data, error } = useSWR(
     `/api/tmdb/people?page=${currentPage}`,

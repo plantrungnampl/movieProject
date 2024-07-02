@@ -1,6 +1,7 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import React, { Suspense } from "react";
 import Loading from "../loading";
+import Transition from "../components/Transition";
 
 export default function DetailMovieslayout({
   children,
@@ -10,7 +11,9 @@ export default function DetailMovieslayout({
   return (
     <div className="mt-[61px] relative w-full">
       <div>
-        <Suspense fallback={<Loading number={1} />}>{children}</Suspense>
+        <Suspense fallback={<Loading number={1} />}>
+          <Transition>{children}</Transition>
+        </Suspense>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default function PopularTvSeris({
             key={movieItem.id}
             className="relative flex flex-col bg-clip-border rounded-xl w-1/5 "
           >
-            <Link href={href}>
+            <Link href={href} passHref>
               <Card className="relative mx-4 mt-4 overflow-hidden bg-clip-border rounded-xl flex-card-cal">
                 <div className=" relative">
                   <Image

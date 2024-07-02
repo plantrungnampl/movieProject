@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/app/components/theme-provider";
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header/Header";
+import { cookies } from "next/headers";
+import { SESSION_COOKIE_NAME } from "@/lib/constants";
+import Transition from "./components/Transition";
 const sourceSansPro = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -22,6 +25,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = cookies().get(SESSION_COOKIE_NAME)?.value || null;
+
   return (
     <html lang="en">
       <head>
@@ -39,20 +44,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <Header session={session} />
           <Toaster />
           <SpeedInsights />
-          <Suspense
-            fallback={
-              <div>
-                <h1>Loading.....................</h1>
-              </div>
-            }
-          >
-            {children}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Transition>{children}</Transition>
           </Suspense>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+// export default dynamic(() => Promise.resolve(RootLayout), {
+//   ssr: false,
+// });

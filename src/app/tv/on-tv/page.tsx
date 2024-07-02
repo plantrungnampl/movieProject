@@ -92,7 +92,9 @@ export default function OnTv() {
           </div>
 
           <div className=" w-full flex flex-wrap">
-            <OnTvs onTv={filteredMovies} />
+            <React.Suspense fallback={<div>Loading....</div>}>
+              <OnTvs onTv={filteredMovies} />
+            </React.Suspense>
             <div className="w-full">
               <div className="text-center mt-4  ">
                 {!isReachingEnd && (

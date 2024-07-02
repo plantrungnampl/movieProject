@@ -1,8 +1,6 @@
 "use client";
 import { LoadingSkeleton } from "@/components/SkeletonLoading/SkeletonLoading";
-
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
 import { fetcher } from "@/lib/constants";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
@@ -33,13 +31,6 @@ export default function TopRated() {
     } else {
       return `/api/tmdb/getTopRatedTvShow?page=${pageIndex + 1}`;
     }
-
-    // const baseUrl = `/api/tmdb/getTopRatedTvShow?page=${pageIndex + 1}`;
-    // const genreUrl = `/api/tmdb/getTopRatedTvShowByGenre?page=${
-    //   pageIndex + 1
-    // }&genreId=${selectGenres.join(",")}&sortingOrder=${sortOrder}`;
-
-    // return isFilterGenres ? genreUrl : baseUrl;
   };
   const { data, error, isLoading, size, setSize, mutate } = useSWRInfinite(
     getKey,
@@ -86,8 +77,7 @@ export default function TopRated() {
       console.log(err);
     }
   };
-  console.log(selectGenres);
-  console.log(filterTopRated);
+
   return (
     <>
       <div>
@@ -105,7 +95,9 @@ export default function TopRated() {
           </div>
 
           <div className=" w-full flex flex-wrap">
-            <TopRatedTv topRates={filterTopRated} />
+            <React.Suspense fallback={<div>Loading....</div>}>
+              <TopRatedTv topRates={filterTopRated} />
+            </React.Suspense>
             <div className="w-full">
               <div className="text-center mt-4  ">
                 {!isReachingEnd && (

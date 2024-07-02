@@ -13,7 +13,6 @@ import {
 } from "@/service/serives";
 import useSWR from "swr";
 import { fetcher } from "@/lib/constants";
-// import Background from "@/components/Background";
 const Background = lazy(() => import("@/components/Background"));
 
 const MovieDetail = lazy(() => import("@/components/Detail/MovieDetail"));

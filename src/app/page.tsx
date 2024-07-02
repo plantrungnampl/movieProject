@@ -20,8 +20,6 @@ const HomeTrendding = dynamic(
 );
 
 export default function Home() {
-  // const [dataToday, setDataToday] = useState<any[]>([]);
-  // const [isLoading, setIsLoading] = useState(false);
   const { data, isLoading, error } = useSWR(
     `/api/tmdb/todayAndTrending`,
     fetcher,

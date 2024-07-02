@@ -125,7 +125,6 @@ export default function Detail({ params }: DetailProps) {
               handleBookmarkClick={handleBookmarkClick}
               trailerKey={trailerKey}
             />
-            {/* <div>aaaaa</div> */}
           </Suspense>
         </div>
       </div>

@@ -1,5 +1,4 @@
 "use client";
-import { Suspense } from "react";
 import {
   Form,
   FormControl,
@@ -16,14 +15,12 @@ import * as z from "zod";
 import Link from "next/link";
 import { auth } from "@/service/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import Loading from "@/app/loading";
 import { formSchemaResgister } from "@/validation/form";
 
 const RegisterPage = () => {
   const route = useRouter();
-  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof formSchemaResgister>>({
     resolver: zodResolver(formSchemaResgister),
     defaultValues: {
@@ -166,11 +163,4 @@ const RegisterPage = () => {
     </>
   );
 };
-
-const Register = () => (
-  <Suspense fallback={<Loading number={1} />}>
-    <RegisterPage />
-  </Suspense>
-);
-
-export default Register;
+export default RegisterPage;

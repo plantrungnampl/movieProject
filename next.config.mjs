@@ -14,6 +14,12 @@ const nextConfig = {
     //         },
     //     ];
     // },
+    // experimental: {
+    //     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+    // },
+    experimental: {
+        optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+    },
     compress: true,
     reactStrictMode: true,
 
@@ -49,6 +55,7 @@ const nextConfig = {
     env: {
         NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY,
     },
+
 };
 
 export default nextConfig;

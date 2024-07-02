@@ -25,8 +25,8 @@ export default function CarouselItemComponent({ item }: { item: IItem }) {
               src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
               alt={item.original_title || item.name}
               className="object-cover w-full h-full rounded-t-lg  "
-              width={0}
-              height={0}
+              width={200}
+              height={300}
               priority={true}
               placeholder="blur"
               loading="eager"

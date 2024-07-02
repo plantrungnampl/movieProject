@@ -27,3 +27,7 @@ export const defaultSort: SortFilterItem = {
 export const BASE_URL = "https://api.themoviedb.org/3";
 export const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const ROOT_ROUTE = "/login";
+export const HOME_ROUTE = "/";
+
+export const SESSION_COOKIE_NAME = "user_session";

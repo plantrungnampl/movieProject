@@ -100,7 +100,9 @@ export default function TopRate() {
           </div>
 
           <div className="w-full flex flex-wrap">
-            <TopRateMovies PopularTv={filteredMovies} />
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <TopRateMovies PopularTv={filteredMovies} />
+            </React.Suspense>
             <div className="w-full text-center mt-4">
               {!isReachingEnd && (
                 <Button
