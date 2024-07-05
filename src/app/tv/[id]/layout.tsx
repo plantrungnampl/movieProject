@@ -10,9 +10,9 @@ export default function DetailTvlayout({
   return (
     <div className="mt-[61px] relative w-full">
       <div>
-        <Suspense fallback={<div>Loading.....</div>}>
-          <Transition>{children}</Transition>
-        </Suspense>
+        <Transition>
+          <Suspense fallback={<div>Loading.....</div>}>{children}</Suspense>
+        </Transition>
       </div>
     </div>
   );

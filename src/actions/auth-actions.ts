@@ -7,7 +7,7 @@ export async function createSession(uid: string) {
   cookies().set(SESSION_COOKIE_NAME, uid, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24, // One day
+    maxAge: 60 * 60 * 24,
     path: "/",
   });
 
